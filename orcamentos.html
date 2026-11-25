@@ -1,979 +1,700 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VOSTY Design | Sistema Unificado (Marcenaria &amp; Remodelação)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOSTY Design | Simulador de Orçamentos — Marcenaria & Remodelações em Lisboa e Regiões</title>
+  <meta name="description" content="Simulador online da VOSTY Design. Calcule na hora o orçamento para móveis sob medida, cozinhas, roupeiros, pintura e remodelações em Lisboa e regiões.">
+  <meta name="keywords" content="VOSTY Design, simulador orçamento, marcenaria Lisboa, remodelações Lisboa e regiões, móveis sob medida, pintura interior, remodelação espaço comercial">
+  <link rel="canonical" href="https://vostydesign-marcenaria.github.io/vosty-orcamentos/orcamentos.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "VOSTY Design - Marcenaria e Remodelações",
+    "url": "https://vostydesign.com",
+    "telephone": "+351923189914",
+    "email": "vostydesign@gmail.com",
+    "areaServed": "Lisboa e regiões"
+  }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; background-color: #f4f4f6; color: #18181b; }
-    .font-brand { font-family: 'Playfair Display', serif; }
-    body.client-mode .internal-only { display: none !important; }
-    @media print {
-      body { background: #ffffff !important; color: #111827 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .no-print { display: none !important; }
-      .internal-only { display: none !important; }
-      .print-shadow-none { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
-      .page-break-inside { break-inside: avoid; }
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --primary: #1e293b;
+      --accent: #0f172a;
+      --sand: #b08d57;
+      --green: #16a34a;
+      --green-hover: #15803d;
+      --text: #1e293b;
+      --muted: #64748b;
     }
+    * { box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* Cabeçalho Limpo e Sofisticado */
+    .header {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px; margin-bottom: 18px; box-shadow: 0 2px 10px rgba(15,23,42,0.03);
+    }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .brand-left { display: flex; align-items: center; gap: 14px; }
+    .logo-box {
+      width: 48px; height: 48px; border-radius: 12px; background: #f1f5f9;
+      border: 1px solid #cbd5e1; color: var(--primary); font-weight: 800;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .brand-title h1 { margin: 0; font-size: 20px; color: var(--primary); letter-spacing: 0.5px; }
+    .brand-title p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+
+    .top-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .btn-link {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+      border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none;
+      border: 1px solid var(--border); background: #f8fafc; color: var(--primary); transition: 0.2s;
+    }
+    .btn-link:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-insta {
+      background: #ffffff; border: 1px solid #e1306c; color: #c13584 !important;
+    }
+    .btn-insta:hover { background: #fdf2f8; }
+
+    /* Seletor de Abas (Marcenaria vs Remodelação) */
+    .tabs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px;
+    }
+    .tab-btn {
+      padding: 14px; border-radius: 12px; border: 2px solid var(--border);
+      background: var(--card); color: var(--muted); font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: 0.2s; text-align: center;
+    }
+    .tab-btn.active {
+      border-color: var(--primary); background: var(--primary); color: #ffffff;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.12);
+    }
+
+    /* Cards & Formulários */
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(15,23,42,0.03);
+    }
+    .card h2 {
+      margin: 0 0 14px; font-size: 16px; color: var(--primary);
+      border-bottom: 1px solid var(--border); padding-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+    input, select, textarea {
+      width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid #cbd5e1;
+      background: #ffffff; color: var(--text); font-size: 14px; outline: none; transition: 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,41,59,0.08); }
+
+    /* Caixa Leitor de Projeto / Planta IA */
+    .ai-box {
+      background: #f8fafc; border: 1.5px dashed #94a3b8; border-radius: 12px;
+      padding: 16px; text-align: center; margin-bottom: 16px;
+    }
+    .ai-box p { margin: 4px 0 12px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+    .btn-ai {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+      background: var(--primary); color: #fff; border-radius: 8px; font-size: 13px;
+      font-weight: 600; cursor: pointer; border: none;
+    }
+
+    .hint { font-size: 12px; color: #059669; margin-top: 5px; font-weight: 500; }
+    .hidden { display: none !important; }
+
+    /* Botões */
+    .btn {
+      width: 100%; padding: 13px; border-radius: 10px; border: none; font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: 0.2s; display: flex;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-add { background: #f1f5f9; color: var(--primary); border: 1px solid #cbd5e1; margin-top: 14px; }
+    .btn-add:hover { background: #e2e8f0; }
+    .btn-finish { background: var(--green); color: #fff; margin-top: 10px; font-size: 16px; box-shadow: 0 4px 12px rgba(22,163,74,0.22); }
+    .btn-finish:hover { background: var(--green-hover); }
+
+    /* Itens Adicionados */
+    .item-row {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 8px; gap: 10px;
+    }
+    .item-info strong { display: block; font-size: 14px; color: var(--primary); }
+    .item-info span { font-size: 12px; color: var(--muted); }
+    .btn-del { background: #fee2e2; color: #b91c1c; border: none; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 12px; font-weight: 600; }
+
+    /* Proposta Comercial Final */
+    #proposta-box {
+      background: #ffffff; border-radius: 16px; padding: 24px;
+      margin-top: 18px; border: 2px solid var(--primary); box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+    }
+    .prop-header { border-bottom: 2px solid #f1f5f9; padding-bottom: 14px; margin-bottom: 16px; }
+    .prop-badge { display: inline-block; background: #f1f5f9; color: var(--primary); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+    .prop-header h3 { margin: 8px 0 4px; font-size: 21px; color: var(--primary); }
+    .prop-contact { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+    th { background: #f8fafc; text-align: left; padding: 10px; border-bottom: 1px solid #cbd5e1; color: var(--primary); }
+    td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
+    .total-box { text-align: right; font-size: 19px; font-weight: 800; color: var(--primary); margin-top: 14px; }
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+    @media (max-width: 600px) { .action-grid { grid-template-columns: 1fr; } }
+
+    /* Painel Interno Equipa (Oculto por defeito) */
+    .equipa-panel {
+      background: #fefce8; border: 1px solid #fde047; border-radius: 10px;
+      padding: 12px; margin-top: 14px; font-size: 13px; color: #854d0e;
+    }
+    .footer { text-align: center; font-size: 12px; color: var(--muted); margin: 24px 0 12px; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+<div class="container">
 
-  <!-- BARRA SUPERIOR -->
-  <header class="bg-zinc-950 text-white border-b border-amber-500/30 sticky top-0 z-40 no-print">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-zinc-950 font-bold text-lg shadow-lg">
-          VD
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-brand text-lg md:text-xl tracking-wide text-white leading-tight">VOSTY <span class="text-amber-400">DESIGN</span></h1>
-            <span id="syncBadge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">● Cloud Ligado</span>
-          </div>
-          <p class="text-[11px] text-zinc-400 uppercase tracking-widest">Marcenaria &amp; Remodelações • Lisboa</p>
+  <!-- Cabeçalho -->
+  <div class="header">
+    <div class="brand-row">
+      <div class="brand-left">
+        <div class="logo-box">VD</div>
+        <div class="brand-title">
+          <h1>VOSTY DESIGN</h1>
+          <p>MARCENARIA & REMODELAÇÕES • LISBOA E REGIÕES</p>
         </div>
       </div>
-
-      <div class="flex flex-wrap items-center gap-2">
-        <button id="btnToggleMode" onclick="toggleViewMode()" class="px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-amber-300">
-          <span id="modeIcon">🔒</span>
-          <span id="modeLabel">Modo Equipa (Custos Visíveis)</span>
-        </button>
-
-        <button onclick="openAiPromptModal()" class="px-3 py-2 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow">
-          <span>📐</span> Ler Projeto / Planta (IA)
-        </button>
-
-        <button onclick="generateClientPDF()" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 transition shadow flex items-center gap-1.5">
-          <span>📄</span> Gerar Proposta PDF
-        </button>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:12px; color:#059669; font-weight:600;">☁️ Cloud Sincronizado</span>
+        <button type="button" onclick="alternarModoEquipa()" style="background:none; border:1px solid #cbd5e1; border-radius:6px; padding:4px 8px; font-size:11px; color:#64748b; cursor:pointer;">🔒 Equipa</button>
       </div>
     </div>
-  </header>
 
-  <!-- CABEÇALHO DA PROPOSTA -->
-  <div id="proposalHeader" class="max-w-7xl w-full mx-auto px-4 pt-6">
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-zinc-200 print-shadow-none">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-zinc-100 pb-5">
-        <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800 mb-2">PROPOSTA COMERCIAL &amp; TÉCNICA</span>
-          <h2 class="font-brand text-2xl md:text-3xl text-zinc-900">VOSTY Design | Remodelações</h2>
-          <p class="text-xs text-zinc-500 mt-1">Lisboa, Portugal • Tel: +351 923 189 914 • Instagram: @vostydesign_remodelações</p>
-        </div>
-        <div class="text-left md:text-right text-xs text-zinc-600 space-y-1 bg-zinc-50 p-3 rounded-xl border border-zinc-100 w-full md:w-auto">
-          <div><span class="font-semibold text-zinc-800">Orçamento N.º:</span> <input id="propNumber" type="text" value="VD-2026-014" class="bg-transparent font-mono font-bold text-zinc-900 w-28 focus:outline-none border-b border-dashed border-zinc-300" /></div>
-          <div><span class="font-semibold text-zinc-800">Data:</span> <input id="propDate" type="text" class="bg-transparent text-zinc-700 w-28 focus:outline-none" /></div>
-          <div><span class="font-semibold text-zinc-800">Validade:</span> 15 dias</div>
-        </div>
+    <div class="top-links">
+      <a href="https://vostydesign.com" target="_blank" class="btn-link">🌐 Site VOSTY Design</a>
+      <a href="https://instagram.com/vostydesign_remodelações" target="_blank" class="btn-link btn-insta">📸 @vostydesign_remodelações</a>
+      <a href="mailto:vostydesign@gmail.com" class="btn-link">✉️ vostydesign@gmail.com</a>
+    </div>
+  </div>
+
+  <!-- Escolha do Simulador -->
+  <div class="tabs">
+    <button type="button" id="tabMarcenaria" class="tab-btn active" onclick="mudarAba('marcenaria')">🪑 Simulador Marcenaria</button>
+    <button type="button" id="tabRemodelacao" class="tab-btn" onclick="mudarAba('remodelacao')">🏗️ Simulador Remodelação</button>
+  </div>
+
+  <!-- 1. Dados do Cliente -->
+  <div class="card">
+    <h2>1. Dados do Cliente</h2>
+    <div class="grid">
+      <div>
+        <label>Nome Completo *</label>
+        <input type="text" id="clienteNome" placeholder="Ex.: João Silva" autocomplete="off">
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 text-sm">
-        <div>
-          <label class="block text-[11px] font-semibold uppercase text-zinc-400 mb-1">Cliente / Empresa</label>
-          <input id="clientName" type="text" value="Jefferson Cabeleireiros e Estética" class="w-full font-medium text-zinc-900 bg-zinc-50/70 rounded-lg px-3 py-2 border border-zinc-200 focus:border-amber-500 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block text-[11px] font-semibold uppercase text-zinc-400 mb-1">Arquiteto(a) / Designer</label>
-          <input id="architectName" type="text" value="Monique M. Vicente (Interior Designer)" class="w-full text-zinc-800 bg-zinc-50/70 rounded-lg px-3 py-2 border border-zinc-200 focus:border-amber-500 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block text-[11px] font-semibold uppercase text-zinc-400 mb-1">Local da Obra</label>
-          <input id="projectLocation" type="text" value="Lisboa, Portugal" class="w-full text-zinc-800 bg-zinc-50/70 rounded-lg px-3 py-2 border border-zinc-200 focus:border-amber-500 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block text-[11px] font-semibold uppercase text-zinc-400 mb-1">Comercial Responsável</label>
-          <input id="salesRep" type="text" value="Equipa VOSTY Design" class="w-full text-zinc-800 bg-zinc-50/70 rounded-lg px-3 py-2 border border-zinc-200 focus:border-amber-500 focus:outline-none" />
-        </div>
+      <div>
+        <label>Telemóvel / WhatsApp *</label>
+        <input type="tel" id="clienteTel" placeholder="Ex.: +351 912 345 678" autocomplete="off">
+      </div>
+      <div>
+        <label>E-mail do Cliente</label>
+        <input type="email" id="clienteEmail" placeholder="Ex.: cliente@email.com" autocomplete="off">
+      </div>
+      <div>
+        <label>Localidade (Lisboa e regiões)</label>
+        <input type="text" id="clienteLocal" placeholder="Ex.: Lisboa, Oeiras, Sintra, Almada..." autocomplete="off">
       </div>
     </div>
   </div>
 
-  <!-- PAINEL DE KPIs -->
-  <section class="max-w-7xl w-full mx-auto px-4 mt-5">
-    <div class="grid grid-cols-2 lg:grid-cols-5 gap-3">
-      <div class="internal-only bg-white p-4 rounded-xl border border-zinc-200 shadow-sm">
-        <p class="text-[11px] font-semibold text-zinc-400 uppercase">Custo Materiais</p>
-        <p id="kpiMaterial" class="text-xl font-bold text-zinc-800 mt-1">€ 0,00</p>
-        <p class="text-[11px] text-zinc-400 mt-0.5">Chapas, ferragens &amp; obra</p>
-      </div>
-      <div class="internal-only bg-white p-4 rounded-xl border border-zinc-200 shadow-sm">
-        <p class="text-[11px] font-semibold text-zinc-400 uppercase">Custo Mão de Obra</p>
-        <p id="kpiLabor" class="text-xl font-bold text-zinc-800 mt-1">€ 0,00</p>
-        <p class="text-[11px] text-zinc-400 mt-0.5">Fabrico, corte &amp; instalação</p>
-      </div>
-      <div class="internal-only bg-emerald-50/80 p-4 rounded-xl border border-emerald-200 shadow-sm">
-        <p class="text-[11px] font-semibold text-emerald-700 uppercase">Lucro Bruto VOSTY</p>
-        <p id="kpiProfit" class="text-xl font-bold text-emerald-700 mt-1">€ 0,00</p>
-        <p id="kpiMarginPct" class="text-[11px] text-emerald-600 font-medium mt-0.5">Margem média: 0%</p>
-      </div>
-      <div class="bg-white p-4 rounded-xl border border-zinc-200 shadow-sm">
-        <p class="text-[11px] font-semibold text-zinc-400 uppercase">Subtotais por Área</p>
-        <div class="text-xs text-zinc-700 mt-1.5 space-y-0.5">
-          <div class="flex justify-between"><span>Marcenaria:</span> <strong id="kpiSubMarc">€ 0,00</strong></div>
-          <div class="flex justify-between"><span>Remodelação:</span> <strong id="kpiSubRem">€ 0,00</strong></div>
-        </div>
-      </div>
-      <div class="col-span-2 lg:col-span-1 bg-zinc-900 text-white p-4 rounded-xl border border-amber-500/40 shadow-md">
-        <p class="text-[11px] font-semibold text-amber-400 uppercase">Valor Total Proposta</p>
-        <p id="kpiTotalClient" class="text-2xl font-bold text-white mt-1">€ 0,00</p>
-        <p class="text-[11px] text-zinc-400 mt-0.5">Acresce IVA à taxa legal em vigor</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- NAVEGAÇÃO POR ABAS -->
-  <main class="max-w-7xl w-full mx-auto px-4 mt-6 mb-12 flex-1">
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 pb-3 mb-5 no-print">
-      <div class="flex flex-wrap gap-2">
-        <button onclick="switchTab('marcenaria')" id="tab-marcenaria" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-zinc-900 text-white shadow-sm transition">
-          🪚 Marcenaria &amp; Complementos <span class="ml-1 text-xs text-amber-400">(~52,4%)</span>
-        </button>
-        <button onclick="switchTab('remodelacao')" id="tab-remodelacao" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200 transition">
-          🏗️ Remodelação Geral &amp; Parcial <span class="ml-1 text-xs text-emerald-600">(50%)</span>
-        </button>
-        <button onclick="switchTab('catalogo')" id="tab-catalogo" class="tab-btn internal-only px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200 transition">
-          ☁️ Sincronização Google Sheets &amp; Preços
-        </button>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button onclick="loadDemoProject()" class="text-xs px-3 py-2 rounded-lg bg-zinc-200/70 hover:bg-zinc-200 text-zinc-700 font-medium transition">
-          ↺ Exemplo Jefferson
-        </button>
-        <button onclick="clearProject()" class="text-xs px-3 py-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium transition">
-          🗑️ Novo Projeto
-        </button>
-      </div>
-    </div>
-
-    <!-- ABA 1: MARCENARIA -->
-    <div id="view-marcenaria" class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-zinc-200 no-print">
-        <div>
-          <h3 class="font-bold text-zinc-900 text-base">Itens de Marcenaria, Serralheria, Pedra &amp; Vidros</h3>
-          <p class="text-xs text-zinc-500">Chapas Egger / Sonae Arauco / Finsa • Ferragens Hettich / Blum • Margem calibrada (~52,4%)</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <select id="quickMarcSelect" class="text-xs bg-zinc-50 border border-zinc-300 rounded-lg px-3 py-2 text-zinc-800 focus:outline-none">
-            <option value="">+ Adicionar modelo do catálogo...</option>
-          </select>
-          <button onclick="addFromQuickSelect('marcenaria')" class="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold">Inserir Modelo</button>
-          <button onclick="openItemModal('marcenaria')" class="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-bold">+ Novo Móvel / Peça</button>
-        </div>
-      </div>
-      <div id="marcenariaList" class="space-y-4"></div>
-    </div>
-
-    <!-- ABA 2: REMODELAÇÃO (GERAL "CHAVE NA MÃO", PARCIAL POR DIVISÃO OU ITENS AVULSOS) -->
-    <div id="view-remodelacao" class="hidden space-y-4">
-      <div class="bg-white p-4 rounded-xl border border-zinc-200 no-print space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 class="font-bold text-zinc-900 text-base">Remodelação Geral ("Chave na Mão") ou Parcial (Cozinha, WC, Especialidades)</h3>
-            <p class="text-xs text-zinc-500">Escolha um pacote de obra integral por m², uma divisão completa (Cozinha / WC) ou serviços avulsos • Margem VOSTY: 50%</p>
-          </div>
-          <button onclick="openItemModal('remodelacao')" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">+ Novo Serviço Personalizado</button>
-        </div>
-
-        <!-- ATALHOS RÁPIDOS DE ESCOPO: GERAL vs PARCIAL -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-2 border-t border-zinc-100">
-          <div class="bg-zinc-50 p-2.5 rounded-lg border border-zinc-200 flex items-center justify-between gap-2">
-            <div class="text-xs">
-              <span class="font-bold text-zinc-900 block">🏠 Remodelação Geral (m²)</span>
-              <span class="text-[11px] text-zinc-500">Chave na mão (Standard/Premium)</span>
-            </div>
-            <button onclick="quickAddByCode('REM-GER-STD')" class="px-2.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-700 text-white text-[11px] font-semibold shrink-0">+ Inserir</button>
-          </div>
-          <div class="bg-zinc-50 p-2.5 rounded-lg border border-zinc-200 flex items-center justify-between gap-2">
-            <div class="text-xs">
-              <span class="font-bold text-zinc-900 block">🍳 Cozinha Completa (Obra)</span>
-              <span class="text-[11px] text-zinc-500">Águas, luz, cerâmica, demolição</span>
-            </div>
-            <button onclick="quickAddByCode('REM-COZ-COMP')" class="px-2.5 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-[11px] font-semibold shrink-0">+ Inserir</button>
-          </div>
-          <div class="bg-zinc-50 p-2.5 rounded-lg border border-zinc-200 flex items-center justify-between gap-2">
-            <div class="text-xs">
-              <span class="font-bold text-zinc-900 block">🚿 Casa de Banho Completa</span>
-              <span class="text-[11px] text-zinc-500">Canalização, louças, cerâmica</span>
-            </div>
-            <button onclick="quickAddByCode('REM-WC-COMP')" class="px-2.5 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-[11px] font-semibold shrink-0">+ Inserir</button>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-2 pt-1">
-          <select id="quickRemSelect" class="flex-1 min-w-[240px] text-xs bg-zinc-50 border border-zinc-300 rounded-lg px-3 py-2 text-zinc-800 focus:outline-none">
-            <option value="">+ Ou selecione qualquer pacote / serviço avulso da tabela...</option>
-          </select>
-          <button onclick="addFromQuickSelect('remodelacao')" class="px-3.5 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold">Inserir Selecionado</button>
-        </div>
-      </div>
-      <div id="remodelacaoList" class="space-y-4"></div>
-    </div>
-
-    <!-- ABA 3: SINCRONIZAÇÃO GOOGLE SHEETS & TABELA DE PREÇOS -->
-    <div id="view-catalogo" class="hidden space-y-4 internal-only">
-      <div class="bg-gradient-to-r from-zinc-900 to-zinc-800 text-white p-5 rounded-2xl border border-amber-500/30 shadow-md space-y-3">
-        <div class="flex flex-wrap justify-between items-center gap-2">
-          <div>
-            <h3 class="font-bold text-base text-amber-400">☁️ Ligação em Tempo Real com Google Sheets (Sincronização Equipa)</h3>
-            <p class="text-xs text-zinc-300 mt-0.5">Planilha oficial VOSTY Design ligada permanentemente. Sempre que alterar preços no Google Sheets, clique em Sincronizar ou recarregue a página.</p>
-          </div>
-          <button onclick="syncFromGoogleSheet(true)" class="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold shadow">
-            🔄 Sincronizar Agora
-          </button>
-        </div>
-
-        <div class="flex flex-col md:flex-row gap-2">
-          <input id="sheetCsvUrlInput" type="url" class="flex-1 bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white font-mono focus:border-amber-400 focus:outline-none" />
-          <button onclick="saveSheetUrl()" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-bold shrink-0">Guardar Ligação</button>
-          <button onclick="generateTeamShareLink()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shrink-0">🔗 Copiar Link p/ Equipa</button>
-        </div>
-        <p id="syncStatusMsg" class="text-[11px] text-emerald-300">✅ Ligação oficial VOSTY Design pré-configurada no sistema.</p>
-      </div>
-
-      <div class="bg-white p-5 rounded-xl border border-zinc-200 shadow-sm">
-        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-          <div>
-            <h3 class="font-bold text-zinc-900 text-base">Tabela-Mestre Ativa no Sistema</h3>
-            <p class="text-xs text-zinc-500">Inclui Marcenaria, Remodelação Geral Chave na Mão, Cozinha, Casa de Banho e Especialidades.</p>
-          </div>
-          <div class="flex items-center gap-2 text-xs bg-zinc-100 p-2 rounded-lg">
-            <span class="font-semibold">PIN Equipa:</span>
-            <input id="pinConfigInput" type="text" maxlength="6" class="w-16 px-2 py-1 rounded border border-zinc-300 font-mono text-center bg-white" />
-            <button onclick="savePin()" class="px-2.5 py-1 bg-zinc-900 text-white rounded font-semibold">Guardar PIN</button>
-          </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr class="bg-zinc-900 text-white">
-                <th class="p-2.5 rounded-tl-lg">Área</th>
-                <th class="p-2.5">Código</th>
-                <th class="p-2.5">Tipologia / Serviço</th>
-                <th class="p-2.5">Unid.</th>
-                <th class="p-2.5">Custo Mat. (€)</th>
-                <th class="p-2.5">Mão Obra (€)</th>
-                <th class="p-2.5">Margem (%)</th>
-                <th class="p-2.5 rounded-tr-lg">Venda Base (€)</th>
-              </tr>
-            </thead>
-            <tbody id="catalogTableBody" class="divide-y divide-zinc-200"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- RODAPÉ PROPOSTA -->
-    <div class="mt-8 bg-white p-5 rounded-2xl border border-zinc-200 text-xs text-zinc-600 space-y-2 print-shadow-none page-break-inside">
-      <h4 class="font-bold text-zinc-900 uppercase tracking-wider text-[11px]">Condições Gerais &amp; Garantias VOSTY Design</h4>
-      <p>• <strong>Materiais &amp; Ferragens:</strong> Chapas melamínicas e MDF hidrófugo de alta densidade (Egger / Sonae Arauco / Finsa) com orlagem em PVC/ABS de 1mm/2mm e ferragens com sistema de amortecimento <em>soft-close</em> (Hettich / Blum).</p>
-      <p>• <strong>Condições de Pagamento:</strong> 50% na adjudicação para adjudicação de materiais e início de fabrico; 30% na entrega dos módulos em obra; 20% na conclusão e auto de receção.</p>
-      <p>• <strong>Notas Técnicas:</strong> Todas as medidas serão conferidas <em>in-loco</em> antes do corte. Valores apresentados sem IVA (acresce IVA à taxa legal em vigor em Portugal).</p>
-    </div>
-  </main>
-
-  <!-- MODAL: ADICIONAR / EDITAR ITEM -->
-  <div id="itemModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 no-print">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[92vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b border-zinc-100 pb-3 mb-4">
-        <h3 id="modalTitle" class="font-bold text-lg text-zinc-900">Adicionar Item ao Orçamento</h3>
-        <button onclick="closeItemModal()" class="text-zinc-400 hover:text-zinc-700 text-xl font-bold">&times;</button>
-      </div>
-
-      <form id="itemForm" onsubmit="saveItemForm(event)" class="space-y-4 text-sm">
-        <input type="hidden" id="editItemId" />
-        <input type="hidden" id="editItemCategory" />
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-zinc-600 mb-1">Referência / Código</label>
-            <input id="fCode" type="text" required class="w-full border border-zinc-300 rounded-lg px-3 py-2" />
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-xs font-semibold text-zinc-600 mb-1">Ambiente / Título do Móvel ou Serviço</label>
-            <input id="fTitle" type="text" required class="w-full border border-zinc-300 rounded-lg px-3 py-2" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-zinc-600 mb-1">Especificação Técnica (Medidas, Chapas, Ferragens / Materiais)</label>
-          <textarea id="fSpecs" rows="3" required class="w-full border border-zinc-300 rounded-lg px-3 py-2"></textarea>
-        </div>
-
-        <div class="bg-zinc-50 p-3.5 rounded-xl border border-dashed border-zinc-300">
-          <label class="block text-xs font-semibold text-zinc-700 mb-1">📷 Imagem / Render do Projeto Arquitetónico ou 3D (Aparece na proposta do cliente)</label>
-          <div class="flex flex-wrap items-center gap-3">
-            <input id="fImageInput" type="file" accept="image/*" onchange="handleImageUpload(event)" class="text-xs text-zinc-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-900 file:text-white hover:file:bg-zinc-700" />
-            <button type="button" onclick="clearModalImage()" class="text-xs text-rose-600 hover:underline">Remover foto</button>
-          </div>
-          <img id="fImagePreview" src="" alt="Pré-visualização" class="hidden mt-3 max-h-36 rounded-lg border border-zinc-200 object-contain bg-white p-1" />
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-amber-50/60 p-3.5 rounded-xl border border-amber-200/70">
-          <div>
-            <label class="block text-xs font-semibold text-zinc-700 mb-1">Quantidade (un./m²)</label>
-            <input id="fQty" type="number" step="0.01" min="0.01" value="1" oninput="recalcModalPreview()" required class="w-full border border-zinc-300 rounded-lg px-3 py-2 bg-white" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-zinc-700 mb-1">Custo Material (€)</label>
-            <input id="fMatCost" type="number" step="0.01" min="0" value="0" oninput="recalcModalPreview()" required class="w-full border border-zinc-300 rounded-lg px-3 py-2 bg-white" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-zinc-700 mb-1">Mão de Obra (€)</label>
-            <input id="fLabCost" type="number" step="0.01" min="0" value="0" oninput="recalcModalPreview()" required class="w-full border border-zinc-300 rounded-lg px-3 py-2 bg-white" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-zinc-700 mb-1">Margem Alvo (%)</label>
-            <input id="fMargin" type="number" step="0.1" min="0" max="90" value="52.4" oninput="recalcModalPreview()" required class="w-full border border-zinc-300 rounded-lg px-3 py-2 bg-white font-bold text-emerald-700" />
-          </div>
-        </div>
-
-        <div class="flex flex-wrap justify-between items-center bg-zinc-900 text-white p-3.5 rounded-xl text-xs">
-          <div>Lucro VOSTY: <strong id="mPrevProfit" class="text-emerald-400 text-sm">€ 0,00</strong></div>
-          <div>Preço Final Cliente: <strong id="mPrevTotal" class="text-amber-400 text-base">€ 0,00</strong></div>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeItemModal()" class="px-4 py-2 rounded-lg border border-zinc-300 text-zinc-700 font-medium">Cancelar</button>
-          <button type="submit" class="px-5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-bold">Guardar no Orçamento</button>
-        </div>
-      </form>
+  <!-- Leitor de Projeto / Planta (IA) -->
+  <div class="card">
+    <h2>2. Leitura Rápida de Projeto ou Planta (Opcional)</h2>
+    <div class="ai-box">
+      <strong>📎 Tem uma planta, projeto 3D ou desenho?</strong>
+      <p>Anexe aqui o seu projeto arquitetónico, projeto de design de interiores ou o esboço que você mesmo realizou, para fazermos a leitura automática das medidas e ambientes.</p>
+      <input type="file" id="ficheiroProjeto" accept=".pdf,image/*" class="hidden" onchange="processarProjetoIA(event)">
+      <button type="button" class="btn-ai" onclick="document.getElementById('ficheiroProjeto').click()">📤 Carregar Projeto / Planta (PDF ou Imagem)</button>
+      <div id="statusIA" class="hint hidden"></div>
     </div>
   </div>
 
-  <!-- MODAL: LEITURA DE PROJETO ARQUITETÓNICO & DESIGN DE INTERIORES (IA) -->
-  <div id="aiModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 no-print">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
-      <div class="flex justify-between items-center border-b border-zinc-100 pb-3">
-        <h3 class="font-bold text-lg text-zinc-900">📐 Leitura de Projeto Arquitetónico &amp; Design de Interiores</h3>
-        <button onclick="closeAiPromptModal()" class="text-zinc-400 hover:text-zinc-700 text-xl font-bold">&times;</button>
-      </div>
-      <p class="text-xs text-zinc-600 leading-relaxed">
-        Este módulo lê plantas baixas, cadernos de encargos, projetos de arquitetura ou design de interiores (PDF ou fotos) e extrai automaticamente tanto o <strong>mobiliário sob medida</strong> como a <strong>remodelação geral ou parcial</strong>:<br>
-        <strong>1.</strong> Copie o comando padrão VOSTY Design abaixo;<br>
-        <strong>2.</strong> Abra o Gemini, anexe o PDF/imagens do projeto arquitetónico ou de interiores e cole o comando;<br>
-        <strong>3.</strong> Cole o resultado JSON abaixo para preencher o orçamento completo numa única operação!
-      </p>
-      <div class="bg-zinc-100 p-3 rounded-xl border border-zinc-200">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-[11px] font-bold uppercase text-zinc-500">Comando Padrão VOSTY Design (Arquitetura + Interiores)</span>
-          <button onclick="copyStandardPrompt()" class="px-2.5 py-1 rounded bg-zinc-900 text-white text-[11px] font-semibold">📋 Copiar Comando</button>
-        </div>
-        <pre id="standardAiPrompt" class="text-[11px] text-zinc-700 whitespace-pre-wrap font-mono bg-white p-2.5 rounded border border-zinc-200 max-h-32 overflow-y-auto">Pesquisa preços atualizados em Portugal e faz a leitura técnica completa deste projeto arquitetónico e de design de interiores para a VOSTY Design (Lisboa).
-1. Extrai cada peça de marcenaria/mobiliário sob medida (chapas Egger/Sonae/Finsa 19mm, ferragens Hettich/Blum, serralheria, pedras/espelhos) com category: "marcenaria" e margin: 52.4.
-2. Extrai todos os trabalhos de remodelação geral ou parcial identificados na planta (demolições, Pladur paredes/tetos com estrutura e isolamento, barramento e pintura, pavimentos flutuante/cerâmico, canalização, elétrica/LED, remodelação de cozinha ou casa de banho) com category: "remodelacao" e margin: 50.0.
-Devolve APENAS um array JSON válido neste formato exato:
-[{"category":"marcenaria","code":"M01","title":"Ambiente — Nome do Móvel","specs":"Medidas exatas e materiais","qty":1,"matCost":200,"labCost":150,"margin":52.4},{"category":"remodelacao","code":"REM-01","title":"Serviço de Obra","specs":"Descrição técnica completa","qty":10,"matCost":18,"labCost":22,"margin":50.0}]</pre>
+  <!-- 3A. Configuração MARCENARIA -->
+  <div class="card" id="secMarcenaria">
+    <h2>3. Configurar Móvel / Marcenaria Sob Medida</h2>
+    <div class="grid">
+      <div>
+        <label>Tipo de Móvel / Item</label>
+        <select id="tipoMovel" onchange="atualizarCamposMarcenaria()">
+          <option value="cozinha_branca">Cozinha (Branco / Melamina)</option>
+          <option value="cozinha_lacada">Cozinha Lacada / Brilho</option>
+          <option value="cozinha_amadeirada">Cozinha em Tom Amadeirado</option>
+          <option value="roupeiro_abrir">Roupeiro / Closet (Portas de Abrir)</option>
+          <option value="roupeiro_correr">Roupeiro / Closet (Portas de Correr)</option>
+          <option value="movel_wc">Móvel de Casa de Banho (Suspenso / Bancada)</option>
+          <option value="porta_branca">Porta de Interior Branca</option>
+          <option value="porta_amadeirada">Porta de Interior Amadeirada</option>
+          <option value="painel_ripado">Painel Ripado / Sala TV</option>
+        </select>
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-zinc-700 mb-1">Colar JSON gerado pela leitura do projeto:</label>
-        <textarea id="jsonImportBox" rows="4" placeholder='[{"category":"marcenaria","code":"M01","title":"Cozinha em L","specs":"...","qty":1,"matCost":1200,"labCost":900,"margin":52.4}]' class="w-full border border-zinc-300 rounded-lg p-2.5 text-xs font-mono"></textarea>
+        <label>Tipo de Ferragens</label>
+        <select id="tipoFerragem">
+          <option value="standard">Standard (Amortecimento Suave)</option>
+          <option value="blum_emuca">Premium Blum Legrabox + Emuca</option>
+        </select>
       </div>
 
-      <div class="flex justify-end gap-2">
-        <button onclick="closeAiPromptModal()" class="px-4 py-2 rounded-lg border border-zinc-300 text-xs font-semibold">Fechar</button>
-        <button onclick="importJsonItems()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Importar Projeto Completo</button>
+      <div>
+        <label id="labelMedidaMarc">Medida (m linear ou m²)</label>
+        <input type="number" id="medidaMarc" step="0.1" min="0.5" placeholder="Ex.: 3.2" autocomplete="off">
       </div>
+
+      <div>
+        <label>Quantidade</label>
+        <input type="number" id="qtdMarc" min="1" value="1" autocomplete="off">
+      </div>
+
+      <div id="boxGavetas" class="hidden" style="grid-column: 1 / -1;">
+        <label>Quantidade Total de Gavetas no Roupeiro (4 gavetas padrão já incluídas)</label>
+        <input type="number" id="qtdGavetas" min="4" value="4" autocomplete="off">
+        <div class="hint">✔ Inclui 4 gavetas padrão. Gavetas extras acima de 4 acrescentam corrediças e montagem automaticamente.</div>
+      </div>
+
+      <div style="grid-column: 1 / -1;">
+        <label>Observações / Acabamento Específico (Opcional)</label>
+        <input type="text" id="obsMarc" placeholder="Ex.: Puxador oculto, cor carvalho natural..." autocomplete="off">
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-add" onclick="adicionarMarcenaria()">➕ Adicionar Novo Item</button>
+    <button type="button" class="btn btn-finish" onclick="finalizarOrcamento()">✅ Finalizar Orçamento</button>
+  </div>
+
+  <!-- 3B. Configuração REMODELAÇÃO -->
+  <div class="card hidden" id="secRemodelacao">
+    <h2>3. Configurar Obra / Remodelação (Lisboa e Regiões)</h2>
+    <div class="grid">
+      <div style="grid-column: 1 / -1;">
+        <label>Tipo de Remodelação / Serviço</label>
+        <select id="tipoObra" onchange="atualizarCamposRemodelacao()">
+          <option value="remodelacao_geral">Remodelação Geral (Chave na Mão)</option>
+          <option value="espaco_comercial">Remodelação de Espaço Comercial / Conversão para Moradia</option>
+          <option value="pintura_interior">Pintura Interior (Imóvel Completo ou Divisões Específicas)</option>
+          <option value="cozinha_obra">Remodelação de Cozinha Completa (Obra Civil + Canalização)</option>
+          <option value="wc_obra">Remodelação de Casa de Banho Completa</option>
+          <option value="pladur_tetos">Divisórias e Tetos Falsos em Pladur</option>
+          <option value="pavimento_flutuante">Fornecimento e Aplicação de Pavimento Flutuante</option>
+        </select>
+      </div>
+
+      <!-- Campos extras: Remodelação Geral -->
+      <div id="boxTipologia">
+        <label>Tipologia do Imóvel</label>
+        <select id="tipologiaImovel">
+          <option value="T0 / Estúdio">T0 / Estúdio</option>
+          <option value="T1">T1</option>
+          <option value="T2" selected>T2</option>
+          <option value="T3">T3</option>
+          <option value="T4 ou superior">T4 ou superior</option>
+        </select>
+      </div>
+      <div id="boxQtdWC">
+        <label>Quantidade de Casas de Banho (1 WC incluída no padrão)</label>
+        <input type="number" id="qtdWC" min="1" value="1" autocomplete="off">
+      </div>
+
+      <!-- Campos extras: Espaço Comercial -->
+      <div id="boxComercialTipo" class="hidden" style="grid-column: 1 / -1;">
+        <label>Finalidade do Espaço Comercial</label>
+        <select id="finalidadeComercial">
+          <option value="Remodelação de Loja / Escritório / Espaço Comercial">Remodelação de Loja / Escritório / Espaço Comercial</option>
+          <option value="Conversão de Espaço Comercial para Habitação / Moradia">Conversão de Espaço Comercial para Habitação / Moradia</option>
+        </select>
+      </div>
+      <div id="boxComercialDesc" class="hidden" style="grid-column: 1 / -1;">
+        <label>Em que pretende transformar este espaço? *</label>
+        <textarea id="descTransformacao" rows="2" placeholder="Ex.: Transformar loja de 65 m² num apartamento T2 com cozinha aberta e 1 WC..."></textarea>
+      </div>
+
+      <!-- Campos extras: Pintura Específica -->
+      <div id="boxPinturaDivisoes" class="hidden" style="grid-column: 1 / -1;">
+        <label>Divisões a Pintar (Ex.: Apartamento completo, ou apenas Sala e 2 Quartos)</label>
+        <input type="text" id="divisoesPintura" placeholder="Ex.: Apenas Sala de Estar e Quarto Principal (sem cozinha)" autocomplete="off">
+      </div>
+
+      <div>
+        <label id="labelAreaObra">Área Total / Metragem a Intervir (m²)</label>
+        <input type="number" id="areaObra" step="1" min="1" placeholder="Ex.: 75" autocomplete="off">
+      </div>
+
+      <div>
+        <label>Observações Técnicas (Opcional)</label>
+        <input type="text" id="obsObra" placeholder="Ex.: Inclui janelas PVC, loiças suspensas..." autocomplete="off">
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-add" onclick="adicionarRemodelacao()">➕ Adicionar Novo Item</button>
+    <button type="button" class="btn btn-finish" onclick="finalizarOrcamento()">✅ Finalizar Orçamento</button>
+  </div>
+
+  <!-- 4. Resumo dos Itens -->
+  <div class="card">
+    <h2>4. Itens no Orçamento (<span id="contadorItens">0</span>)</h2>
+    <div id="listaItens">
+      <p style="color:var(--muted); font-size:13px;">Nenhum item adicionado ainda. Configure acima e clique em "Adicionar Novo Item".</p>
     </div>
   </div>
 
-  <script>
-    const HARDCODED_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSsoiPAcDXng3qskQhYfhtho8G_3EXV-9HekpYtVoXYXgT10mXCz8_FR0XbaOJrfBQyF6YxdP5sAwlG/pub?gid=0&single=true&output=csv";
+  <!-- 5. Proposta Comercial Final -->
+  <div id="proposta-box" class="hidden">
+    <div id="area-pdf">
+      <div class="prop-header">
+        <span class="prop-badge">PROPOSTA COMERCIAL & TÉCNICA</span>
+        <h3>VOSTY Design | Marcenaria & Remodelações</h3>
+        <div class="prop-contact">
+          Atendimento: <strong>Lisboa e regiões</strong> • Tel/WhatsApp: <strong>+351 923 189 914</strong><br>
+          E-mail: <strong>vostydesign@gmail.com</strong> • Site: <strong>vostydesign.com</strong> • Instagram: <strong>@vostydesign_remodelações</strong>
+        </div>
+      </div>
 
-    const DEFAULT_CATALOG = [
-      { category: 'marcenaria', code: 'COZ-MEL', title: 'Cozinha Linear / em L (Melamina Egger/Sonae)', specs: 'Estrutura hidrófuga 19mm, frentes Egger/Sonae, dobradiças e gavetas Hettich/Blum soft-close.', unit: 'm² frontal', matCost: 135, labCost: 100, margin: 53.0 },
-      { category: 'marcenaria', code: 'COZ-ILHA', title: 'Cozinha com Ilha Central', specs: 'Módulos inferiores, colunas e ilha central com gavetões Blum Tandembox e frentes melamínicas/lacadas.', unit: 'm² parede', matCost: 215, labCost: 160, margin: 53.1 },
-      { category: 'marcenaria', code: 'ROUP-MEL', title: 'Roupeiro / Closet Melamina 19mm', specs: 'Interior linho/branco Sonae/Finsa 19mm, portas abrir/correr Egger, varões e calhas Hettich.', unit: 'm² frontal', matCost: 145, labCost: 103, margin: 54.9 },
-      { category: 'marcenaria', code: 'ROUP-LAC', title: 'Roupeiro / Closet Exterior Lacado Branco', specs: 'Frentes em MDF hidrófugo lacado mate/acetinado, interior melamina 19mm e ferragens Blum.', unit: 'm² frontal', matCost: 180, labCost: 130, margin: 53.0 },
-      { category: 'marcenaria', code: 'PAIN-RIP', title: 'Painel Ripado Decorativo MDF', specs: 'Ripas em MDF folheado/melamínico Egger/Finsa sobre base estrutural oculta.', unit: 'm²', matCost: 85, labCost: 65, margin: 52.4 },
-      { category: 'marcenaria', code: 'WC-MOV', title: 'Móvel de Casa de Banho Suspenso', specs: 'MDF hidrófugo, puxador cava alumínio, corrediças ocultas Hettich.', unit: 'Conj.', matCost: 330, labCost: 250, margin: 52.1 },
-      { category: 'remodelacao', code: 'REM-GER-STD', title: 'Remodelação Geral Chave na Mão — Gama Standard (por m²)', specs: 'Obra integral do imóvel: demolições, rede elétrica e canalização novas, tetos falsos Pladur, barramento e pintura geral CIN, pavimento flutuante AC4, portas interiores e 1 WC completo.', unit: 'm² área', matCost: 165.0, labCost: 135.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-GER-PRM', title: 'Remodelação Geral Chave na Mão — Gama Premium (por m²)', specs: 'Obra integral de alta gama: demolições, infraestruturas completas, Pladur acústico com sancas LED, barramento fino, pavimento flutuante AC5/vinílico, portas lacadas até ao teto, porta blindada e WCs.', unit: 'm² área', matCost: 230.0, labCost: 180.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-COZ-COMP', title: 'Remodelação Parcial — Cozinha Completa (Obra Civil até 10m²)', specs: 'Demolição de revestimentos e bancada antiga, entulho, rede nova de águas/esgotos (lava-loiça, máquinas), quadro/pontos elétricos dedicados, revestimento cerâmico parede/chão e pintura teto (não inclui móveis).', unit: 'Conj.', matCost: 2100.0, labCost: 1850.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-WC-COMP', title: 'Remodelação Parcial — Casa de Banho Completa (até 5m²)', specs: 'Demolição, entulho, rede águas/esgotos multicamada, impermeabilização, cerâmica retificada, base duche, resguardo, sanita, lavatório e torneiras.', unit: 'Conj.', matCost: 1850.0, labCost: 1650.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-PLD-PAR', title: 'Divisória em Pladur (Parede Simples/Dupla)', specs: 'Placas gesso cartonado 13mm (ou H1 hidrófuga), montantes e canais galvanizados, lã mineral acústica, parafusos, fita de juntas, massa de barramento e lixagem.', unit: 'm²', matCost: 18.0, labCost: 22.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-PLD-TET', title: 'Teto Falso em Pladur Completo', specs: 'Placas 13mm, estrutura metálica T47/primária, varões roscados, pivotantes, fita, massa de juntas e preparação para pintura.', unit: 'm²', matCost: 16.5, labCost: 21.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-BAR-PIN', title: 'Barramento Geral e Pintura (Paredes/Tetos)', specs: 'Raspagem, massa de barramento fino (2 demãos), lixagem, primário isolante e 2 demãos de tinta plástica lavável (CIN / Robbialac).', unit: 'm²', matCost: 5.5, labCost: 12.5, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-CH-FLU', title: 'Pavimento Flutuante AC4 / AC5', specs: 'Regularização base, tela acústica/barreira de vapor, réguas flutuantes (10-12mm), rodapé branco hidrófugo, perfis e cortes.', unit: 'm²', matCost: 19.0, labCost: 13.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-CH-CER', title: 'Pavimento / Revestimento Cerâmico', specs: 'Regularização, cimento-cola flexível C2TE, mosaico/azulejo retificado, cruzetas niveladoras, betume de juntas e cortes.', unit: 'm²', matCost: 24.0, labCost: 24.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-CAN-HID', title: 'Canalização / Rede Hidráulica (Ponto)', specs: 'Abertura de roços, tubagem multicamada (quente/fria), acessórios de prensar, rede de esgotos PVC e fecho de roços.', unit: 'Ponto', matCost: 45.0, labCost: 75.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-ELE-PON', title: 'Eletricidade & Iluminação LED (Ponto)', specs: 'Abertura de roços, tubo corrugado, cabo H07V-U, caixas, aparelhagem Efapel/Legrand ou driver/perfil LED.', unit: 'Ponto', matCost: 22.0, labCost: 38.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-PRT-INT', title: 'Porta Interior Completa (Branca/Madeira)', specs: 'Folha alveolar/maciça, aro, guarnições, fechadura magnética, dobradiças ocultas/inox e montagem.', unit: 'Unid.', matCost: 195.0, labCost: 115.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-PRT-BLI', title: 'Porta Blindada de Alta Segurança', specs: 'Estrutura em aço galvanizado, fechadura multi-pontos, cilindro anti-gazua, painéis decorativos e instalação.', unit: 'Unid.', matCost: 680.0, labCost: 270.0, margin: 50.0 },
-      { category: 'remodelacao', code: 'REM-DEM-ENT', title: 'Demolições e Gestão de Entulho', specs: 'Demolição de alvenaria/revestimentos antigos, ensacamento, transporte e vazadouro certificado.', unit: 'm²', matCost: 8.0, labCost: 17.0, margin: 50.0 }
-    ];
+      <div style="font-size:13px; margin-bottom:12px; background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+        <strong>Cliente:</strong> <span id="propCliente">-</span> | <strong>Contacto:</strong> <span id="propTel">-</span><br>
+        <strong>E-mail:</strong> <span id="propEmail">-</span> | <strong>Localidade:</strong> <span id="propLocal">-</span>
+      </div>
 
-    const DEMO_ITEMS = [
-      { id: 'd1', category: 'marcenaria', code: 'M01', title: 'Casa de Banho — Gaveteiro Suspenso + Prateleira', specs: 'Gaveteiro (0,60x0,50x0,20m) MDF Branco Porcelana W1200 ST9 Egger, puxador cava alumínio, corrediça Hettich + Prateleira inferior (0,60x0,40x0,05m).', qty: 1, matCost: 105, labCost: 85, margin: 52.5, image: '' },
-      { id: 'd2', category: 'marcenaria', code: 'M02', title: 'Sala de Unhas — Bancada Lava-Pés & Letreiro VIP Nails', specs: 'Bancada (0,80x0,55x0,60m) Nogueira Pacífico H3700 ST10, degrau (0,20x0,40x0,16m), gavetas cava, base estofada + letreiro VIP Nails em MDF colorido.', qty: 1, matCost: 290, labCost: 230, margin: 52.3, image: '' },
-      { id: 'd3', category: 'marcenaria', code: 'M03', title: 'Sala de Unhas — Par de Bancadas de Manicure', specs: '2 Bancadas (0,85x0,40x0,85m) Branco Porcelana W1200 ST9, gaveteiro lateral 3 gavetas, nicho catalisador e furação para aspirador/tomada.', qty: 1, matCost: 310, labCost: 240, margin: 52.4, image: '' },
-      { id: 'd4', category: 'marcenaria', code: 'M04', title: 'Sala de Unhas — Armário Alto c/ Basculante AC', specs: 'Armário (1,20x0,30x2,80m) Nogueira Pacífico H3700 ST10, porta basculante ripada para ar condicionado, LED embutido, portas correr e 4 gavetas.', qty: 1, matCost: 460, labCost: 360, margin: 52.5, image: '' },
-      { id: 'd5', category: 'marcenaria', code: 'M05-M06', title: 'Spa — Conjunto Prateleiras LED & Móvel Alto Bancada', specs: 'Prateleiras suspensas LED (0,80x1,80m) + Móvel Spa (1,80x0,55x2,80m) Nogueira/Branco com basculante ripado AC, 4 gavetas e nichos LED.', qty: 1, matCost: 785, labCost: 615, margin: 52.4, image: '' },
-      { id: 'd6', category: 'marcenaria', code: 'M07-M09', title: 'Recepção — Painel Ripado, Balcão c/ Logo LED & Armário', specs: 'Painel ripado 3 nichos LED (1,45x3,20m), Balcão recepção (1,10x1,35m) c/ logo circular LED e Armário 3 portas correr (2,15x2,50m).', qty: 1, matCost: 1540, labCost: 1200, margin: 52.4, image: '' },
-      { id: 'd7', category: 'marcenaria', code: 'M10-M12', title: 'Lavatório — Móvel Principal, Armário Copa & Módulo Central', specs: 'Móvel lavatório (2,60x2,50m) nichos toalhas LED e tulha lixo, Armário Copa (2,00x2,50m) e Módulo central rampas (1,45x0,65m).', qty: 1, matCost: 1695, labCost: 1310, margin: 52.4, image: '' },
-      { id: 'd8', category: 'marcenaria', code: 'M13-M18', title: 'Salão Principal — Bancada 4,50m, Painéis Ripados, Porta Oculta & Montra', specs: 'Bancada cabeleireiro 4,50m (13 gavetas), Painel ripado (3,65x3,20m) c/ porta oculta dobradiças fresar, Painel divisor, Base sofá, Painel lateral e Bancada montra.', qty: 1, matCost: 3525, labCost: 2730, margin: 52.4, image: '' },
-      { id: 'd9', category: 'marcenaria', code: 'M19-M24', title: 'Sótão / Depósito — 6 Estantes de Armazenamento', specs: '6 módulos de estantes (2,00m, 1,90m, 1,50m, 2,00m, 1,20m e comp. x 0,50x2,10m) estrutura metálica e prateleiras MDF.', qty: 1, matCost: 1080, labCost: 780, margin: 52.4, image: '' },
-      { id: 'd10', category: 'marcenaria', code: 'COMP-EXT', title: 'Complementos Técnicos — Serralheria, Granitos & Espelhos', specs: '4 Espelhos moldura metal preto Salão, Estrutura dourada Spa, Bancadas Granito Colonial White e Preto Zimbabwe, Espelhos e vidros leitosos.', qty: 1, matCost: 1560, labCost: 1115, margin: 52.3, image: '' },
-      { id: 'r1', category: 'remodelacao', code: 'REM-PLD-PAR', title: 'Estruturas em Pladur para Nichos (Recepção & Salão)', specs: 'Execução de paredes/enchimentos em gesso cartonado 13mm com montantes galvanizados, lã mineral, fitas e barramento pronto a revestir.', qty: 14, matCost: 18.0, labCost: 22.0, margin: 50.0, image: '' },
-      { id: 'r2', category: 'remodelacao', code: 'REM-ELE-PON', title: 'Pontos Elétricos, Tomadas Embutidas & Drivers LED', specs: 'Alimentação elétrica para tomadas embutidas nas bancadas, espelhos iluminados e fitas LED dos nichos.', qty: 18, matCost: 22.0, labCost: 38.0, margin: 50.0, image: '' }
-    ];
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição do Serviço / Móvel</th>
+            <th>Dimensão / Qtd</th>
+            <th style="text-align:right;">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaProposta"></tbody>
+      </table>
 
-    let items = [];
-    let catalog = [];
-    let isClientMode = false;
-    let currentModalImageBase64 = '';
+      <div class="total-box">
+        Estimativa Total: <span id="valorTotalProposta">€ 0,00</span>
+      </div>
 
-    async function initApp() {
-      document.getElementById('propDate').value = new Date().toLocaleDateString('pt-PT');
-      
-      const savedPin = localStorage.getItem('vosty_pin') || '2026';
-      document.getElementById('pinConfigInput').value = savedPin;
+      <!-- Painel Exclusivo Equipa (Custo Material, Mão de Obra e Lucro 38%) -->
+      <div id="painelEquipa" class="equipa-panel hidden">
+        <strong>📊 Análise Financeira Interna (VOSTY Design — Margem 38%):</strong><br>
+        • Custo Estimado de Materiais (Leroy Merlin / Brico Depôt / Obramat): <strong id="eqMaterial">€ 0,00</strong><br>
+        • Custo Estimado de Mão de Obra (Lisboa e regiões): <strong id="eqMaoObra">€ 0,00</strong><br>
+        • Lucro Líquido Previsto (38%): <strong id="eqLucro">€ 0,00</strong>
+      </div>
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const paramSheet = urlParams.get('sheet');
-      if (paramSheet) {
-        localStorage.setItem('vosty_sheet_csv', paramSheet);
-      }
+      <p style="font-size:11px; color:#64748b; margin-top:12px;">
+        * Estimativa sujeita a confirmação técnica e medição final no local. Contacto direto: vostydesign@gmail.com | Validade: 15 dias.
+      </p>
+    </div>
 
-      const activeSheetUrl = HARDCODED_SHEET_CSV_URL || localStorage.getItem('vosty_sheet_csv') || '';
-      document.getElementById('sheetCsvUrlInput').value = activeSheetUrl;
+    <div class="action-grid">
+      <button type="button" class="btn btn-finish" style="margin-top:0;" onclick="enviarWhatsApp()">📲 Enviar pelo WhatsApp</button>
+      <button type="button" class="btn btn-add" style="margin-top:0;" onclick="enviarEmailDireto()">✉️ Enviar para vostydesign@gmail.com</button>
+      <button type="button" class="btn" style="background:#0f172a; color:#fff;" onclick="baixarPDF()">📄 Descarregar Proposta PDF</button>
+      <button type="button" class="btn" style="background:#f1f5f9; color:#0f172a;" onclick="limparTudo()">🔄 Novo Orçamento Limpo</button>
+    </div>
+  </div>
 
-      const savedCatalog = localStorage.getItem('vosty_catalog_v2');
-      catalog = savedCatalog ? JSON.parse(savedCatalog) : JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+  <div class="footer">
+    VOSTY Design — Marcenaria & Remodelações • Lisboa e regiões<br>
+    E-mail: <a href="mailto:vostydesign@gmail.com" style="color:var(--primary); font-weight:600;">vostydesign@gmail.com</a> • Instagram: <a href="https://instagram.com/vostydesign_remodelações" target="_blank" style="color:var(--primary); font-weight:600;">@vostydesign_remodelações</a>
+  </div>
 
-      const savedItems = localStorage.getItem('vosty_items');
-      items = savedItems ? JSON.parse(savedItems) : JSON.parse(JSON.stringify(DEMO_ITEMS));
+</div>
 
-      populateQuickSelects();
-      renderCatalogTable();
-      renderAll();
+<script>
+  // URL do vosso Google Apps Script (Cloud Sync + Leitura IA)
+  const CLOUD_URL = "COLE_AQUI_O_SEU_LINK_DO_GOOGLE_APPS_SCRIPT";
 
-      if (activeSheetUrl) {
-        await syncFromGoogleSheet(false);
-      }
+  let itens = [];
+  let modoEquipaAtivo = false;
+  let abaAtual = 'marcenaria';
+
+  // Tabelas Calibradas (38% Margem Líquida VOSTY Design)
+  const tabelaMarcenaria = {
+    cozinha_branca:     { nome: "Cozinha (Branco / Melamina)", preco: 680, un: "m linear" },
+    cozinha_lacada:     { nome: "Cozinha Lacada / Brilho", preco: 890, un: "m linear" },
+    cozinha_amadeirada: { nome: "Cozinha em Tom Amadeirado", preco: 790, un: "m linear" },
+    roupeiro_abrir:     { nome: "Roupeiro / Closet (Portas de Abrir)", preco: 540, un: "m²" },
+    roupeiro_correr:    { nome: "Roupeiro / Closet (Portas de Correr)", preco: 620, un: "m²" },
+    movel_wc:           { nome: "Móvel de Casa de Banho (Suspenso / Bancada)", preco: 450, un: "un" },
+    porta_branca:       { nome: "Porta de Interior Branca (Completa c/ aro)", preco: 340, un: "un" },
+    porta_amadeirada:   { nome: "Porta de Interior Amadeirada (Completa c/ aro)", preco: 370, un: "un" },
+    painel_ripado:      { nome: "Painel Ripado / Sala TV por Medida", preco: 260, un: "m²" }
+  };
+
+  // Valores internos de remodelação (não exibidos no seletor ao cliente)
+  const tabelaRemodelacao = {
+    remodelacao_geral:    { nome: "Remodelação Geral (Chave na Mão)", precoM2: 433 },
+    espaco_comercial:     { nome: "Remodelação / Conversão de Espaço Comercial", precoM2: 460 },
+    pintura_interior:     { nome: "Pintura Interior Profissional", precoM2: 24 },
+    cozinha_obra:         { nome: "Remodelação de Cozinha Completa (Obra Civil)", precoM2: 520 },
+    wc_obra:              { nome: "Remodelação de Casa de Banho Completa", precoM2: 650 },
+    pladur_tetos:         { nome: "Divisórias e Tetos Falsos em Pladur", precoM2: 48 },
+    pavimento_flutuante:  { nome: "Pavimento Flutuante (Fornecimento e Aplicação)", precoM2: 39 }
+  };
+
+  function mudarAba(aba) {
+    abaAtual = aba;
+    document.getElementById('tabMarcenaria').classList.toggle('active', aba === 'marcenaria');
+    document.getElementById('tabRemodelacao').classList.toggle('active', aba === 'remodelacao');
+    document.getElementById('secMarcenaria').classList.toggle('hidden', aba !== 'marcenaria');
+    document.getElementById('secRemodelacao').classList.toggle('hidden', aba !== 'remodelacao');
+  }
+
+  function alternarModoEquipa() {
+    if (!modoEquipaAtivo) {
+      const pin = prompt("Introduza o PIN da Equipa VOSTY Design:");
+      if (pin !== "2026") { alert("PIN incorreto."); return; }
+      modoEquipaAtivo = true;
+      document.getElementById('painelEquipa').classList.remove('hidden');
+      alert("Modo Equipa ativado! Verá a divisão de Material, Mão de Obra e Lucro (38%).");
+    } else {
+      modoEquipaAtivo = false;
+      document.getElementById('painelEquipa').classList.add('hidden');
+    }
+  }
+
+  function atualizarCamposMarcenaria() {
+    const tipo = document.getElementById('tipoMovel').value;
+    document.getElementById('boxGavetas').classList.toggle('hidden', !(tipo === 'roupeiro_abrir' || tipo === 'roupeiro_correr'));
+    document.getElementById('labelMedidaMarc').innerText = `Medida (${tabelaMarcenaria[tipo].un})`;
+  }
+
+  function atualizarCamposRemodelacao() {
+    const tipo = document.getElementById('tipoObra').value;
+    document.getElementById('boxTipologia').classList.toggle('hidden', tipo !== 'remodelacao_geral');
+    document.getElementById('boxQtdWC').classList.toggle('hidden', tipo !== 'remodelacao_geral');
+    document.getElementById('boxComercialTipo').classList.toggle('hidden', tipo !== 'espaco_comercial');
+    document.getElementById('boxComercialDesc').classList.toggle('hidden', tipo !== 'espaco_comercial');
+    document.getElementById('boxPinturaDivisoes').classList.toggle('hidden', tipo !== 'pintura_interior');
+  }
+
+  function adicionarMarcenaria() {
+    const tipo = document.getElementById('tipoMovel').value;
+    const ferragem = document.getElementById('tipoFerragem').value;
+    const medida = parseFloat(document.getElementById('medidaMarc').value) || 1;
+    const qtd = parseInt(document.getElementById('qtdMarc').value) || 1;
+    const obs = document.getElementById('obsMarc').value.trim();
+
+    const info = tabelaMarcenaria[tipo];
+    const mult = ferragem === 'blum_emuca' ? 1.18 : 1.0;
+    const nomeFerr = ferragem === 'blum_emuca' ? "Premium Blum Legrabox + Emuca" : "Standard";
+
+    let extraGav = 0, txtGav = "";
+    if (tipo === 'roupeiro_abrir' || tipo === 'roupeiro_correr') {
+      const totalG = Math.max(4, parseInt(document.getElementById('qtdGavetas').value) || 4);
+      const extras = totalG - 4;
+      extraGav = extras * 55;
+      txtGav = extras > 0 ? ` | ${totalG} gavetas (${extras} extras)` : ` | 4 gavetas padrão`;
     }
 
-    function parseCSV(text) {
-      const rows = [];
-      let row = [], val = '', inQuotes = false;
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        const next = text[i + 1];
-        if (inQuotes) {
-          if (ch === '"' && next === '"') { val += '"'; i++; }
-          else if (ch === '"') { inQuotes = false; }
-          else { val += ch; }
-        } else {
-          if (ch === '"') { inQuotes = true; }
-          else if (ch === ',') { row.push(val.trim()); val = ''; }
-          else if (ch === '\n' || (ch === '\r' && next === '\n')) {
-            if (ch === '\r') i++;
-            row.push(val.trim());
-            if (row.some(c => c !== '')) rows.push(row);
-            row = []; val = '';
-          } else { val += ch; }
-        }
-      }
-      if (val !== '' || row.length > 0) {
-        row.push(val.trim());
-        if (row.some(c => c !== '')) rows.push(row);
-      }
-      return rows;
+    const isUn = (tipo === 'movel_wc' || tipo === 'porta_branca' || tipo === 'porta_amadeirada');
+    const subtotal = (((isUn ? info.preco : info.preco * medida) * mult) + extraGav) * qtd;
+
+    itens.push({
+      categoria: "Marcenaria",
+      descricao: `${info.nome}${txtGav} • Ferragens: ${nomeFerr}${obs ? ` (${obs})` : ""}`,
+      detalhe: isUn ? `${qtd} un.` : `${qtd}x (${medida} ${info.un})`,
+      subtotal
+    });
+
+    renderizarLista();
+    document.getElementById('medidaMarc').value = "";
+    document.getElementById('obsMarc').value = "";
+  }
+
+  function adicionarRemodelacao() {
+    const tipo = document.getElementById('tipoObra').value;
+    const area = parseFloat(document.getElementById('areaObra').value);
+    if (!area || area <= 0) { alert("Por favor, indique a metragem (m²) a intervir."); return; }
+
+    const obs = document.getElementById('obsObra').value.trim();
+    const info = tabelaRemodelacao[tipo];
+    let subtotal = area * info.precoM2;
+    let detalheExtra = "";
+
+    if (tipo === 'remodelacao_geral') {
+      const tip = document.getElementById('tipologiaImovel').value;
+      const wcs = Math.max(1, parseInt(document.getElementById('qtdWC').value) || 1);
+      const wcExtras = wcs - 1;
+      subtotal += wcExtras * 3800; // Valor por casa de banho adicional
+      detalheExtra = ` (${tip} • ${wcs} WC${wcs > 1 ? 's' : ''})`;
+    } else if (tipo === 'espaco_comercial') {
+      const fin = document.getElementById('finalidadeComercial').value;
+      const desc = document.getElementById('descTransformacao').value.trim();
+      detalheExtra = ` — ${fin}${desc ? `: "${desc}"` : ""}`;
+    } else if (tipo === 'pintura_interior') {
+      const divs = document.getElementById('divisoesPintura').value.trim();
+      detalheExtra = divs ? ` — Âmbito: ${divs}` : " — Imóvel Completo";
     }
 
-    async function syncFromGoogleSheet(showAlert = true) {
-      const url = document.getElementById('sheetCsvUrlInput').value.trim();
-      const badge = document.getElementById('syncBadge');
-      const statusMsg = document.getElementById('syncStatusMsg');
+    itens.push({
+      categoria: "Remodelação",
+      descricao: `${info.nome}${detalheExtra}${obs ? ` (${obs})` : ""}`,
+      detalhe: `${area} m²`,
+      subtotal
+    });
 
-      if (!url) {
-        if (showAlert) alert('Cole primeiro o link CSV público da sua planilha Google Sheets.');
-        return;
-      }
+    renderizarLista();
+    document.getElementById('areaObra').value = "";
+    document.getElementById('obsObra').value = "";
+    document.getElementById('descTransformacao').value = "";
+    document.getElementById('divisoesPintura').value = "";
+  }
 
-      badge.textContent = '↻ A sincronizar...';
-      badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+  function removerItem(i) {
+    itens.splice(i, 1);
+    renderizarLista();
+  }
 
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Falha ao aceder ao Google Sheets');
-        const csvText = await res.text();
-        const rows = parseCSV(csvText);
-        if (rows.length < 2) throw new Error('Planilha vazia');
-
-        const newCatalog = [];
-        for (let i = 1; i < rows.length; i++) {
-          const r = rows[i];
-          if (!r[1] || !r[2]) continue;
-          const cleanNum = (s, def) => {
-            if (!s) return def;
-            const n = parseFloat(s.replace(/[€%\s]/g, '').replace(',', '.'));
-            return isNaN(n) ? def : n;
-          };
-          newCatalog.push({
-            category: (r[0] || '').toLowerCase().includes('rem') ? 'remodelacao' : 'marcenaria',
-            code: r[1],
-            title: r[2],
-            specs: r[3] || '',
-            unit: r[4] || 'Unid.',
-            matCost: cleanNum(r[5], 0),
-            labCost: cleanNum(r[6], 0),
-            margin: cleanNum(r[7], 50)
-          });
-        }
-
-        if (newCatalog.length > 0) {
-          catalog = newCatalog;
-          localStorage.setItem('vosty_catalog_v2', JSON.stringify(catalog));
-          populateQuickSelects();
-          renderCatalogTable();
-          const nowStr = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-          badge.textContent = `● Cloud Sincronizado (${nowStr})`;
-          badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-          statusMsg.textContent = `✅ Sincronizado com sucesso às ${nowStr} (${catalog.length} itens carregados do Google Sheets).`;
-          if (showAlert) alert(`Tabela atualizada com sucesso! ${catalog.length} itens sincronizados do Google Sheets.`);
-        }
-      } catch (err) {
-        badge.textContent = '● Offline / Local';
-        badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40';
-        statusMsg.textContent = '⚠️ A usar cópia local (para sincronização direta sem bloqueio do navegador, abra o ficheiro no seu GitHub/site).';
-        if (showAlert) alert('Não foi possível sincronizar diretamente deste ficheiro local. Suba o ficheiro no GitHub para sincronização online.');
-      }
+  function renderizarLista() {
+    const lista = document.getElementById('listaItens');
+    document.getElementById('contadorItens').innerText = itens.length;
+    if (itens.length === 0) {
+      lista.innerHTML = `<p style="color:var(--muted); font-size:13px;">Nenhum item adicionado ainda.</p>`;
+      return;
     }
+    lista.innerHTML = itens.map((it, i) => `
+      <div class="item-row">
+        <div class="item-info">
+          <strong>[${it.categoria}] ${it.descricao}</strong>
+          <span>${it.detalhe} • <b>€ ${it.subtotal.toFixed(2)}</b></span>
+        </div>
+        <button type="button" class="btn-del" onclick="removerItem(${i})">Remover</button>
+      </div>
+    `).join('');
+  }
 
-    function saveSheetUrl() {
-      const url = document.getElementById('sheetCsvUrlInput').value.trim();
-      localStorage.setItem('vosty_sheet_csv', url);
-      syncFromGoogleSheet(true);
-    }
+  function finalizarOrcamento() {
+    if (itens.length === 0) { alert("Adicione pelo menos um item antes de finalizar."); return; }
 
-    function generateTeamShareLink() {
-      const url = document.getElementById('sheetCsvUrlInput').value.trim();
-      if (!url) {
-        alert('Guarde primeiro o link CSV do Google Sheets antes de gerar o link da equipa.');
-        return;
-      }
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?sheet=${encodeURIComponent(url)}`;
-      navigator.clipboard.writeText(shareUrl);
-      alert('Link sincronizado copiado! Quando enviar este link aos vendedores, o simulador deles liga-se automaticamente à sua planilha Google Sheets.');
-    }
+    document.getElementById('propCliente').innerText = document.getElementById('clienteNome').value || "Cliente";
+    document.getElementById('propTel').innerText = document.getElementById('clienteTel').value || "Não informado";
+    document.getElementById('propEmail').innerText = document.getElementById('clienteEmail').value || "Não informado";
+    document.getElementById('propLocal').innerText = document.getElementById('clienteLocal').value || "Lisboa e regiões";
 
-    function formatEUR(val) {
-      return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(val || 0);
-    }
+    let total = 0;
+    document.getElementById('tabelaProposta').innerHTML = itens.map(it => {
+      total += it.subtotal;
+      return `<tr><td>${it.descricao}</td><td>${it.detalhe}</td><td style="text-align:right; font-weight:700;">€ ${it.subtotal.toFixed(2)}</td></tr>`;
+    }).join('');
 
-    function calcItemFinancials(item) {
-      const qty = parseFloat(item.qty) || 1;
-      const matTotal = (parseFloat(item.matCost) || 0) * qty;
-      const labTotal = (parseFloat(item.labCost) || 0) * qty;
-      const directCost = matTotal + labTotal;
-      const margin = Math.min(Math.max(parseFloat(item.margin) || 0, 0), 95);
-      const sellPrice = margin >= 95 ? directCost * 20 : directCost / (1 - (margin / 100));
-      const profit = sellPrice - directCost;
-      return { qty, matTotal, labTotal, directCost, profit, sellPrice, margin };
-    }
+    document.getElementById('valorTotalProposta').innerText = `€ ${total.toLocaleString('pt-PT', { minimumFractionDigits: 2 })}`;
 
-    function renderAll() {
-      localStorage.setItem('vosty_items', JSON.stringify(items));
-      renderCategoryList('marcenaria', 'marcenariaList');
-      renderCategoryList('remodelacao', 'remodelacaoList');
-      updateKPIs();
-    }
+    // Cálculo Interno Equipa (38% lucro líquido, ~34% material, ~28% mão de obra)
+    const lucro = total * 0.38;
+    const custoTotal = total - lucro;
+    const material = custoTotal * 0.55;
+    const maoObra = custoTotal * 0.45;
 
-    function renderCategoryList(category, containerId) {
-      const container = document.getElementById(containerId);
-      const filtered = items.filter(i => i.category === category);
+    document.getElementById('eqMaterial').innerText = `€ ${material.toFixed(2)}`;
+    document.getElementById('eqMaoObra').innerText = `€ ${maoObra.toFixed(2)}`;
+    document.getElementById('eqLucro').innerText = `€ ${lucro.toFixed(2)}`;
 
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="bg-white rounded-xl p-8 text-center border border-dashed border-zinc-300 text-zinc-400 text-sm">Nenhum item adicionado nesta secção ainda. Utilize os botões acima para adicionar.</div>`;
-        return;
-      }
+    const box = document.getElementById('proposta-box');
+    box.classList.remove('hidden');
+    box.scrollIntoView({ behavior: 'smooth' });
+  }
 
-      container.innerHTML = filtered.map(item => {
-        const fin = calcItemFinancials(item);
-        const imgHtml = item.image 
-          ? `<img src="${item.image}" alt="${item.title}" class="w-full md:w-44 h-36 object-cover rounded-xl border border-zinc-200 bg-zinc-50 shrink-0" />`
-          : `<div onclick="editItem('${item.id}')" title="Clique para anexar imagem do projeto" class="no-print w-full md:w-44 h-36 rounded-xl border border-dashed border-zinc-300 bg-zinc-50 flex flex-col items-center justify-center text-zinc-400 text-xs cursor-pointer hover:border-amber-400 hover:text-amber-600 shrink-0 p-2 text-center">
-              <span class="text-xl mb-1">🖼️</span>
-              <span>Anexar foto/render</span>
-             </div>`;
+  async function processarProjetoIA(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const status = document.getElementById('statusIA');
+    status.classList.remove('hidden');
+    status.innerText = `⏳ A ler "${file.name}" com Inteligência Artificial VOSTY Design...`;
 
-        return `
-          <div class="bg-white rounded-2xl p-4 md:p-5 border border-zinc-200 shadow-xs print-shadow-none page-break-inside transition hover:border-zinc-300">
-            <div class="flex flex-col md:flex-row gap-4 justify-between">
-              ${imgHtml}
-              <div class="flex-1 space-y-2">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded bg-zinc-900 text-amber-400 font-mono text-xs font-bold">${item.code}</span>
-                    <h4 class="font-bold text-zinc-900 text-base">${item.title}</h4>
-                  </div>
-                  <div class="flex items-center gap-1.5 no-print">
-                    <button onclick="editItem('${item.id}')" class="px-2.5 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-medium">✏️ Editar</button>
-                    <button onclick="deleteItem('${item.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-medium">✕</button>
-                  </div>
-                </div>
-                <p class="text-xs md:text-sm text-zinc-600 leading-relaxed">${item.specs}</p>
-                <div class="text-xs text-zinc-500 pt-1">
-                  <span class="font-semibold text-zinc-700">Quantidade / Área:</span> ${fin.qty} un./m²
-                </div>
-              </div>
-
-              <div class="md:w-64 shrink-0 flex flex-col justify-between bg-zinc-50 rounded-xl p-3.5 border border-zinc-200/80">
-                <div class="internal-only space-y-1 text-xs border-b border-zinc-200 pb-2 mb-2">
-                  <div class="flex justify-between text-zinc-600"><span>Material:</span> <span>${formatEUR(fin.matTotal)}</span></div>
-                  <div class="flex justify-between text-zinc-600"><span>Fabrico / M.O.:</span> <span>${formatEUR(fin.labTotal)}</span></div>
-                  <div class="flex justify-between text-emerald-700 font-semibold"><span>Lucro (${fin.margin}%):</span> <span>${formatEUR(fin.profit)}</span></div>
-                </div>
-                <div class="flex md:flex-col justify-between items-baseline md:items-end">
-                  <span class="text-[11px] font-semibold uppercase text-zinc-400">Valor Cliente</span>
-                  <span class="text-lg md:text-xl font-bold text-zinc-900">${formatEUR(fin.sellPrice)}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function updateKPIs() {
-      let totMat = 0, totLab = 0, totProfit = 0, totSell = 0;
-      let subMarc = 0, subRem = 0;
-
-      items.forEach(item => {
-        const fin = calcItemFinancials(item);
-        totMat += fin.matTotal;
-        totLab += fin.labTotal;
-        totProfit += fin.profit;
-        totSell += fin.sellPrice;
-        if (item.category === 'marcenaria') subMarc += fin.sellPrice;
-        else subRem += fin.sellPrice;
-      });
-
-      const avgMargin = totSell > 0 ? ((totProfit / totSell) * 100).toFixed(1) : '0.0';
-
-      document.getElementById('kpiMaterial').textContent = formatEUR(totMat);
-      document.getElementById('kpiLabor').textContent = formatEUR(totLab);
-      document.getElementById('kpiProfit').textContent = formatEUR(totProfit);
-      document.getElementById('kpiMarginPct').textContent = `Margem global: ${avgMargin}%`;
-      document.getElementById('kpiSubMarc').textContent = formatEUR(subMarc);
-      document.getElementById('kpiSubRem').textContent = formatEUR(subRem);
-      document.getElementById('kpiTotalClient').textContent = formatEUR(totSell);
-    }
-
-    function switchTab(tab) {
-      ['marcenaria', 'remodelacao', 'catalogo'].forEach(t => {
-        document.getElementById(`view-${t}`).classList.add('hidden');
-        const btn = document.getElementById(`tab-${t}`);
-        if (btn) {
-          btn.classList.remove('bg-zinc-900', 'text-white', 'shadow-sm');
-          btn.classList.add('bg-white', 'text-zinc-600');
-        }
-      });
-      document.getElementById(`view-${tab}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-${tab}`);
-      if (activeBtn) {
-        activeBtn.classList.remove('bg-white', 'text-zinc-600');
-        activeBtn.classList.add('bg-zinc-900', 'text-white', 'shadow-sm');
-      }
-    }
-
-    function toggleViewMode() {
-      const btn = document.getElementById('btnToggleMode');
-      const icon = document.getElementById('modeIcon');
-      const label = document.getElementById('modeLabel');
-
-      if (!isClientMode) {
-        isClientMode = true;
-        document.body.classList.add('client-mode');
-        icon.textContent = '👁️';
-        label.textContent = 'Modo Reunião / Cliente (Margens Ocultas)';
-        btn.classList.remove('text-amber-300');
-        btn.classList.add('text-emerald-300', 'border-emerald-500/40');
-        switchTab('marcenaria');
-      } else {
-        const requiredPin = localStorage.getItem('vosty_pin') || '2026';
-        const entered = prompt('Introduza o PIN da equipa VOSTY Design para visualizar custos e margens:');
-        if (entered === requiredPin) {
-          isClientMode = false;
-          document.body.classList.remove('client-mode');
-          icon.textContent = '🔒';
-          label.textContent = 'Modo Equipa (Custos Visíveis)';
-          btn.classList.add('text-amber-300');
-          btn.classList.remove('text-emerald-300', 'border-emerald-500/40');
-        } else if (entered !== null) {
-          alert('PIN incorreto.');
-        }
-      }
-    }
-
-    function generateClientPDF() {
-      const wasTeamMode = !isClientMode;
-      if (wasTeamMode) document.body.classList.add('client-mode');
-      window.print();
-      if (wasTeamMode) document.body.classList.remove('client-mode');
-    }
-
-    function openItemModal(category, itemToEdit = null) {
-      document.getElementById('editItemCategory').value = category;
-      document.getElementById('editItemId').value = itemToEdit ? itemToEdit.id : '';
-      document.getElementById('modalTitle').textContent = itemToEdit ? `Editar Item (${itemToEdit.code})` : (category === 'marcenaria' ? 'Novo Móvel / Peça' : 'Novo Serviço de Remodelação');
-
-      document.getElementById('fCode').value = itemToEdit ? itemToEdit.code : (category === 'marcenaria' ? `M${items.length + 1}` : `REM-${items.length + 1}`);
-      document.getElementById('fTitle').value = itemToEdit ? itemToEdit.title : '';
-      document.getElementById('fSpecs').value = itemToEdit ? itemToEdit.specs : '';
-      document.getElementById('fQty').value = itemToEdit ? itemToEdit.qty : 1;
-      document.getElementById('fMatCost').value = itemToEdit ? itemToEdit.matCost : 0;
-      document.getElementById('fLabCost').value = itemToEdit ? itemToEdit.labCost : 0;
-      document.getElementById('fMargin').value = itemToEdit ? itemToEdit.margin : (category === 'marcenaria' ? 52.4 : 50.0);
-
-      currentModalImageBase64 = itemToEdit && itemToEdit.image ? itemToEdit.image : '';
-      const preview = document.getElementById('fImagePreview');
-      if (currentModalImageBase64) {
-        preview.src = currentModalImageBase64;
-        preview.classList.remove('hidden');
-      } else {
-        preview.src = '';
-        preview.classList.add('hidden');
-      }
-      document.getElementById('fImageInput').value = '';
-      recalcModalPreview();
-      document.getElementById('itemModal').classList.remove('hidden');
-    }
-
-    function closeItemModal() { document.getElementById('itemModal').classList.add('hidden'); }
-
-    function handleImageUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+    if (CLOUD_URL.startsWith("http")) {
       const reader = new FileReader();
-      reader.onload = function(evt) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxW = 600;
-          const scale = Math.min(1, maxW / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-          currentModalImageBase64 = canvas.toDataURL('image/jpeg', 0.8);
-          const preview = document.getElementById('fImagePreview');
-          preview.src = currentModalImageBase64;
-          preview.classList.remove('hidden');
-        };
-        img.src = evt.target.result;
+      reader.onload = async function() {
+        try {
+          const base64 = reader.result.split(',')[1];
+          const resp = await fetch(CLOUD_URL, {
+            method: "POST",
+            body: JSON.stringify({ acao: "ler_projeto", mimeType: file.type, dados: base64, tipoSimulador: abaAtual })
+          });
+          const res = await resp.json();
+          if (res.itens && res.itens.length > 0) {
+            res.itens.forEach(it => itens.push(it));
+            renderizarLista();
+            status.innerText = `✅ Leitura concluída! ${res.itens.length} itens adicionados automaticamente ao orçamento.`;
+          } else {
+            status.innerText = "✔ Ficheiro anexado! Adicione ou ajuste as medidas abaixo para finalizar.";
+          }
+        } catch (e) {
+          status.innerText = "✔ Projeto registado! Pode confirmar as medidas abaixo.";
+        }
       };
       reader.readAsDataURL(file);
+    } else {
+      setTimeout(() => {
+        status.innerText = `✔ Projeto "${file.name}" carregado! (Ligue o URL do Google Apps Script na linha CLOUD_URL para extração automática total).`;
+      }, 1000);
     }
+  }
 
-    function clearModalImage() {
-      currentModalImageBase64 = '';
-      document.getElementById('fImagePreview').classList.add('hidden');
-      document.getElementById('fImageInput').value = '';
+  function gerarResumoTexto(incluirInterno = false) {
+    const nome = document.getElementById('clienteNome').value || "Cliente";
+    const tel = document.getElementById('clienteTel').value || "";
+    const email = document.getElementById('clienteEmail').value || "";
+    const local = document.getElementById('clienteLocal').value || "Lisboa e regiões";
+    const total = document.getElementById('valorTotalProposta').innerText;
+
+    let txt = `*ORÇAMENTO VOSTY DESIGN*\nCliente: ${nome} (${tel})\nE-mail: ${email}\nLocal: ${local}\n\n*Itens:*\n`;
+    itens.forEach((it, idx) => { txt += `${idx + 1}. [${it.categoria}] ${it.descricao} (${it.detalhe}) -> € ${it.subtotal.toFixed(2)}\n`; });
+    txt += `\n*Estimativa Total:* ${total}`;
+
+    if (incluirInterno) {
+      txt += `\n\n--- RESUMO INTERNO EQUIPA (38%) ---\nMaterial: ${document.getElementById('eqMaterial').innerText}\nMão de Obra: ${document.getElementById('eqMaoObra').innerText}\nLucro Líquido: ${document.getElementById('eqLucro').innerText}`;
     }
+    return txt;
+  }
 
-    function recalcModalPreview() {
-      const fin = calcItemFinancials({
-        qty: document.getElementById('fQty').value,
-        matCost: document.getElementById('fMatCost').value,
-        labCost: document.getElementById('fLabCost').value,
-        margin: document.getElementById('fMargin').value
-      });
-      document.getElementById('mPrevProfit').textContent = formatEUR(fin.profit);
-      document.getElementById('mPrevTotal').textContent = formatEUR(fin.sellPrice);
-    }
+  function enviarWhatsApp() {
+    window.open(`https://wa.me/351923189914?text=${encodeURIComponent(gerarResumoTexto(false))}`, '_blank');
+  }
 
-    function saveItemForm(e) {
-      e.preventDefault();
-      const id = document.getElementById('editItemId').value;
-      const newObj = {
-        id: id || 'item_' + Date.now(),
-        category: document.getElementById('editItemCategory').value,
-        code: document.getElementById('fCode').value.trim(),
-        title: document.getElementById('fTitle').value.trim(),
-        specs: document.getElementById('fSpecs').value.trim(),
-        qty: parseFloat(document.getElementById('fQty').value) || 1,
-        matCost: parseFloat(document.getElementById('fMatCost').value) || 0,
-        labCost: parseFloat(document.getElementById('fLabCost').value) || 0,
-        margin: parseFloat(document.getElementById('fMargin').value) || 50,
-        image: currentModalImageBase64
-      };
+  function enviarEmailDireto() {
+    const nome = document.getElementById('clienteNome').value || "Cliente";
+    const assunto = encodeURIComponent(`Novo Orçamento VOSTY Design - ${nome}`);
+    const corpo = encodeURIComponent(gerarResumoTexto(true));
+    window.location.href = `mailto:vostydesign@gmail.com?subject=${assunto}&body=${corpo}`;
+  }
 
-      if (id) {
-        const idx = items.findIndex(i => i.id === id);
-        if (idx > -1) items[idx] = newObj;
-      } else {
-        items.push(newObj);
-      }
-      closeItemModal();
-      renderAll();
-    }
+  function baixarPDF() {
+    const nome = (document.getElementById('clienteNome').value || "Cliente").replace(/\s+/g, '_');
+    html2pdf().from(document.getElementById('area-pdf')).save(`Orcamento_VOSTY_Design_${nome}.pdf`);
+  }
 
-    function editItem(id) {
-      const found = items.find(i => i.id === id);
-      if (found) openItemModal(found.category, found);
-    }
+  function limparTudo() {
+    itens = [];
+    localStorage.clear();
+    sessionStorage.clear();
+    ['clienteNome','clienteTel','clienteEmail','clienteLocal','medidaMarc','obsMarc','areaObra','obsObra','descTransformacao','divisoesPintura'].forEach(id => {
+      if (document.getElementById(id)) document.getElementById(id).value = "";
+    });
+    document.getElementById('proposta-box').classList.add('hidden');
+    renderizarLista();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-    function deleteItem(id) {
-      if (confirm('Remover este item do orçamento?')) {
-        items = items.filter(i => i.id !== id);
-        renderAll();
-      }
-    }
-
-    function populateQuickSelects() {
-      const marcSel = document.getElementById('quickMarcSelect');
-      const remSel = document.getElementById('quickRemSelect');
-      marcSel.innerHTML = '<option value="">+ Adicionar modelo do catálogo...</option>';
-      remSel.innerHTML = '<option value="">+ Ou selecione qualquer pacote / serviço avulso da tabela...</option>';
-
-      catalog.forEach((c, idx) => {
-        const fin = calcItemFinancials({ qty: 1, matCost: c.matCost, labCost: c.labCost, margin: c.margin });
-        const opt = `<option value="${idx}">[${c.code}] ${c.title} (${formatEUR(fin.sellPrice)}/${c.unit})</option>`;
-        if (c.category === 'marcenaria') marcSel.innerHTML += opt;
-        else remSel.innerHTML += opt;
-      });
-    }
-
-    function addFromQuickSelect(category) {
-      const sel = document.getElementById(category === 'marcenaria' ? 'quickMarcSelect' : 'quickRemSelect');
-      if (sel.value === '') return;
-      const c = catalog[parseInt(sel.value)];
-      items.push({
-        id: 'item_' + Date.now(),
-        category: c.category,
-        code: c.code,
-        title: `${c.title} (${c.unit})`,
-        specs: c.specs,
-        qty: 1,
-        matCost: c.matCost,
-        labCost: c.labCost,
-        margin: c.margin,
-        image: ''
-      });
-      sel.value = '';
-      renderAll();
-    }
-
-    function quickAddByCode(code) {
-      const c = catalog.find(item => item.code === code);
-      if (!c) return;
-      let defaultQty = 1;
-      if (code.startsWith('REM-GER')) {
-        const areaStr = prompt('Qual a área total do apartamento/moradia em m²? (Ex.: 80)', '80');
-        if (areaStr === null) return;
-        defaultQty = parseFloat(areaStr.replace(',', '.')) || 80;
-      }
-      items.push({
-        id: 'item_' + Date.now(),
-        category: c.category,
-        code: c.code,
-        title: `${c.title}`,
-        specs: c.specs,
-        qty: defaultQty,
-        matCost: c.matCost,
-        labCost: c.labCost,
-        margin: c.margin,
-        image: ''
-      });
-      renderAll();
-    }
-
-    function renderCatalogTable() {
-      const tbody = document.getElementById('catalogTableBody');
-      tbody.innerHTML = catalog.map((c, idx) => {
-        const fin = calcItemFinancials({ qty: 1, matCost: c.matCost, labCost: c.labCost, margin: c.margin });
-        return `
-          <tr class="hover:bg-zinc-50">
-            <td class="p-2.5 font-semibold uppercase text-[10px] ${c.category === 'marcenaria' ? 'text-amber-700' : 'text-emerald-700'}">${c.category}</td>
-            <td class="p-2.5 font-mono font-bold">${c.code}</td>
-            <td class="p-2.5 font-medium text-zinc-900">${c.title}</td>
-            <td class="p-2.5 text-zinc-500">${c.unit}</td>
-            <td class="p-2.5"><input type="number" step="0.5" value="${c.matCost}" onchange="updateCatalogRow(${idx}, 'matCost', this.value)" class="w-20 border border-zinc-300 rounded px-2 py-1" /></td>
-            <td class="p-2.5"><input type="number" step="0.5" value="${c.labCost}" onchange="updateCatalogRow(${idx}, 'labCost', this.value)" class="w-20 border border-zinc-300 rounded px-2 py-1" /></td>
-            <td class="p-2.5"><input type="number" step="0.5" value="${c.margin}" onchange="updateCatalogRow(${idx}, 'margin', this.value)" class="w-16 border border-zinc-300 rounded px-2 py-1 font-bold text-emerald-700" /></td>
-            <td class="p-2.5 font-bold text-zinc-900">${formatEUR(fin.sellPrice)}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function updateCatalogRow(idx, field, val) {
-      catalog[idx][field] = parseFloat(val) || 0;
-      localStorage.setItem('vosty_catalog_v2', JSON.stringify(catalog));
-      populateQuickSelects();
-      renderCatalogTable();
-    }
-
-    function savePin() {
-      const val = document.getElementById('pinConfigInput').value.trim();
-      if (val.length >= 4) {
-        localStorage.setItem('vosty_pin', val);
-        alert('Novo PIN guardado com sucesso!');
-      } else {
-        alert('O PIN deve ter pelo menos 4 dígitos.');
-      }
-    }
-
-    function loadDemoProject() {
-      if (confirm('Carregar o projeto completo de exemplo (Jefferson Cabeleireiros e Estética)?')) {
-        items = JSON.parse(JSON.stringify(DEMO_ITEMS));
-        document.getElementById('clientName').value = 'Jefferson Cabeleireiros e Estética';
-        document.getElementById('architectName').value = 'Monique M. Vicente (Interior Designer)';
-        renderAll();
-      }
-    }
-
-    function clearProject() {
-      if (confirm('Limpar todos os itens para iniciar um orçamento novo?')) {
-        items = [];
-        document.getElementById('clientName').value = '';
-        document.getElementById('architectName').value = '';
-        renderAll();
-      }
-    }
-
-    function openAiPromptModal() { document.getElementById('aiModal').classList.remove('hidden'); }
-    function closeAiPromptModal() { document.getElementById('aiModal').classList.add('hidden'); }
-    function copyStandardPrompt() {
-      navigator.clipboard.writeText(document.getElementById('standardAiPrompt').textContent);
-      alert('Comando copiado! Cole no Gemini junto com o PDF ou imagens do projeto arquitetónico/interiores.');
-    }
-    function importJsonItems() {
-      try {
-        const raw = document.getElementById('jsonImportBox').value.trim();
-        const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed)) throw new Error();
-        parsed.forEach((p, idx) => {
-          items.push({
-            id: 'ai_' + Date.now() + '_' + idx,
-            category: p.category === 'remodelacao' ? 'remodelacao' : 'marcenaria',
-            code: p.code || `IT-${idx + 1}`,
-            title: p.title || 'Item Importado',
-            specs: p.specs || '',
-            qty: parseFloat(p.qty) || 1,
-            matCost: parseFloat(p.matCost) || 0,
-            labCost: parseFloat(p.labCost) || 0,
-            margin: parseFloat(p.margin) || (p.category === 'remodelacao' ? 50.0 : 52.4),
-            image: ''
-          });
-        });
-        document.getElementById('jsonImportBox').value = '';
-        closeAiPromptModal();
-        renderAll();
-        alert(`${parsed.length} itens importados com sucesso do projeto!`);
-      } catch (err) {
-        alert('Formato inválido. Certifique-se de colar apenas o bloco JSON gerado pela IA.');
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
+  window.onload = function() {
+    limparTudo();
+    atualizarCamposMarcenaria();
+    atualizarCamposRemodelacao();
+  };
+</script>
 </body>
 </html>
