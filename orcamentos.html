@@ -1,1166 +1,1288 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VOSTY Design | Receba o Seu Orçamento Agora — Marcenaria & Remodelações em Lisboa e Regiões</title>
-  <meta name="description" content="Receba o seu orçamento agora com o simulador online da VOSTY Design. Calcule na hora móveis sob medida, cozinhas, roupeiros, pladur, pintura e remodelações em Lisboa e regiões.">
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <style>
-    :root {
-      --bg: #f5efe6;
-      --bg-soft: #faf7f2;
-      --card: #ffffff;
-      --border: #e4d8c8;
-      --caramel: #a67c52;
-      --caramel-dark: #8c633c;
-      --caramel-light: #efe5d8;
-      --brown-deep: #4a3728;
-      --text: #3b2f26;
-      --muted: #7c6b5d;
-      --green: #2e7d5b;
-      --green-hover: #236347;
-    }
-    * { box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { margin: 0; background: var(--bg); color: var(--text); padding: 18px; }
-    .container { max-width: 900px; margin: 0 auto; }
-
-    .header {
-      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
-      padding: 22px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(74, 55, 40, 0.05);
-    }
-    .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .brand-left { display: flex; align-items: center; gap: 14px; }
-    .logo-box {
-      width: 50px; height: 50px; border-radius: 14px; background: var(--caramel);
-      color: #ffffff; font-weight: 800; letter-spacing: 1px;
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
-    }
-    .brand-title h1 { margin: 0; font-size: 21px; color: var(--brown-deep); letter-spacing: 0.8px; }
-    .brand-title p { margin: 3px 0 0; font-size: 12px; color: var(--muted); font-weight: 500; }
-
-    .top-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--border); }
-    .btn-link {
-      display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
-      border-radius: 9px; font-size: 13px; font-weight: 600; text-decoration: none;
-      border: 1px solid var(--border); background: var(--bg-soft); color: var(--brown-deep); transition: 0.2s;
-    }
-    .btn-link:hover { background: var(--caramel-light); border-color: var(--caramel); }
-
-    .cta-banner {
-      background: linear-gradient(135deg, #a67c52 0%, #8c633c 100%);
-      color: #ffffff; border-radius: 16px; padding: 18px 22px; margin-bottom: 16px;
-      text-align: center; box-shadow: 0 8px 22px rgba(140, 99, 60, 0.22);
-    }
-    .cta-banner h2 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
-    .cta-banner p { margin: 5px 0 0; font-size: 13px; opacity: 0.94; }
-
-    .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-    .tab-btn {
-      padding: 15px; border-radius: 14px; border: 1.5px solid var(--border);
-      background: var(--card); color: var(--muted); font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: 0.25s; text-align: center;
-    }
-    .tab-btn:hover { border-color: var(--caramel); color: var(--brown-deep); }
-    .tab-btn.active {
-      border-color: var(--caramel); background: var(--caramel); color: #ffffff;
-      box-shadow: 0 6px 16px rgba(166, 124, 82, 0.28);
-    }
-
-    .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
-      padding: 22px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(74, 55, 40, 0.04);
-    }
-    .card h2 {
-      margin: 0 0 16px; font-size: 16px; color: var(--brown-deep);
-      border-bottom: 1px solid var(--border); padding-bottom: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
-    @media (max-width: 720px) { .grid, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
-
-    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
-    input, select, textarea {
-      width: 100%; padding: 11px 13px; border-radius: 10px; border: 1px solid #d8c8b6;
-      background: var(--bg-soft); color: var(--text); font-size: 14px; outline: none; transition: 0.2s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--caramel); background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(166, 124, 82, 0.14);
-    }
-
-    .live-estimate-box {
-      background: linear-gradient(135deg, #faf7f2 0%, #f1e6d6 100%);
-      border: 2px solid var(--caramel); border-radius: 14px;
-      padding: 16px 18px; margin-top: 16px;
-    }
-    .live-estimate-top {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-    }
-    .live-estimate-label { font-size: 13px; font-weight: 700; color: var(--brown-deep); }
-    .live-estimate-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
-    .live-estimate-value { font-size: 26px; font-weight: 800; color: var(--caramel-dark); }
-    .live-equipa-line {
-      margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--caramel);
-      font-size: 12px; color: #6e5214; font-weight: 600;
-    }
-
-    .nota-legal {
-      background: #ffffff; border-left: 4px solid var(--caramel);
-      border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 11px 14px; border-radius: 8px; margin-top: 12px;
-      font-size: 12px; color: var(--text); line-height: 1.55;
-    }
-    .nota-legal strong { color: var(--brown-deep); }
-
-    .ai-box {
-      background: var(--bg-soft); border: 1.5px dashed var(--caramel); border-radius: 14px;
-      padding: 18px; text-align: center;
-    }
-    .ai-box strong { color: var(--brown-deep); font-size: 15px; }
-    .ai-box p { margin: 6px 0 14px; font-size: 13px; color: var(--muted); line-height: 1.5; }
-    .btn-ai {
-      display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px;
-      background: var(--caramel); color: #fff; border-radius: 10px; font-size: 13px;
-      font-weight: 600; cursor: pointer; border: none; transition: 0.2s;
-    }
-    .btn-ai:hover { background: var(--caramel-dark); }
-
-    .hint { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 600; }
-    .hidden { display: none !important; }
-
-    .btn {
-      width: 100%; padding: 14px; border-radius: 11px; border: none; font-size: 15px;
-      font-weight: 700; cursor: pointer; transition: 0.2s; display: flex;
-      align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-add {
-      background: var(--caramel-light); color: var(--brown-deep);
-      border: 1px solid var(--caramel); margin-top: 14px;
-    }
-    .btn-add:hover { background: #e5d5c0; }
-    .btn-preview {
-      background: #ffffff; color: var(--brown-deep);
-      border: 1.5px solid var(--brown-deep); margin-top: 10px;
-    }
-    .btn-preview:hover { background: var(--bg-soft); }
-    .btn-finish {
-      background: var(--caramel); color: #fff; margin-top: 10px; font-size: 16px;
-      box-shadow: 0 5px 15px rgba(166, 124, 82, 0.28);
-    }
-    .btn-finish:hover { background: var(--caramel-dark); }
-    .btn-green { background: var(--green); color: #fff; }
-    .btn-green:hover { background: var(--green-hover); }
-
-    .item-row {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--bg-soft); border: 1px solid var(--border); border-radius: 11px;
-      padding: 12px 15px; margin-bottom: 9px; gap: 10px;
-    }
-    .item-info strong { display: block; font-size: 14px; color: var(--brown-deep); }
-    .item-info span { font-size: 12px; color: var(--muted); }
-    .btn-del { background: #fbe9e7; color: #b71c1c; border: 1px solid #f5c6cb; border-radius: 7px; padding: 6px 11px; cursor: pointer; font-size: 12px; font-weight: 600; }
-
-    #proposta-box {
-      background: #ffffff; border-radius: 18px; padding: 26px;
-      margin-top: 20px; border: 2px solid var(--caramel);
-      box-shadow: 0 12px 30px rgba(74, 55, 40, 0.09);
-    }
-    .prop-header {
-      background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
-      padding: 16px; margin-bottom: 16px;
-    }
-    .prop-badge {
-      display: inline-block; background: var(--caramel); color: #ffffff;
-      font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 20px; letter-spacing: 0.5px;
-    }
-    .prop-header h3 { margin: 8px 0 4px; font-size: 21px; color: var(--brown-deep); }
-    .prop-contact { font-size: 12px; color: var(--muted); line-height: 1.6; }
-    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
-    th { background: var(--bg-soft); text-align: left; padding: 11px; border-bottom: 1.5px solid var(--border); color: var(--brown-deep); }
-    td { padding: 11px; border-bottom: 1px solid #f1eae0; }
-    .total-box {
-      text-align: right; font-size: 20px; font-weight: 800; color: var(--brown-deep);
-      margin-top: 14px; padding: 12px 16px; background: var(--bg-soft); border-radius: 10px;
-    }
-
-    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
-    @media (max-width: 600px) { .action-grid { grid-template-columns: 1fr; } }
-
-    .equipa-panel {
-      background: #fdf8eb; border: 1px solid #e6c875; border-radius: 11px;
-      padding: 14px; margin-top: 14px; font-size: 13px; color: #6e5214; line-height: 1.6;
-    }
-    .footer { text-align: center; font-size: 12px; color: var(--muted); margin: 26px 0 14px; line-height: 1.7; }
-    .footer a { color: var(--brown-deep); font-weight: 600; text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-<div class="container">
-
-  <div class="header">
-    <div class="brand-row">
-      <div class="brand-left">
-        <div class="logo-box">VD</div>
-        <div class="brand-title">
-          <h1>VOSTY DESIGN</h1>
-          <p>MARCENARIA & REMODELAÇÕES • LISBOA E REGIÕES</p>
-        </div>
-      </div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:12px; color:var(--green); font-weight:600;">☁️ Cloud Sincronizado</span>
-        <button type="button" onclick="alternarModoEquipa()" style="background:var(--bg-soft); border:1px solid var(--border); border-radius:7px; padding:5px 9px; font-size:11px; color:var(--muted); cursor:pointer;">🔒 Equipa</button>
-      </div>
-    </div>
-
-    <div class="top-links">
-      <a href="https://vostydesign.com" target="_blank" class="btn-link">Site: vostydesign.com</a>
-      <a href="https://instagram.com/vostydesign_remodelações" target="_blank" class="btn-link">Instagram: @vostydesign_remodelações</a>
-      <a href="mailto:vostydesign@gmail.com" class="btn-link">E-mail: vostydesign@gmail.com</a>
-    </div>
-  </div>
-
-  <div class="cta-banner">
-    <h2>Receba o Seu Orçamento Agora</h2>
-    <p>Escolha abaixo entre Marcenaria Sob Medida ou Remodelação, indique as medidas e veja o valor estimado na hora.</p>
-  </div>
-
-  <div class="tabs">
-    <button type="button" id="tabMarcenaria" class="tab-btn active" onclick="mudarAba('marcenaria')">Simulador de Marcenaria</button>
-    <button type="button" id="tabRemodelacao" class="tab-btn" onclick="mudarAba('remodelacao')">Simulador de Remodelação</button>
-  </div>
-
-  <div class="card">
-    <h2>1. Dados do Cliente</h2>
-    <div class="grid">
-      <div>
-        <label>Nome Completo *</label>
-        <input type="text" id="clienteNome" placeholder="Ex.: João Silva" autocomplete="new-password">
-      </div>
-      <div>
-        <label>Telemóvel / WhatsApp *</label>
-        <input type="tel" id="clienteTel" placeholder="Ex.: +351 912 345 678" autocomplete="new-password">
-      </div>
-      <div>
-        <label>E-mail do Cliente</label>
-        <input type="email" id="clienteEmail" placeholder="Ex.: cliente@email.com" autocomplete="new-password">
-      </div>
-      <div>
-        <label>Localidade (Lisboa e regiões)</label>
-        <input type="text" id="clienteLocal" placeholder="Ex.: Lisboa, Oeiras, Sintra, Almada..." autocomplete="new-password">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>2. Leitura de Projeto ou Planta (Opcional)</h2>
-    <div class="ai-box">
-      <strong>Tem uma planta, projeto 3D ou desenho próprio?</strong>
-      <p>Anexe aqui o seu projeto arquitetónico, projeto de design de interiores ou o esboço que você mesmo realizou, para fazermos a leitura automática das medidas e ambientes.</p>
-      <input type="file" id="ficheiroProjeto" accept=".pdf,image/*" class="hidden" onchange="processarProjetoIA(event)">
-      <button type="button" class="btn-ai" onclick="document.getElementById('ficheiroProjeto').click()">Carregar Projeto / Planta (PDF ou Imagem)</button>
-      <div id="statusIA" class="hint hidden"></div>
-    </div>
-  </div>
-
-  <div class="card" id="secMarcenaria">
-    <h2>3. Configurar Móvel / Marcenaria Sob Medida</h2>
-    <div class="grid">
-      <div>
-        <label>Tipo de Móvel / Item</label>
-        <select id="tipoMovel" onchange="aoTrocarMovel()">
-          <option value="">-- Selecione o tipo de móvel --</option>
-          <optgroup label="Cozinhas & Áreas Gourmet">
-            <option value="cozinha_amadeirada">Cozinha em Tom Amadeirado</option>
-            <option value="cozinha_branca_melamina">Cozinha Branca em Melamina</option>
-            <option value="cozinha_lacada">Cozinha Lacada (Mate)</option>
-            <option value="cozinha_termolaminado_brilho">Cozinha em Termolaminado Branco Brilho</option>
-            <option value="cozinha_lacada_brilho">Cozinha Lacada Branca Brilho</option>
-            <option value="ilha_cozinha">Ilha ou Península de Cozinha Sob Medida</option>
-            <option value="despenseiro_coluna">Despenseiro / Torre de Fornos e Micro-ondas</option>
-          </optgroup>
-          <optgroup label="Roupeiros & Closets">
-            <option value="roupeiro_correr_branco_19">Roupeiro de Correr em Melamina Branca com Interno em 19mm</option>
-            <option value="roupeiro_linho_branco">Roupeiro / Closet Melamina 19mm Interno Linho, Portas Brancas Melamina</option>
-            <option value="roupeiro_linho_leds">Roupeiro / Closet Melamina 19mm Interno Linho, Portas Brancas com LEDs nas Laterais</option>
-            <option value="closet_lacado_branco">Closet / Roupeiro Lacado Branco, Portas em Lacado Branco</option>
-            <option value="roupeiro_correr_amadeirado">Roupeiro de Correr Amadeirado</option>
-            <option value="closet_aberto">Closet Aberto / Walk-in Closet</option>
-          </optgroup>
-          <optgroup label="Sala, Escritório & Hall">
-            <option value="painel_tv_gavetas">Painel de Televisão / Sala com Gavetas Incluídas</option>
-            <option value="painel_ripado">Painel Ripado Decorativo</option>
-            <option value="comoda_mesas">Cómoda / Conjunto de Mesas de Cabeceira</option>
-            <option value="secretaria_office">Secretária / Móvel de Escritório Home Office</option>
-            <option value="movel_entrada">Móvel de Entrada / Sapateira / Consola</option>
-          </optgroup>
-          <optgroup label="Lavandaria & Casa de Banho">
-            <option value="moveis_lavandaria">Móveis para Lavandaria (Armários / Coluna Técnica)</option>
-            <option value="moveis_casa_banho">Móveis para Casa de Banho (Suspenso / Bancada Sob Medida)</option>
-          </optgroup>
-          <optgroup label="Portas Interiores">
-            <option value="porta_batente_2x80">Porta de Batente 2,00 m × 0,80 m (Completa c/ aro e guarnições)</option>
-            <option value="porta_batente_2x70">Porta de Batente 2,00 m × 0,70 m (Completa c/ aro e guarnições)</option>
-            <option value="porta_correr_interior">Porta de Correr Interior (Embutida ou à Face)</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <div>
-        <label>Tipo de Ferragens</label>
-        <select id="tipoFerragem" onchange="atualizarEstimativaAoVivoMarc()">
-          <option value="standard">Standard (Amortecimento Suave)</option>
-          <option value="blum_emuca">Premium Blum Legrabox + Emuca</option>
-        </select>
-      </div>
-
-      <div id="boxAcabamentoPorta" class="hidden" style="grid-column: 1 / -1;">
-        <label>Acabamento da Porta Interior *</label>
-        <select id="acabamentoPorta" onchange="atualizarEstimativaAoVivoMarc()">
-          <option value="Lacada Branca">Lacada Branca</option>
-          <option value="Lacada (Outra Cor / Mate)">Lacada (Outra Cor / Mate)</option>
-          <option value="Tom Amadeirado">Tom Amadeirado</option>
-          <option value="Branca Melamina">Branca Melamina</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="grid-4" style="margin-top:14px;">
-      <div>
-        <label>Largura (m)</label>
-        <input type="number" id="larguraMarc" step="0.05" min="0" placeholder="Ex.: 3.00" oninput="aoDigitarMedidaMarc()" autocomplete="off">
-      </div>
-      <div>
-        <label>Altura (m)</label>
-        <input type="number" id="alturaMarc" step="0.05" min="0" placeholder="Ex.: 2.50" oninput="aoDigitarMedidaMarc()" autocomplete="off">
-      </div>
-      <div>
-        <label>Profundidade (m) — Opcional</label>
-        <input type="number" id="profundidadeMarc" step="0.05" min="0" placeholder="Ex.: 0.60" oninput="atualizarEstimativaAoVivoMarc()" autocomplete="off">
-      </div>
-      <div>
-        <label>Área Total (m²)</label>
-        <input type="number" id="m2Marc" step="0.05" min="0" placeholder="Auto ou manual" oninput="atualizarEstimativaAoVivoMarc()" autocomplete="off">
-      </div>
-    </div>
-
-    <div class="grid" style="margin-top:14px;">
-      <div>
-        <label>Quantidade de Unidades</label>
-        <input type="number" id="qtdMarc" min="1" value="1" oninput="atualizarEstimativaAoVivoMarc()" autocomplete="off">
-      </div>
-      <div>
-        <label>Observações / Detalhes (Opcional)</label>
-        <input type="text" id="obsMarc" placeholder="Ex.: Carvalho natural, puxador oculto..." autocomplete="off">
-      </div>
-
-      <div id="boxGavetas" class="hidden" style="grid-column: 1 / -1;">
-        <label>Quantidade Total de Gavetas no Roupeiro (4 gavetas padrão já incluídas)</label>
-        <input type="number" id="qtdGavetas" min="4" value="4" oninput="atualizarEstimativaAoVivoMarc()" autocomplete="off">
-        <div class="hint">✔ Inclui 4 gavetas padrão. Gavetas extras acima de 4 acrescentam corrediças e montagem automaticamente.</div>
-      </div>
-    </div>
-
-    <div class="live-estimate-box">
-      <div class="live-estimate-top">
-        <div>
-          <div class="live-estimate-label">Valor Estimado Deste Móvel / Item:</div>
-          <div class="live-estimate-sub" id="liveDetalheMarc">Selecione o tipo de móvel e introduza a largura, altura ou m² para ver o valor na hora.</div>
-        </div>
-        <div class="live-estimate-value" id="liveValorMarc">€ 0,00</div>
-      </div>
-      <div id="liveEquipaMarc" class="live-equipa-line hidden"></div>
-    </div>
-
-    <div class="nota-legal">
-      <strong>NOTA IMPORTANTE:</strong> Os valores apresentados constituem uma estimativa tentativamente preliminar com base nas dimensões e acabamentos selecionados. O orçamento final vinculativo está sujeito à visita técnica ao local, levantamento rigoroso de medidas e verificações das condições de instalação e validação final das especificações técnicas pelo cliente.
-    </div>
-
-    <button type="button" class="btn btn-add" onclick="adicionarMarcenaria()">+ Adicionar Novo Item</button>
-    <button type="button" class="btn btn-preview" onclick="preVisualizarOrcamento()">Pré-Visualizar Orçamento</button>
-    <button type="button" class="btn btn-finish" onclick="finalizarOrcamento()">Finalizar Orçamento</button>
-  </div>
-
-  <div class="card hidden" id="secRemodelacao">
-    <h2>3. Configurar Obra / Remodelação (Lisboa e Regiões)</h2>
-    <div class="grid">
-      <div style="grid-column: 1 / -1;">
-        <label>Categoria de Serviço / Remodelação</label>
-        <select id="tipoObra" onchange="aoTrocarObra()">
-          <option value="">-- Selecione o serviço de remodelação --</option>
-          <optgroup label="Remodelações Completas & Por Divisão">
-            <option value="remodelacao_geral">Remodelação Geral de Imóvel (Chave na Mão)</option>
-            <option value="espaco_comercial">Remodelação de Espaço Comercial / Conversão para Moradia</option>
-            <option value="cozinha_obra">Remodelação de Cozinha Completa (Obra Civil + Canalização + Eletricidade)</option>
-            <option value="wc_obra">Remodelação de Casa de Banho Completa (Demolição, Impermeabilização e Loiças)</option>
-            <option value="quarto_obra">Remodelação de Quarto Completo (Pavimento, Pintura, Rodapés e Eletricidade)</option>
-            <option value="sala_obra">Remodelação de Sala Completa (Pavimento, Pintura, Rodapés e Iluminação)</option>
-          </optgroup>
-          <optgroup label="Pladur / Drywall (Separados)">
-            <option value="divisorias_pladur">Divisórias em Pladur / Drywall (Paredes Interiores c/ Estrutura, Lã Mineral, Barramento e Pintura)</option>
-            <option value="teto_falso_pladur">Teto Falso em Pladur / Drywall (Estrutura Suspensa, Tabicas, Barramento e Pintura)</option>
-          </optgroup>
-          <optgroup label="Pintura Profissional (Primário + 2 Demãos)">
-            <option value="pintura_interior">Pintura Interior Profissional (Imóvel Completo ou Divisões Específicas)</option>
-            <option value="pintura_exterior">Pintura Exterior de Fachadas / Moradias (Lavagem, Primário + 2 Demãos)</option>
-            <option value="pintura_telhado">Pintura e Impermeabilização de Telhado (Limpeza, Primário + 2 Demãos Membrana/Telha)</option>
-          </optgroup>
-          <optgroup label="Pavimentos, Revestimentos & Instalações">
-            <option value="demolicao_reboco">Demolições, Remoção de Entulho e Regularização / Reboco de Paredes</option>
-            <option value="pavimento_flutuante">Fornecimento e Aplicação de Pavimento Flutuante / Vinílico</option>
-            <option value="revestimento_ceramico">Assentamento de Revestimentos Cerâmicos / Azulejos e Mosaicos</option>
-            <option value="canalizacao_aguas">Substituição de Rede de Canalização (Águas e Esgotos)</option>
-            <option value="eletricidade_led">Instalação Elétrica Geral, Quadro e Iluminação Embutida</option>
-            <option value="portas_obra">Fornecimento e Instalação de Portas Interiores e Portas Blindadas</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <div id="boxTipologia" class="hidden">
-        <label>Tipologia do Imóvel</label>
-        <select id="tipologiaImovel" onchange="atualizarEstimativaAoVivoObra()">
-          <option value="T0 / Estúdio">T0 / Estúdio</option>
-          <option value="T1">T1</option>
-          <option value="T2" selected>T2</option>
-          <option value="T3">T3</option>
-          <option value="T4 ou superior">T4 ou superior</option>
-        </select>
-      </div>
-      <div id="boxQtdWC" class="hidden">
-        <label>Quantidade de Casas de Banho (1 WC incluída no padrão)</label>
-        <input type="number" id="qtdWC" min="1" value="1" oninput="atualizarEstimativaAoVivoObra()" autocomplete="off">
-      </div>
-
-      <div id="boxComercialTipo" class="hidden" style="grid-column: 1 / -1;">
-        <label>Finalidade do Espaço Comercial</label>
-        <select id="finalidadeComercial" onchange="atualizarEstimativaAoVivoObra()">
-          <option value="Remodelação de Loja / Escritório / Espaço Comercial">Remodelação de Loja / Escritório / Espaço Comercial</option>
-          <option value="Conversão de Espaço Comercial para Habitação / Moradia">Conversão de Espaço Comercial para Habitação / Moradia</option>
-        </select>
-      </div>
-      <div id="boxComercialDesc" class="hidden" style="grid-column: 1 / -1;">
-        <label>Em que pretende transformar este espaço? *</label>
-        <textarea id="descTransformacao" rows="2" placeholder="Ex.: Transformar loja de 65 m² num apartamento T2 com cozinha aberta e 1 WC..."></textarea>
-      </div>
-
-      <div id="boxPinturaDivisoes" class="hidden" style="grid-column: 1 / -1;">
-        <label>Divisões a Pintar (Ex.: Apartamento completo, ou apenas Sala e 2 Quartos)</label>
-        <input type="text" id="divisoesPintura" placeholder="Ex.: Apenas Sala de Estar e Quarto Principal (sem cozinha)" autocomplete="off">
-      </div>
-
-      <div id="boxPladurPortas" class="hidden" style="grid-column: 1 / -1; background:var(--bg-soft); padding:13px; border-radius:11px; border:1px solid var(--border);">
-        <div class="grid-3">
-          <div>
-            <label>Incluir Portas Interiores nas Divisórias?</label>
-            <select id="incluirPortasPladur" onchange="aoAlterarPortasPladur()">
-              <option value="nao">Não (Apenas as divisórias em pladur)</option>
-              <option value="sim">Sim (Incluir portas interiores completas)</option>
-            </select>
-          </div>
-          <div id="subQtdPortasPladur" class="hidden">
-            <label>Quantidade de Portas Interiores</label>
-            <input type="number" id="qtdPortasPladur" min="1" value="1" oninput="atualizarEstimativaAoVivoObra()" autocomplete="off">
-          </div>
-          <div id="subAcabPortasPladur" class="hidden">
-            <label>Acabamento das Portas</label>
-            <select id="acabPortasPladur" onchange="atualizarEstimativaAoVivoObra()">
-              <option value="Lacada Branca">Lacada Branca</option>
-              <option value="Tom Amadeirado">Tom Amadeirado</option>
-              <option value="Branca Melamina">Branca Melamina</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid-4" style="margin-top:14px;">
-      <div>
-        <label>Largura (m)</label>
-        <input type="number" id="larguraObra" step="0.05" min="0" placeholder="Ex.: 2.50" oninput="aoDigitarMedidaObra()" autocomplete="off">
-      </div>
-      <div>
-        <label>Altura (m)</label>
-        <input type="number" id="alturaObra" step="0.05" min="0" placeholder="Ex.: 2.50" oninput="aoDigitarMedidaObra()" autocomplete="off">
-      </div>
-      <div>
-        <label>Quantidade (Paredes / Ambientes)</label>
-        <input type="number" id="qtdObra" min="1" value="1" oninput="aoDigitarMedidaObra()" autocomplete="off">
-      </div>
-      <div>
-        <label>Área Total (m²) *</label>
-        <input type="number" id="areaObra" step="0.1" min="0" placeholder="Auto ou manual" oninput="atualizarEstimativaAoVivoObra()" autocomplete="off">
-      </div>
-    </div>
-
-    <div style="margin-top:14px;">
-      <label>Observações Técnicas (Opcional)</label>
-      <input type="text" id="obsObra" placeholder="Ex.: Inclui isolamento térmico/acústico, loiças suspensas..." autocomplete="off">
-    </div>
-
-    <div class="live-estimate-box">
-      <div class="live-estimate-top">
-        <div>
-          <div class="live-estimate-label">Valor Estimado Deste Serviço de Remodelação:</div>
-          <div class="live-estimate-sub" id="liveDetalheObra">Selecione o serviço e introduza a largura, altura ou área total (m²) para ver o valor na hora.</div>
-        </div>
-        <div class="live-estimate-value" id="liveValorObra">€ 0,00</div>
-      </div>
-      <div id="liveEquipaObra" class="live-equipa-line hidden"></div>
-    </div>
-
-    <div class="nota-legal">
-      <strong>NOTA IMPORTANTE:</strong> Os valores apresentados constituem uma estimativa tentativamente preliminar com base nas dimensões e acabamentos selecionados. O orçamento final vinculativo está sujeito à visita técnica ao local, levantamento rigoroso de medidas e verificações das condições de instalação e validação final das especificações técnicas pelo cliente.
-    </div>
-
-    <button type="button" class="btn btn-add" onclick="adicionarRemodelacao()">+ Adicionar Novo Item</button>
-    <button type="button" class="btn btn-preview" onclick="preVisualizarOrcamento()">Pré-Visualizar Orçamento</button>
-    <button type="button" class="btn btn-finish" onclick="finalizarOrcamento()">Finalizar Orçamento</button>
-  </div>
-
-  <div class="card">
-    <h2>4. Itens no Orçamento (<span id="contadorItens">0</span>)</h2>
-    <div id="listaItens">
-      <p style="color:var(--muted); font-size:13px;">Nenhum item adicionado ainda. Configure acima e clique em "Adicionar Novo Item".</p>
-    </div>
-  </div>
-
-  <div id="proposta-box" class="hidden">
-    <div id="area-pdf">
-      <div class="prop-header">
-        <span class="prop-badge">PRÉ-PROPOSTA COMERCIAL & TÉCNICA</span>
-        <h3>VOSTY Design | Marcenaria & Remodelações</h3>
-        <div class="prop-contact">
-          Atendimento: <strong>Lisboa e regiões</strong> • Tel/WhatsApp: <strong>+351 923 189 914</strong><br>
-          Site: <strong>vostydesign.com</strong> • Instagram: <strong>@vostydesign_remodelações</strong> • E-mail: <strong>vostydesign@gmail.com</strong>
-        </div>
-      </div>
-
-      <div style="font-size:13px; margin-bottom:14px; background:var(--bg-soft); padding:13px; border-radius:10px; border:1px solid var(--border); line-height:1.6;">
-        <strong>Cliente:</strong> <span id="propCliente">-</span> &nbsp;|&nbsp; <strong>Telemóvel:</strong> <span id="propTel">-</span><br>
-        <strong>E-mail:</strong> <span id="propEmail">-</span> &nbsp;|&nbsp; <strong>Localidade:</strong> <span id="propLocal">-</span>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição do Serviço / Móvel</th>
-            <th>Dimensões / Qtd</th>
-            <th style="text-align:right;">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaProposta"></tbody>
-      </table>
-
-      <div class="total-box">
-        Estimativa Total: <span id="valorTotalProposta">€ 0,00</span>
-      </div>
-
-      <div id="painelEquipa" class="equipa-panel hidden">
-        <strong>Análise Financeira Interna (VOSTY Design — Marcenaria 53% | Remodelação 50%):</strong><br>
-        • Custo Total de Materiais & Ferragens (Chapas, Blum/Emuca, Leroy Merlin/Brico/Obramat): <strong id="eqMaterial">€ 0,00</strong><br>
-        • Custo Total de Mão de Obra (Fabrico, Montagem & Obra Lisboa): <strong id="eqMaoObra">€ 0,00</strong><br>
-        • Lucro Líquido Previsto (53% Marcenaria / 50% Remodelação): <strong id="eqLucro">€ 0,00</strong>
-      </div>
-
-      <div class="nota-legal">
-        <strong>NOTA IMPORTANTE:</strong> Os valores apresentados constituem uma estimativa tentativamente preliminar com base nas dimensões e acabamentos selecionados. O orçamento final vinculativo está sujeito à visita técnica ao local, levantamento rigoroso de medidas e verificações das condições de instalação e validação final das especificações técnicas pelo cliente.
-      </div>
-    </div>
-
-    <div class="action-grid">
-      <button type="button" class="btn btn-green" onclick="enviarWhatsAppEmpresa()">Enviar para WhatsApp VOSTY Design</button>
-      <button type="button" class="btn btn-finish" style="margin-top:0;" onclick="enviarWhatsAppCliente()">Enviar Cópia para o Meu WhatsApp</button>
-      <button type="button" class="btn btn-add" style="margin-top:0;" onclick="enviarEmailEmpresa()">Enviar para vostydesign@gmail.com</button>
-      <button type="button" class="btn btn-add" style="margin-top:0;" onclick="baixarPDF()">Descarregar Proposta PDF</button>
-    </div>
-    <button type="button" class="btn" style="background:var(--bg-soft); color:var(--muted); border:1px solid var(--border); margin-top:10px;" onclick="limparTudo()">Iniciar Novo Orçamento Limpo</button>
-  </div>
-
-  <div class="footer">
-    <strong>VOSTY Design</strong> — Marcenaria & Remodelações • Lisboa e regiões<br>
-    Site: <a href="https://vostydesign.com" target="_blank">vostydesign.com</a> &nbsp;•&nbsp;
-    Instagram: <a href="https://instagram.com/vostydesign_remodelações" target="_blank">@vostydesign_remodelações</a> &nbsp;•&nbsp;
-    E-mail: <a href="mailto:vostydesign@gmail.com">vostydesign@gmail.com</a>
-  </div>
-
-</div>
-
-<script>
-  const CLOUD_URL = "COLE_AQUI_O_SEU_LINK_DO_GOOGLE_APPS_SCRIPT";
-  const EMAIL_VOSTY = "vostydesign@gmail.com";
-  const MARGEM_MARCENARIA = 0.53;
-  const MARGEM_REMODELACAO = 0.50;
-  const TEXTO_NOTA_LEGAL = "NOTA IMPORTANTE: Os valores apresentados constituem uma estimativa tentativamente preliminar com base nas dimensões e acabamentos selecionados. O orçamento final vinculativo está sujeito à visita técnica ao local, levantamento rigoroso de medidas e verificações das condições de instalação e validação final das especificações técnicas pelo cliente.";
-
-  let itens = [];
-  let modoEquipaAtivo = false;
-  let abaAtual = 'marcenaria';
-
-  const tabelaMarcenaria = {
-    cozinha_amadeirada:          { nome: "Cozinha em Tom Amadeirado", custoMat: 220, custoMO: 151, modo: "cozinha", profPadrao: 0.60 },
-    cozinha_branca_melamina:     { nome: "Cozinha Branca em Melamina", custoMat: 185, custoMO: 135, modo: "cozinha", profPadrao: 0.60 },
-    cozinha_lacada:              { nome: "Cozinha Lacada (Mate)", custoMat: 245, custoMO: 159, modo: "cozinha", profPadrao: 0.60 },
-    cozinha_termolaminado_brilho:{ nome: "Cozinha em Termolaminado Branco Brilho", custoMat: 215, custoMO: 151, modo: "cozinha", profPadrao: 0.60 },
-    cozinha_lacada_brilho:       { nome: "Cozinha Lacada Branca Brilho", custoMat: 265, custoMO: 167, modo: "cozinha", profPadrao: 0.60 },
-    ilha_cozinha:                { nome: "Ilha ou Península de Cozinha Sob Medida", custoMat: 210, custoMO: 142, modo: "linear", profPadrao: 0.90 },
-    despenseiro_coluna:          { nome: "Despenseiro / Torre de Fornos", custoMat: 165, custoMO: 112, modo: "m2", profPadrao: 0.60 },
-    roupeiro_correr_branco_19:   { nome: "Roupeiro de Correr em Melamina Branca com Interno em 19mm", custoMat: 155, custoMO: 110, modo: "m2", roupeiro: true, profPadrao: 0.60 },
-    roupeiro_linho_branco:       { nome: "Roupeiro / Closet Melamina 19mm Interno Linho, Portas Brancas Melamina", custoMat: 150, custoMO: 108, modo: "m2", roupeiro: true, profPadrao: 0.60 },
-    roupeiro_linho_leds:         { nome: "Roupeiro / Closet Melamina 19mm Interno Linho, Portas Brancas com LEDs nas Laterais", custoMat: 172, custoMO: 115, modo: "m2", roupeiro: true, profPadrao: 0.60 },
-    closet_lacado_branco:        { nome: "Closet / Roupeiro Lacado Branco, Portas em Lacado Branco", custoMat: 195, custoMO: 125, modo: "m2", roupeiro: true, profPadrao: 0.60 },
-    roupeiro_correr_amadeirado:  { nome: "Roupeiro de Correr Amadeirado", custoMat: 180, custoMO: 120, modo: "m2", roupeiro: true, profPadrao: 0.60 },
-    closet_aberto:               { nome: "Closet Aberto / Walk-in Closet", custoMat: 135, custoMO: 95,  modo: "m2", roupeiro: true, profPadrao: 0.55 },
-    painel_tv_gavetas:           { nome: "Painel de Televisão / Sala com Gavetas Incluídas", custoMat: 135, custoMO: 95,  modo: "m2", profPadrao: 0.40 },
-    painel_ripado:               { nome: "Painel Ripado Decorativo", custoMat: 72,  custoMO: 50,  modo: "m2", profPadrao: 0.05 },
-    comoda_mesas:                { nome: "Cómoda / Conjunto de Mesas de Cabeceira", custoMat: 115, custoMO: 82,  modo: "un", profPadrao: 0.45 },
-    secretaria_office:           { nome: "Secretária / Móvel Home Office", custoMat: 126, custoMO: 90,  modo: "linear", profPadrao: 0.60 },
-    movel_entrada:               { nome: "Móvel de Entrada / Sapateira / Consola", custoMat: 120, custoMO: 87,  modo: "m2", profPadrao: 0.38 },
-    moveis_lavandaria:           { nome: "Móveis para Lavandaria (Armários / Coluna Técnica)", custoMat: 144, custoMO: 100, modo: "m2", profPadrao: 0.60 },
-    moveis_casa_banho:           { nome: "Móveis para Casa de Banho (Suspenso / Bancada Sob Medida)", custoMat: 126, custoMO: 90,  modo: "flex_wc", profPadrao: 0.45 },
-    porta_batente_2x80:          { nome: "Porta de Batente 2,00 m × 0,80 m (Completa c/ aro e guarnições)", custoMat: 105, custoMO: 64,  modo: "porta" },
-    porta_batente_2x70:          { nome: "Porta de Batente 2,00 m × 0,70 m (Completa c/ aro e guarnições)", custoMat: 100, custoMO: 64,  modo: "porta" },
-    porta_correr_interior:       { nome: "Porta de Correr Interior (Embutida ou à Face)", custoMat: 125, custoMO: 77,  modo: "porta" }
-  };
-
-  const tabelaRemodelacao = {
-    remodelacao_geral:     { nome: "Remodelação Geral de Imóvel (Chave na Mão)", custoMatM2: 145, custoMOM2: 123 },
-    espaco_comercial:      { nome: "Remodelação / Conversão de Espaço Comercial", custoMatM2: 155, custoMOM2: 130 },
-    cozinha_obra:          { nome: "Remodelação de Cozinha Completa (Obra Civil + Canalização + Eletricidade)", custoMatM2: 175, custoMOM2: 145 },
-    wc_obra:               { nome: "Remodelação de Casa de Banho Completa", custoMatM2: 220, custoMOM2: 180 },
-    quarto_obra:           { nome: "Remodelação de Quarto Completo (Pavimento, Pintura, Rodapés e Eletricidade)", custoMatM2: 65,  custoMOM2: 60 },
-    sala_obra:             { nome: "Remodelação de Sala Completa (Pavimento, Pintura, Rodapés e Iluminação)", custoMatM2: 60,  custoMOM2: 55 },
-    divisorias_pladur:     { nome: "Divisórias em Pladur / Drywall (Dupla Face, Estrutura, Lã Mineral, Barramento e Pintura)", custoMatM2: 18,  custoMOM2: 18 },
-    teto_falso_pladur:     { nome: "Teto Falso em Pladur / Drywall (Estrutura Suspensa, Tabicas, Barramento e Pintura)", custoMatM2: 15,  custoMOM2: 16 },
-    pintura_interior:      { nome: "Pintura Interior Profissional (Primário + 2 Demãos)", custoMatM2: 5,   custoMOM2: 9,   rendimentoLata15L: 65 },
-    pintura_exterior:      { nome: "Pintura Exterior de Fachadas / Moradias (Lavagem, Primário + 2 Demãos)", custoMatM2: 7.5, custoMOM2: 12.5, rendimentoLata15L: 55 },
-    pintura_telhado:       { nome: "Pintura e Impermeabilização de Telhado (Limpeza, Primário + 2 Demãos)", custoMatM2: 9.5, custoMOM2: 14.5, rendimentoLata15L: 12 },
-    demolicao_reboco:      { nome: "Demolições, Remoção de Entulho e Regularização / Reboco", custoMatM2: 7,   custoMOM2: 14 },
-    pavimento_flutuante:   { nome: "Fornecimento e Aplicação de Pavimento Flutuante / Vinílico", custoMatM2: 14,  custoMOM2: 9 },
-    revestimento_ceramico: { nome: "Assentamento de Revestimentos Cerâmicos / Azulejos", custoMatM2: 14,  custoMOM2: 13 },
-    canalizacao_aguas:     { nome: "Substituição de Rede de Canalização (Águas e Esgotos)", custoMatM2: 16,  custoMOM2: 17 },
-    eletricidade_led:      { nome: "Instalação Elétrica Geral, Quadro e Iluminação", custoMatM2: 15,  custoMOM2: 15 },
-    portas_obra:           { nome: "Fornecimento e Instalação de Portas Interiores / Blindadas", custoMatM2: 65,  custoMOM2: 45 }
-  };
-
-  function mudarAba(aba) {
-    abaAtual = aba;
-    document.getElementById('tabMarcenaria').classList.toggle('active', aba === 'marcenaria');
-    document.getElementById('tabRemodelacao').classList.toggle('active', aba === 'remodelacao');
-    document.getElementById('secMarcenaria').classList.toggle('hidden', aba !== 'marcenaria');
-    document.getElementById('secRemodelacao').classList.toggle('hidden', aba !== 'remodelacao');
-  }
-
-  function alternarModoEquipa() {
-    if (!modoEquipaAtivo) {
-      const pin = prompt("Introduza o PIN da Equipa VOSTY Design:");
-      if (pin !== "2026") { alert("PIN incorreto."); return; }
-      modoEquipaAtivo = true;
-      document.getElementById('painelEquipa').classList.remove('hidden');
-      document.getElementById('liveEquipaMarc').classList.remove('hidden');
-      document.getElementById('liveEquipaObra').classList.remove('hidden');
-      atualizarEstimativaAoVivoMarc();
-      atualizarEstimativaAoVivoObra();
-      alert("Modo Equipa ativado! Verá a divisão real de Material, Mão de Obra e Lucro (53% Marcenaria / 50% Remodelação).");
-    } else {
-      modoEquipaAtivo = false;
-      document.getElementById('painelEquipa').classList.add('hidden');
-      document.getElementById('liveEquipaMarc').classList.add('hidden');
-      document.getElementById('liveEquipaObra').classList.add('hidden');
-    }
-  }
-
-  function limparCamposMarcenaria(resetarSelect = true) {
-    if (resetarSelect) document.getElementById('tipoMovel').selectedIndex = 0;
-    document.getElementById('tipoFerragem').selectedIndex = 0;
-    ['larguraMarc','alturaMarc','profundidadeMarc','m2Marc','obsMarc'].forEach(id => {
-      document.getElementById(id).value = "";
-    });
-    document.getElementById('qtdMarc').value = "1";
-    document.getElementById('qtdGavetas').value = "4";
-    atualizarCamposMarcenaria();
-    atualizarEstimativaAoVivoMarc();
-  }
-
-  function limparCamposRemodelacao(resetarSelect = true) {
-    if (resetarSelect) document.getElementById('tipoObra').selectedIndex = 0;
-    ['larguraObra','alturaObra','areaObra','obsObra','descTransformacao','divisoesPintura'].forEach(id => {
-      document.getElementById(id).value = "";
-    });
-    document.getElementById('qtdObra').value = "1";
-    document.getElementById('qtdWC').value = "1";
-    document.getElementById('incluirPortasPladur').value = "nao";
-    document.getElementById('qtdPortasPladur').value = "1";
-    atualizarCamposRemodelacao();
-    atualizarEstimativaAoVivoObra();
-  }
-
-  function aoDigitarMedidaMarc() {
-    const l = parseFloat(document.getElementById('larguraMarc').value) || 0;
-    const a = parseFloat(document.getElementById('alturaMarc').value) || 0;
-    if (l > 0 && a > 0) {
-      document.getElementById('m2Marc').value = (l * a).toFixed(2);
-    } else if (l > 0 && a === 0) {
-      document.getElementById('m2Marc').value = l.toFixed(2);
-    } else if (a > 0 && l === 0) {
-      document.getElementById('m2Marc').value = a.toFixed(2);
-    } else {
-      document.getElementById('m2Marc').value = "";
-    }
-    atualizarEstimativaAoVivoMarc();
-  }
-
-  function aoDigitarMedidaObra() {
-    const l = parseFloat(document.getElementById('larguraObra').value) || 0;
-    const a = parseFloat(document.getElementById('alturaObra').value) || 0;
-    const qtd = Math.max(1, parseInt(document.getElementById('qtdObra').value) || 1);
-    if (l > 0 && a > 0) {
-      document.getElementById('areaObra').value = (l * a * qtd).toFixed(2);
-    } else if (l > 0 && a === 0) {
-      document.getElementById('areaObra').value = (l * qtd).toFixed(2);
-    }
-    atualizarEstimativaAoVivoObra();
-  }
-
-  function aoTrocarMovel() {
-    limparCamposMarcenaria(false);
-  }
-
-  function atualizarCamposMarcenaria() {
-    const tipo = document.getElementById('tipoMovel').value;
-    const info = tabelaMarcenaria[tipo];
-    document.getElementById('boxGavetas').classList.toggle('hidden', !info || !info.roupeiro);
-    document.getElementById('boxAcabamentoPorta').classList.toggle('hidden', !info || info.modo !== 'porta');
-  }
-
-  function aoTrocarObra() {
-    limparCamposRemodelacao(false);
-  }
-
-  function aoAlterarPortasPladur() {
-    const inc = document.getElementById('incluirPortasPladur').value === 'sim';
-    document.getElementById('subQtdPortasPladur').classList.toggle('hidden', !inc);
-    document.getElementById('subAcabPortasPladur').classList.toggle('hidden', !inc);
-    atualizarEstimativaAoVivoObra();
-  }
-
-  function atualizarCamposRemodelacao() {
-    const tipo = document.getElementById('tipoObra').value;
-    document.getElementById('boxTipologia').classList.toggle('hidden', tipo !== 'remodelacao_geral');
-    document.getElementById('boxQtdWC').classList.toggle('hidden', tipo !== 'remodelacao_geral');
-    document.getElementById('boxComercialTipo').classList.toggle('hidden', tipo !== 'espaco_comercial');
-    document.getElementById('boxComercialDesc').classList.toggle('hidden', tipo !== 'espaco_comercial');
-    document.getElementById('boxPinturaDivisoes').classList.toggle('hidden', tipo !== 'pintura_interior');
-    document.getElementById('boxPladurPortas').classList.toggle('hidden', tipo !== 'divisorias_pladur');
-    aoAlterarPortasPladur();
-  }
-
-  function calcularDadosMarcenaria() {
-    const tipo = document.getElementById('tipoMovel').value;
-    if (!tipo || !tabelaMarcenaria[tipo]) return null;
-
-    const ferragem = document.getElementById('tipoFerragem').value;
-    const larg = parseFloat(document.getElementById('larguraMarc').value) || 0;
-    const alt = parseFloat(document.getElementById('alturaMarc').value) || 0;
-    const prof = parseFloat(document.getElementById('profundidadeMarc').value) || 0;
-    const m2 = parseFloat(document.getElementById('m2Marc').value) || 0;
-    const qtd = Math.max(1, parseInt(document.getElementById('qtdMarc').value) || 1);
-    const obs = document.getElementById('obsMarc').value.trim();
-
-    const info = tabelaMarcenaria[tipo];
-    const multFerragemMat = ferragem === 'blum_emuca' ? 1.28 : 1.0;
-    const nomeFerr = ferragem === 'blum_emuca' ? "Premium Blum Legrabox + Emuca" : "Standard";
-
-    const temMedida = (info.modo === 'porta' || info.modo === 'un') || (larg > 0 || alt > 0 || m2 > 0);
-    if (!temMedida) return null;
-
-    let fatorProf = 1.0;
-    if (prof > 0 && info.profPadrao && info.profPadrao > 0) {
-      fatorProf = Math.max(0.70, Math.min(1.50, 0.65 + 0.35 * (prof / info.profPadrao)));
-    }
-
-    let medidaCalculo = 1;
-    let textoMedida = `${qtd} un.`;
-    let extraDesc = "";
-    const sufixoProf = prof > 0 ? ` × ${prof.toFixed(2)}m prof.` : "";
-
-    if (info.modo === 'porta') {
-      const acab = document.getElementById('acabamentoPorta').value;
-      extraDesc = ` — Acabamento: ${acab}`;
-      textoMedida = `${qtd} un.`;
-    } else if (info.modo === 'cozinha') {
-      if (larg > 0 && alt > 0) {
-        const fatorAltura = Math.max(1.0, alt / 1.45);
-        medidaCalculo = larg * fatorAltura;
-        textoMedida = `${qtd}x (${larg.toFixed(2)}m × ${alt.toFixed(2)}m${sufixoProf} = ${(larg * alt).toFixed(2)} m²)`;
-      } else {
-        medidaCalculo = larg > 0 ? larg : (alt > 0 ? alt : m2);
-        textoMedida = `${qtd}x (${medidaCalculo.toFixed(2)} m linear${sufixoProf})`;
-      }
-    } else if (info.modo === 'flex_wc') {
-      if (larg > 0 && alt > 0) {
-        medidaCalculo = larg * alt * 2.1;
-        textoMedida = `${qtd}x (${larg.toFixed(2)}m × ${alt.toFixed(2)}m${sufixoProf})`;
-      } else if (larg > 0) {
-        medidaCalculo = larg;
-        textoMedida = `${qtd}x (${larg.toFixed(2)}m larg.${sufixoProf})`;
-      } else if (alt > 0) {
-        medidaCalculo = alt;
-        textoMedida = `${qtd}x (${alt.toFixed(2)}m alt.${sufixoProf})`;
-      } else if (m2 > 0) {
-        medidaCalculo = m2 * 2.1;
-        textoMedida = `${qtd}x (${m2.toFixed(2)} m²${sufixoProf})`;
-      }
-    } else if (info.modo === 'linear') {
-      medidaCalculo = larg > 0 ? larg : (alt > 0 ? alt : m2);
-      textoMedida = `${qtd}x (${medidaCalculo.toFixed(2)} m linear${sufixoProf})`;
-    } else if (info.modo === 'm2') {
-      medidaCalculo = (larg > 0 && alt > 0) ? (larg * alt) : (m2 > 0 ? m2 : (larg > 0 ? larg : alt));
-      textoMedida = (larg > 0 && alt > 0)
-        ? `${qtd}x (${larg.toFixed(2)}m × ${alt.toFixed(2)}m${sufixoProf} = ${medidaCalculo.toFixed(2)} m²)`
-        : `${qtd}x (${medidaCalculo.toFixed(2)} m²${sufixoProf})`;
-    }
-
-    const fatorUn = (info.modo === 'un' || info.modo === 'porta') ? 1 : medidaCalculo * fatorProf;
-    let matUnit = (info.custoMat * fatorUn) * multFerragemMat;
-    let moUnit = info.custoMO * fatorUn;
-
-    let txtGav = "";
-    if (info.roupeiro) {
-      const totalG = Math.max(4, parseInt(document.getElementById('qtdGavetas').value) || 4);
-      const extras = totalG - 4;
-      matUnit += extras * (ferragem === 'blum_emuca' ? 24 : 14);
-      moUnit += extras * 12;
-      txtGav = extras > 0 ? ` | ${totalG} gavetas (${extras} extras)` : ` | 4 gavetas padrão`;
-    }
-
-    const custoMaterialTotal = matUnit * qtd;
-    const custoMOTotal = moUnit * qtd;
-    const custoDiretoTotal = custoMaterialTotal + custoMOTotal;
-    const subtotal = custoDiretoTotal / (1 - MARGEM_MARCENARIA);
-    const lucroItem = subtotal - custoDiretoTotal;
-
-    return {
-      categoria: "Marcenaria",
-      descricao: `${info.nome}${extraDesc}${txtGav} • Ferragens: ${nomeFerr}${obs ? ` (${obs})` : ""}`,
-      detalhe: textoMedida,
-      custoMat: custoMaterialTotal,
-      custoMO: custoMOTotal,
-      lucro: lucroItem,
-      subtotal
-    };
-  }
-
-  function atualizarEstimativaAoVivoMarc() {
-    const calc = calcularDadosMarcenaria();
-    if (!calc) {
-      document.getElementById('liveValorMarc').innerText = "€ 0,00";
-      document.getElementById('liveDetalheMarc').innerText = "Selecione o tipo de móvel e introduza a largura, altura ou m² para ver o valor na hora.";
-      document.getElementById('liveEquipaMarc').innerText = "";
-      return;
-    }
-    document.getElementById('liveValorMarc').innerText = `€ ${calc.subtotal.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    document.getElementById('liveDetalheMarc').innerText = `${calc.descricao} • ${calc.detalhe}`;
-    document.getElementById('liveEquipaMarc').innerText = `🔒 Equipa (53%): Material € ${calc.custoMat.toFixed(2)} | Mão de Obra € ${calc.custoMO.toFixed(2)} | Lucro € ${calc.lucro.toFixed(2)}`;
-  }
-
-  function calcularDadosRemodelacao() {
-    const tipo = document.getElementById('tipoObra').value;
-    if (!tipo || !tabelaRemodelacao[tipo]) return null;
-
-    const larg = parseFloat(document.getElementById('larguraObra').value) || 0;
-    const alt = parseFloat(document.getElementById('alturaObra').value) || 0;
-    const qtd = Math.max(1, parseInt(document.getElementById('qtdObra').value) || 1);
-    const areaInput = parseFloat(document.getElementById('areaObra').value) || 0;
-
-    let area = areaInput;
-    if (!area || area <= 0) {
-      if (larg > 0 && alt > 0) area = larg * alt * qtd;
-      else if (larg > 0) area = larg * qtd;
-    }
-    if (!area || area <= 0) return null;
-
-    const obs = document.getElementById('obsObra').value.trim();
-    const info = tabelaRemodelacao[tipo];
-
-    let custoMaterialTotal = area * info.custoMatM2;
-    let custoMOTotal = area * info.custoMOM2;
-    let detalheExtra = "";
-    let infoLatasEquipa = "";
-
-    if (info.rendimentoLata15L) {
-      const latas = Math.ceil(area / info.rendimentoLata15L);
-      infoLatasEquipa = ` | Estimativa Tinta: ~${latas} lata(s) 15L (Primário + 2 demãos)`;
-    }
-
-    if (tipo === 'remodelacao_geral') {
-      const tip = document.getElementById('tipologiaImovel').value;
-      const wcs = Math.max(1, parseInt(document.getElementById('qtdWC').value) || 1);
-      const wcExtras = wcs - 1;
-      custoMaterialTotal += wcExtras * 1150;
-      custoMOTotal += wcExtras * 1050;
-      detalheExtra = ` (${tip} • ${wcs} WC${wcs > 1 ? 's' : ''})`;
-    } else if (tipo === 'espaco_comercial') {
-      const fin = document.getElementById('finalidadeComercial').value;
-      const desc = document.getElementById('descTransformacao').value.trim();
-      detalheExtra = ` — ${fin}${desc ? `: "${desc}"` : ""}`;
-    } else if (tipo === 'pintura_interior') {
-      const divs = document.getElementById('divisoesPintura').value.trim();
-      detalheExtra = divs ? ` — Divisões: ${divs}` : " — Imóvel Completo";
-    } else if (tipo === 'divisorias_pladur') {
-      const incPortas = document.getElementById('incluirPortasPladur').value === 'sim';
-      if (incPortas) {
-        const qtdP = Math.max(1, parseInt(document.getElementById('qtdPortasPladur').value) || 1);
-        const acabP = document.getElementById('acabPortasPladur').value;
-        custoMaterialTotal += qtdP * 110;
-        custoMOTotal += qtdP * 70;
-        detalheExtra = ` + ${qtdP} Porta(s) Interior(es) (${acabP})`;
-      }
-    }
-
-    const custoDiretoTotal = custoMaterialTotal + custoMOTotal;
-    const subtotal = custoDiretoTotal / (1 - MARGEM_REMODELACAO);
-    const lucroItem = subtotal - custoDiretoTotal;
-
-    const prefixoQtd = qtd > 1 ? `${qtd} paredes/un. • ` : "";
-    const textoDim = (larg > 0 && alt > 0)
-      ? `${prefixoQtd}${larg.toFixed(2)}m × ${alt.toFixed(2)}m (Total: ${area.toFixed(2)} m²)`
-      : `${prefixoQtd}${area.toFixed(2)} m²`;
-
-    return {
-      categoria: "Remodelação",
-      descricao: `${info.nome}${detalheExtra}${obs ? ` (${obs})` : ""}`,
-      detalhe: textoDim,
-      custoMat: custoMaterialTotal,
-      custoMO: custoMOTotal,
-      lucro: lucroItem,
-      subtotal,
-      infoLatasEquipa
-    };
-  }
-
-  function atualizarEstimativaAoVivoObra() {
-    const calc = calcularDadosRemodelacao();
-    if (!calc) {
-      document.getElementById('liveValorObra').innerText = "€ 0,00";
-      document.getElementById('liveDetalheObra').innerText = "Selecione o serviço e introduza a largura, altura ou área total (m²) para ver o valor na hora.";
-      document.getElementById('liveEquipaObra').innerText = "";
-      return;
-    }
-    document.getElementById('liveValorObra').innerText = `€ ${calc.subtotal.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    document.getElementById('liveDetalheObra').innerText = `${calc.descricao} • ${calc.detalhe}`;
-    document.getElementById('liveEquipaObra').innerText = `🔒 Equipa (50%): Material € ${calc.custoMat.toFixed(2)} | Mão de Obra € ${calc.custoMO.toFixed(2)} | Lucro € ${calc.lucro.toFixed(2)}${calc.infoLatasEquipa}`;
-  }
-
-  function adicionarMarcenaria() {
-    const calc = calcularDadosMarcenaria();
-    if (!calc) { alert("Por favor, selecione o móvel e indique a largura, altura ou m² antes de adicionar."); return; }
-    itens.push(calc);
-    renderizarLista();
-    limparCamposMarcenaria(true);
-  }
-
-  function adicionarRemodelacao() {
-    const calc = calcularDadosRemodelacao();
-    if (!calc) { alert("Por favor, selecione o serviço e indique a largura, altura ou área total (m²) antes de adicionar."); return; }
-    itens.push(calc);
-    renderizarLista();
-    limparCamposRemodelacao(true);
-  }
-
-  function removerItem(i) {
-    itens.splice(i, 1);
-    renderizarLista();
-  }
-
-  function renderizarLista() {
-    const lista = document.getElementById('listaItens');
-    document.getElementById('contadorItens').innerText = itens.length;
-    if (itens.length === 0) {
-      lista.innerHTML = `<p style="color:var(--muted); font-size:13px;">Nenhum item adicionado ainda.</p>`;
-      return;
-    }
-    lista.innerHTML = itens.map((it, i) => `
-      <div class="item-row">
-        <div class="item-info">
-          <strong>[${it.categoria}] ${it.descricao}</strong>
-          <span>${it.detalhe} • <b>€ ${it.subtotal.toFixed(2)}</b></span>
-        </div>
-        <button type="button" class="btn-del" onclick="removerItem(${i})">Remover</button>
-      </div>
-    `).join('');
-  }
-
-  function incluirItemPendenteSeHouver() {
-    if (abaAtual === 'marcenaria') {
-      const calcMarc = calcularDadosMarcenaria();
-      if (calcMarc) {
-        itens.push(calcMarc);
-        renderizarLista();
-        limparCamposMarcenaria(true);
-      }
-    } else {
-      const calcObra = calcularDadosRemodelacao();
-      if (calcObra) {
-        itens.push(calcObra);
-        renderizarLista();
-        limparCamposRemodelacao(true);
-      }
-    }
-  }
-
-  function montarPropostaNaTela() {
-    incluirItemPendenteSeHouver();
-    if (itens.length === 0) { alert("Selecione um item e introduza as medidas antes de gerar o orçamento."); return false; }
-
-    document.getElementById('propCliente').innerText = document.getElementById('clienteNome').value || "Cliente";
-    document.getElementById('propTel').innerText = document.getElementById('clienteTel').value || "Não informado";
-    document.getElementById('propEmail').innerText = document.getElementById('clienteEmail').value || "Não informado";
-    document.getElementById('propLocal').innerText = document.getElementById('clienteLocal').value || "Lisboa e regiões";
-
-    let total = 0, totalMat = 0, totalMO = 0, totalLucro = 0;
-    document.getElementById('tabelaProposta').innerHTML = itens.map(it => {
-      total += it.subtotal;
-      totalMat += it.custoMat;
-      totalMO += it.custoMO;
-      totalLucro += it.lucro;
-      return `<tr><td>${it.descricao}</td><td>${it.detalhe}</td><td style="text-align:right; font-weight:700;">€ ${it.subtotal.toFixed(2)}</td></tr>`;
-    }).join('');
-
-    document.getElementById('valorTotalProposta').innerText = `€ ${total.toLocaleString('pt-PT', { minimumFractionDigits: 2 })}`;
-    document.getElementById('eqMaterial').innerText = `€ ${totalMat.toFixed(2)}`;
-    document.getElementById('eqMaoObra').innerText = `€ ${totalMO.toFixed(2)}`;
-    document.getElementById('eqLucro').innerText = `€ ${totalLucro.toFixed(2)}`;
-
-    const box = document.getElementById('proposta-box');
-    box.classList.remove('hidden');
-    box.scrollIntoView({ behavior: 'smooth' });
-    return true;
-  }
-
-  function preVisualizarOrcamento() {
-    montarPropostaNaTela();
-  }
-
-  function finalizarOrcamento() {
-    if (!montarPropostaNaTela()) return;
-    notificarEmailAutomatico();
-  }
-
-  function notificarEmailAutomatico() {
-    const nome = document.getElementById('clienteNome').value || "Cliente Simulador";
-    fetch(`https://formsubmit.co/ajax/${EMAIL_VOSTY}`, {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: `Novo Orçamento VOSTY Design - ${nome}`,
-        Cliente: nome,
-        Telemovel: document.getElementById('clienteTel').value || "Não informado",
-        Email_Cliente: document.getElementById('clienteEmail').value || "Não informado",
-        Localidade: document.getElementById('clienteLocal').value || "Lisboa e regiões",
-        Resumo_Completo_Com_Custos_E_Lucros: gerarResumoTexto(true)
-      })
-    }).catch(() => {});
-  }
-
-  async function processarProjetoIA(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const status = document.getElementById('statusIA');
-    status.classList.remove('hidden');
-    status.innerText = `⏳ A ler "${file.name}" com Inteligência Artificial VOSTY Design...`;
-
-    if (CLOUD_URL.startsWith("http")) {
-      const reader = new FileReader();
-      reader.onload = async function() {
-        try {
-          const base64 = reader.result.split(',')[1];
-          const resp = await fetch(CLOUD_URL, {
-            method: "POST",
-            body: JSON.stringify({ acao: "ler_projeto", mimeType: file.type, dados: base64, tipoSimulador: abaAtual })
-          });
-          const res = await resp.json();
-          if (res.itens && res.itens.length > 0) {
-            res.itens.forEach(it => itens.push(it));
-            renderizarLista();
-            status.innerText = `✅ Leitura concluída! ${res.itens.length} itens adicionados automaticamente ao orçamento.`;
-          } else {
-            status.innerText = "✔ Ficheiro anexado! Confirme as dimensões abaixo para finalizar.";
-          }
-        } catch (e) {
-          status.innerText = "✔ Projeto registado! Pode confirmar as medidas abaixo.";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOSTY Design | Simulador Oficial de Orçamentos — Portugal &amp; Toda a Europa</title>
+    <meta name="description" content="Simulador de orçamentos VOSTY Design: móveis planejados, móveis sob medida e remodelações completas ou parciais em Portugal e toda a Europa.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                    },
+                    colors: {
+                        vosty: {
+                            dark: '#141413',
+                            charcoal: '#1E1D1B',
+                            gold: '#B89352',
+                            goldlight: '#D4B47B',
+                            cream: '#F8F6F2',
+                            stone: '#EAE5DC',
+                            muted: '#6E6A63'
+                        }
+                    }
+                }
+            }
         }
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setTimeout(() => {
-        status.innerText = `✔ Projeto "${file.name}" carregado! Adicione ou ajuste as medidas abaixo para calcular.`;
-      }, 900);
-    }
-  }
+    </script>
+    <style>
+        .pdf-sheet {
+            background: #ffffff;
+            color: #141413;
+        }
+        .pdf-break-avoid {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+    </style>
+</head>
+<body class="bg-vosty-cream text-vosty-dark antialiased">
 
-  function gerarResumoTexto(incluirInterno = false) {
-    const nome = document.getElementById('clienteNome').value || "Cliente";
-    const tel = document.getElementById('clienteTel').value || "";
-    const email = document.getElementById('clienteEmail').value || "";
-    const local = document.getElementById('clienteLocal').value || "Lisboa e regiões";
-    const total = document.getElementById('valorTotalProposta').innerText;
+    <!-- Top Bar -->
+    <div class="bg-vosty-dark text-vosty-stone/85 text-xs py-2.5 px-4 border-b border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-vosty-gold"></span>
+                <span>VOSTY Design • Portugal &amp; Toda a Europa • Móveis Sob Medida &amp; Remodelações</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://vostydesign.com" class="text-vosty-goldlight hover:underline">← Voltar ao Site Oficial</a>
+                <span>WhatsApp: +351 923 189 914</span>
+            </div>
+        </div>
+    </div>
 
-    let txt = `*PRÉ-PROPOSTA VOSTY DESIGN*\nCliente: ${nome} (${tel})\nE-mail: ${email}\nLocal: ${local}\n\n*Itens Solicitados:*\n`;
-    itens.forEach((it, idx) => { txt += `${idx + 1}. [${it.categoria}] ${it.descricao} (${it.detalhe}) -> € ${it.subtotal.toFixed(2)}\n`; });
-    txt += `\n*Estimativa Total:* ${total}\n\n_${TEXTO_NOTA_LEGAL}_\n\nSite: vostydesign.com | Instagram: @vostydesign_remodelações | E-mail: vostydesign@gmail.com`;
+    <!-- Header -->
+    <header class="bg-white border-b border-vosty-stone sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 border border-vosty-gold flex items-center justify-center rotate-45">
+                    <div class="w-5 h-5 border border-vosty-dark/70"></div>
+                </div>
+                <div class="pl-1">
+                    <span class="block text-lg font-bold tracking-[0.22em] text-vosty-dark leading-none">VOSTY</span>
+                    <span class="block text-[10px] tracking-[0.18em] text-vosty-muted uppercase mt-1">Simulador Oficial de Orçamentos</span>
+                </div>
+            </div>
+            <div class="text-xs text-vosty-muted">
+                Base Central Sincronizada: <strong class="text-vosty-dark">Leroy Merlin • Brico Depôt • Obramat • Egger/Sonae/Finsa • Blum/Hettich</strong>
+            </div>
+        </div>
+    </header>
 
-    if (incluirInterno) {
-      txt += `\n\n--- ANÁLISE FINANCEIRA EQUIPA (MARCENARIA 53% | REMODELAÇÃO 50%) ---\nCusto de Materiais & Ferragens: ${document.getElementById('eqMaterial').innerText}\nCusto de Mão de Obra: ${document.getElementById('eqMaoObra').innerText}\nLucro Líquido Previsto: ${document.getElementById('eqLucro').innerText}`;
-    }
-    return txt;
-  }
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
 
-  function enviarWhatsAppEmpresa() {
-    window.open(`https://wa.me/351923189914?text=${encodeURIComponent(gerarResumoTexto(false))}`, '_blank');
-  }
+            <!-- COLUNA ESQUERDA: CONFIGURADOR (7 colunas) -->
+            <div class="lg:col-span-7 space-y-6">
 
-  function enviarWhatsAppCliente() {
-    let telRaw = (document.getElementById('clienteTel').value || "").replace(/\D/g, '');
-    if (!telRaw) { alert("Por favor, preencha o seu número de Telemóvel / WhatsApp no campo 1."); return; }
-    if (telRaw.length === 9) telRaw = "351" + telRaw;
-    window.open(`https://wa.me/${telRaw}?text=${encodeURIComponent(gerarResumoTexto(false))}`, '_blank');
-  }
+                <!-- 1. Dados do Cliente -->
+                <section class="bg-white p-6 border border-vosty-stone shadow-sm">
+                    <h2 class="font-serif text-2xl font-bold text-vosty-dark mb-4">1. Dados do Cliente &amp; Local da Obra</h2>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Nome Completo *</label>
+                            <input type="text" id="cliente-nome" oninput="atualizarPreview()" placeholder="Ex: Carlos Mendes"
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Cidade / País (Portugal ou Europa) *</label>
+                            <input type="text" id="cliente-local" oninput="atualizarPreview()" placeholder="Ex: Portugal, Espanha, França, Itália, Reino Unido..."
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">WhatsApp do Cliente (com indicativo) *</label>
+                            <input type="tel" id="cliente-whatsapp" oninput="atualizarPreview()" placeholder="Ex: +351 912 345 678"
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">E-mail do Cliente *</label>
+                            <input type="email" id="cliente-email" oninput="atualizarPreview()" placeholder="Ex: cliente@email.com"
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-gold">
+                        </div>
+                    </div>
+                </section>
 
-  function enviarEmailEmpresa() {
-    const nome = document.getElementById('clienteNome').value || "Cliente";
-    const assunto = encodeURIComponent(`Novo Orçamento VOSTY Design - ${nome}`);
-    const corpo = encodeURIComponent(gerarResumoTexto(true));
-    window.location.href = `mailto:${EMAIL_VOSTY}?subject=${assunto}&body=${corpo}`;
-  }
+                <!-- 2. Carregar Projeto, Planta, Imagem ou Tirar Foto + Análise Complementar -->
+                <section class="bg-white p-6 border border-vosty-stone shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <h2 class="font-serif text-2xl font-bold text-vosty-dark">2. Carregar Projeto, Planta ou Foto do Espaço</h2>
+                        <span class="text-[11px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 font-semibold">
+                            Cloud Sincronizador Ativo
+                        </span>
+                    </div>
+                    <p class="text-xs text-vosty-muted mb-4">
+                        Envie a planta, PDF ou fotografia do ambiente (ou tire uma foto agora pelo telemóvel). O sistema sincroniza as referências de materiais (Leroy Merlin, Brico Depôt, Obramat, chapas Egger/Sonae/Finsa e ferragens Blum/Hettich) e permite incluir itens complementares (vidro, pedra, serralharia).
+                    </p>
 
-  function baixarPDF() {
-    const nome = (document.getElementById('clienteNome').value || "Cliente").replace(/\s+/g, '_');
-    html2pdf().from(document.getElementById('area-pdf')).save(`Pre_Proposta_VOSTY_Design_${nome}.pdf`);
-  }
+                    <div class="grid sm:grid-cols-2 gap-3 mb-4">
+                        <label for="input-arquivo" class="cursor-pointer border-2 border-dashed border-vosty-gold/70 hover:border-vosty-dark bg-vosty-cream/50 p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
+                            <span class="text-lg">📄</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-vosty-dark">Carregar Imagem ou PDF</span>
+                            <span class="text-[11px] text-vosty-muted">JPG, PNG, WEBP ou PDF</span>
+                            <input type="file" id="input-arquivo" accept="image/*,.pdf,application/pdf" class="hidden" onchange="processarFicheiro(event)">
+                        </label>
 
-  function limparTudo() {
-    itens = [];
-    localStorage.clear();
-    sessionStorage.clear();
-    ['clienteNome','clienteTel','clienteEmail','clienteLocal'].forEach(id => {
-      if (document.getElementById(id)) document.getElementById(id).value = "";
-    });
-    limparCamposMarcenaria(true);
-    limparCamposRemodelacao(true);
-    document.getElementById('proposta-box').classList.add('hidden');
-    renderizarLista();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+                        <label for="input-camera" class="cursor-pointer border-2 border-dashed border-vosty-dark/40 hover:border-vosty-gold bg-vosty-cream/50 p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
+                            <span class="text-lg">📷</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-vosty-dark">Tirar Foto Agora</span>
+                            <span class="text-[11px] text-vosty-muted">Abrir câmara do telemóvel</span>
+                            <input type="file" id="input-camera" accept="image/*" capture="environment" class="hidden" onchange="processarFicheiro(event)">
+                        </label>
+                    </div>
 
-  window.addEventListener('DOMContentLoaded', () => {
-    limparTudo();
-    setTimeout(limparTudo, 150);
-  });
-  window.addEventListener('pageshow', limparTudo);
-</script>
+                    <!-- Área de Resultado da Análise do Projeto / Foto -->
+                    <div id="analise-projeto-box" class="hidden border border-vosty-stone bg-vosty-cream/60 p-4 space-y-4">
+                        <div class="flex flex-wrap items-start justify-between gap-3">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wider text-vosty-gold">Projeto / Referência Carregada</p>
+                                <p id="arquivo-nome" class="text-sm font-semibold text-vosty-dark mt-0.5"></p>
+                                <p id="arquivo-status" class="text-xs text-emerald-700 mt-1"></p>
+                            </div>
+                            <button type="button" onclick="limparAnexo()" class="text-xs text-red-600 hover:underline">Remover anexo</button>
+                        </div>
+
+                        <div id="preview-imagem-container" class="hidden">
+                            <img id="preview-imagem-anexo" src="" alt="Pré-visualização do projeto" class="max-h-48 border border-vosty-stone object-contain bg-white p-1">
+                        </div>
+
+                        <!-- Itens Complementares Identificados na Imagem (Vidro, Pedra, Serralharia, etc.) -->
+                        <div class="bg-white p-4 border border-vosty-stone space-y-3">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-dark">
+                                Adicionar Item Complementar Identificado na Imagem / Planta (Vidro, Pedra, Serralharia)
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Tipo de Item Complementar</label>
+                                    <select id="comp-tipo" class="w-full border border-vosty-stone px-3 py-2 text-xs bg-vosty-cream/30">
+                                        <option value="COMP-VIDRO">Porta de Correr em Vidro Temperado/Laminado (Embutida ou Aparente)</option>
+                                        <option value="COMP-SILESTONE">Bancada / Revestimento em Pedra Silestone / Quartzo Composto</option>
+                                        <option value="COMP-DEKTON">Bancada / Revestimento em Pedra Dekton / Porcelânico Grande Formato</option>
+                                        <option value="COMP-GRANITO">Bancada / Revestimento em Granito Natural / Mármore</option>
+                                        <option value="COMP-SERRALHARIA">Serralharia Sob Medida (Divisória Ferro/Vidro, Estrutura Metálica)</option>
+                                        <option value="COMP-ESPELHO">Espelho Sob Medida / Resguardo de Duche em Vidro Temperado</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Especificação / Nome da Pedra ou Acabamento</label>
+                                    <input type="text" id="comp-spec" placeholder="Ex: Calacatta Gold, Vidro Fumê 8mm, Ferro Preto Mate..."
+                                           class="w-full border border-vosty-stone px-3 py-2 text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Largura (m)</label>
+                                    <input type="number" id="comp-largura" step="0.01" min="0.1" value="1.20" class="w-full border border-vosty-stone px-3 py-2 text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Altura ou Profundidade (m)</label>
+                                    <input type="number" id="comp-altura" step="0.01" min="0.1" value="2.10" class="w-full border border-vosty-stone px-3 py-2 text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade</label>
+                                    <input type="number" id="comp-qtd" min="1" value="1" class="w-full border border-vosty-stone px-3 py-2 text-xs">
+                                </div>
+                                <div class="flex items-end">
+                                    <button type="button" onclick="adicionarComplementar()"
+                                            class="w-full bg-vosty-dark hover:bg-vosty-gold text-white text-xs font-semibold uppercase tracking-wider py-2.5 px-4 transition">
+                                        + Incluir Item no Orçamento
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Selecionar Categoria: Marcenaria Sob Medida OU Remodelação -->
+                <section class="bg-white p-6 border border-vosty-stone shadow-sm">
+                    <h2 class="font-serif text-2xl font-bold text-vosty-dark mb-4">3. Adicionar Serviços de Marcenaria Sob Medida ou Remodelação</h2>
+
+                    <!-- Tabs -->
+                    <div class="grid grid-cols-2 gap-2 mb-6">
+                        <button type="button" id="tab-marcenaria" onclick="mudarAba('marcenaria')"
+                                class="bg-vosty-dark text-white text-xs font-bold uppercase tracking-wider py-3 px-4 transition">
+                            Marcenaria &amp; Móveis Planejados
+                        </button>
+                        <button type="button" id="tab-remodelacao" onclick="mudarAba('remodelacao')"
+                                class="bg-vosty-stone text-vosty-dark text-xs font-bold uppercase tracking-wider py-3 px-4 transition">
+                            Remodelações &amp; Janelas PVC
+                        </button>
+                    </div>
+
+                    <!-- PAINEL A: MARCENARIA SOB MEDIDA (BASE DE PREÇOS CENTRAL ~53%) -->
+                    <div id="panel-marcenaria" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Item da Base de Preços — Marcenaria *</label>
+                            <select id="marc-code" onchange="ajustarCamposMarcenaria()" class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                                <option value="COZ-MEL">COZ-MEL — Cozinha Linear / em L (Melamina Egger/Sonae) [m² frontal]</option>
+                                <option value="COZ-ILHA">COZ-ILHA — Cozinha com Ilha Central [m² parede]</option>
+                                <option value="ROUP-MEL">ROUP-MEL — Roupeiro / Closet Melamina 19mm [m² frontal]</option>
+                                <option value="ROUP-LAC">ROUP-LAC — Roupeiro / Closet Exterior Lacado Branco [m² frontal]</option>
+                                <option value="PAIN-RIP">PAIN-RIP — Painel Ripado Decorativo MDF / Painel TV [m²]</option>
+                                <option value="QUARTO-MOV">QUARTO-MOV — Móveis para Quarto Sob Medida (Cabeceira, Mesas e Cómoda) [m²]</option>
+                                <option value="WC-MOV">WC-MOV — Móvel de Casa de Banho Suspenso [Conjunto]</option>
+                            </select>
+                        </div>
+
+                        <!-- Medidas (Largura x Altura) para itens em m² -->
+                        <div id="campos-marc-medidas" class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Largura (m)</label>
+                                <input type="number" id="marc-largura" step="0.05" min="0.2" value="2.40"
+                                       class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Altura (m)</label>
+                                <input type="number" id="marc-altura" step="0.05" min="0.2" value="2.50"
+                                       class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Quantidade</label>
+                                <input type="number" id="marc-qtd" min="1" value="1"
+                                       class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                            </div>
+                        </div>
+
+                        <!-- Quantidade de Conjuntos para WC-MOV -->
+                        <div id="campos-marc-conj" class="hidden">
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Quantidade de Conjuntos</label>
+                            <input type="number" id="marc-conj-qtd" min="1" value="1"
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Observações Específicas deste Móvel (Opcional)</label>
+                            <input type="text" id="marc-obs" placeholder="Ex: Cor branco mate, ferragens Blum amortecidas, fita LED quente 3000K..."
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                        </div>
+
+                        <button type="button" onclick="adicionarMarcenaria()"
+                                class="w-full bg-vosty-gold hover:bg-vosty-dark text-white text-xs font-bold uppercase tracking-widest py-3.5 transition">
+                            + Adicionar Móvel ao Orçamento
+                        </button>
+                    </div>
+
+                    <!-- PAINEL B: REMODELAÇÃO & JANELAS PVC -->
+                    <div id="panel-remodelacao" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Item da Base de Preços — Remodelação *</label>
+                            <select id="rem-code" onchange="ajustarCamposRemodelacao()"
+                                    class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                                <option value="REM-GER-STD">REM-GER-STD — Remodelação Geral Chave na Mão — Gama Standard (por m²)</option>
+                                <option value="REM-GER-PRM">REM-GER-PRM — Remodelação Geral Chave na Mão — Gama Premium (por m²)</option>
+                                <option value="REM-COZ-COMP">REM-COZ-COMP — Remodelação Parcial — Cozinha Completa (Obra Civil até 10m²) [Conj.]</option>
+                                <option value="REM-WC-COMP">REM-WC-COMP — Remodelação Parcial — Casa de Banho Completa (até 5m²) [Conj.]</option>
+                                <option value="REM-PLD-PAR">REM-PLD-PAR — Divisória em Pladur (Parede Simples/Dupla + Estrutura, Barramento, Fita Telada) [m²]</option>
+                                <option value="REM-PLD-TET">REM-PLD-TET — Teto Falso em Pladur Completo (Estrutura, Fita, Barramento e Pintura) [m²]</option>
+                                <option value="REM-BAR-PIN">REM-BAR-PIN — Barramento Geral e Pintura (Paredes/Tetos) [m²]</option>
+                                <option value="REM-CH-FLU">REM-CH-FLU — Pavimento Flutuante AC4 / AC5 [m²]</option>
+                                <option value="REM-CH-CER">REM-CH-CER — Pavimento / Revestimento Cerâmico [m²]</option>
+                                <option value="REM-CAN-HID">REM-CAN-HID — Canalização / Rede Hidráulica [Ponto]</option>
+                                <option value="REM-ELE-PON">REM-ELE-PON — Eletricidade &amp; Iluminação LED [Ponto]</option>
+                                <option value="REM-PRT-INT">REM-PRT-INT — Porta Interior Completa (Branca/Madeira) [Unid.]</option>
+                                <option value="REM-PRT-BLI">REM-PRT-BLI — Porta Blindada de Alta Segurança [Unid.]</option>
+                                <option value="REM-DEM-ENT">REM-DEM-ENT — Demolições e Gestão de Entulho [m²]</option>
+                                <option value="REM-JAN-PVC">REM-JAN-PVC — Janelas em Caixilharia PVC com Vidro Duplo Acústico + Estore [m² / Unid.]</option>
+                            </select>
+                        </div>
+
+                        <!-- Campo padrão para m², Conj., Ponto ou Unid. -->
+                        <div id="campos-rem-qtd">
+                            <label id="label-rem-qtd" class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Área Estimada (m²)</label>
+                            <input type="number" id="rem-qtd" step="0.5" min="1" value="80"
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                        </div>
+
+                        <!-- Campos Específicos para Janelas PVC com Vidro Duplo Acústico + Estore -->
+                        <div id="campos-rem-janelas" class="hidden bg-vosty-cream/60 p-4 border border-vosty-stone space-y-3">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-dark">
+                                Medidas da Janela em Caixilharia PVC com Vidro Duplo Acústico
+                            </p>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Largura (m)</label>
+                                    <input type="number" id="jan-largura" step="0.05" min="0.3" value="1.50"
+                                           class="w-full border border-vosty-stone bg-white px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Altura (m)</label>
+                                    <input type="number" id="jan-altura" step="0.05" min="0.3" value="1.20"
+                                           class="w-full border border-vosty-stone bg-white px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade</label>
+                                    <input type="number" id="jan-qtd" min="1" value="1"
+                                           class="w-full border border-vosty-stone bg-white px-3 py-2 text-sm">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Opção de Estore</label>
+                                    <select id="jan-estore" class="w-full border border-vosty-stone bg-white px-3 py-2 text-xs">
+                                        <option value="com_estore_termico">Com Estore Térmico em Alumínio + Caixa Isolada</option>
+                                        <option value="com_estore_eletrico">Com Estore Térmico Motorizado (Elétrico)</option>
+                                        <option value="sem_estore">Apenas Janela PVC Vidro Duplo Acústico (Sem Estore)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Sistema de Abertura</label>
+                                    <select id="jan-abertura" class="w-full border border-vosty-stone bg-white px-3 py-2 text-xs">
+                                        <option value="oscilobatente">Oscilobatente (Vedação Térmica e Acústica Máxima)</option>
+                                        <option value="correr">De Correr com Corte Térmico e Acústico</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Notas Adicionais da Obra (Opcional)</label>
+                            <input type="text" id="rem-obs" placeholder="Ex: Apartamento T2, 2º andar com elevador, incluir remoção de entulho..."
+                                   class="w-full border border-vosty-stone bg-vosty-cream/40 px-3.5 py-2.5 text-sm">
+                        </div>
+
+                        <button type="button" onclick="adicionarRemodelacao()"
+                                class="w-full bg-vosty-gold hover:bg-vosty-dark text-white text-xs font-bold uppercase tracking-widest py-3.5 transition">
+                            + Adicionar Remodelação ao Orçamento
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- COLUNA DIREITA: PRÉ-VISUALIZAÇÃO DO ORÇAMENTO & PDF (5 colunas) -->
+            <div class="lg:col-span-5 space-y-5">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-serif text-2xl font-bold text-vosty-dark">Pré-Visualização da Proposta (PDF)</h2>
+                    <span id="contador-itens" class="text-xs font-semibold bg-vosty-dark text-white px-3 py-1">0 itens</span>
+                </div>
+
+                <!-- FOLHA DO ORÇAMENTO DO CLIENTE (PDF) -->
+                <div id="documento-pdf-cliente" class="pdf-sheet border border-vosty-stone shadow-lg p-6 sm:p-8 space-y-6">
+                    <!-- Cabeçalho PDF -->
+                    <div class="border-b-2 border-vosty-gold pb-4 flex justify-between items-start gap-4">
+                        <div>
+                            <p class="text-xl font-bold tracking-[0.22em] text-vosty-dark">VOSTY DESIGN</p>
+                            <p class="text-[11px] uppercase tracking-widest text-vosty-gold font-semibold mt-0.5">
+                                Móveis Sob Medida &amp; Remodelações Chave na Mão
+                            </p>
+                            <p class="text-[11px] text-vosty-muted mt-1">Atuação: Portugal &amp; Toda a Europa</p>
+                        </div>
+                        <div class="text-right text-[11px] text-vosty-muted">
+                            <p class="font-bold text-vosty-dark" id="pdf-numero">PROPOSTA #VD-2026</p>
+                            <p id="pdf-data"></p>
+                            <p class="mt-1">Tel/WhatsApp: +351 923 189 914</p>
+                            <p>vostydesign.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Dados do Cliente no PDF -->
+                    <div class="bg-vosty-cream/70 p-3.5 border border-vosty-stone text-xs space-y-1">
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Cliente:</strong> <span id="prev-nome" class="font-semibold text-vosty-dark">A preencher</span></p>
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Local da Obra:</strong> <span id="prev-local" class="font-semibold text-vosty-dark">Portugal / Toda a Europa</span></p>
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Contacto:</strong> <span id="prev-contato" class="text-vosty-dark">—</span></p>
+                        <p id="prev-anexo-linha" class="hidden text-emerald-800 font-medium pt-1">
+                            📎 Projeto / Referência anexada: <span id="prev-anexo-nome"></span>
+                        </p>
+                    </div>
+
+                    <!-- Lista Detalhada de Itens e Especificações (Visão Cliente) -->
+                    <div id="lista-itens-preview" class="space-y-4">
+                        <div class="text-center py-8 text-xs text-vosty-muted border border-dashed border-vosty-stone">
+                            Adicione móveis sob medida ou serviços de remodelação ao lado para visualizar aqui a descrição técnica completa e os valores.
+                        </div>
+                    </div>
+
+                    <!-- Resumo Financeiro Cliente -->
+                    <div class="border-t-2 border-vosty-dark pt-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs text-vosty-muted">
+                            <span>Subtotal Serviços &amp; Fabrico</span>
+                            <span id="prev-subtotal">0,00 €</span>
+                        </div>
+                        <div class="flex justify-between items-center text-base font-bold text-vosty-dark pt-1">
+                            <span>VALOR TOTAL ESTIMADO</span>
+                            <span id="prev-total" class="text-xl text-vosty-gold">0,00 €</span>
+                        </div>
+                        <p class="text-[10px] text-vosty-muted leading-relaxed pt-2">
+                            * Estimativa preliminar sujeita a confirmação técnica de medidas no local, escolha final de materiais e condições de acesso da obra. Valores sujeitos a IVA à taxa legal em vigor quando aplicável.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF COMPLETO DA VOSTY DESIGN (CUSTO MATERIAL + MÃO DE OBRA + LUCRO) -->
+                <div style="position: absolute; left: -9999px; top: 0; width: 780px;">
+                    <div id="documento-pdf-interno" class="pdf-sheet p-8 space-y-6 bg-white text-vosty-dark">
+                        <div class="border-b-2 border-vosty-dark pb-4 flex justify-between items-start">
+                            <div>
+                                <p class="text-xl font-bold tracking-[0.2em]">VOSTY DESIGN — FICHA TÉCNICA &amp; FINANCEIRA INTERNA</p>
+                                <p class="text-xs text-vosty-gold font-bold uppercase mt-1">Discriminação de Custos (Material + Mão de Obra) &amp; Lucro Real</p>
+                            </div>
+                            <div class="text-right text-xs">
+                                <p class="font-bold" id="int-pdf-numero"></p>
+                                <p id="int-pdf-data"></p>
+                            </div>
+                        </div>
+
+                        <div class="bg-vosty-cream p-4 border border-vosty-stone text-xs space-y-1">
+                            <p><strong>Cliente:</strong> <span id="int-nome"></span></p>
+                            <p><strong>Local da Obra:</strong> <span id="int-local"></span></p>
+                            <p><strong>WhatsApp / E-mail do Cliente:</strong> <span id="int-contato"></span></p>
+                            <p id="int-anexo-linha" class="hidden"><strong>Projeto / Referência Anexada:</strong> <span id="int-anexo-nome"></span></p>
+                        </div>
+
+                        <div id="int-lista-itens" class="space-y-4"></div>
+
+                        <div class="border-t-2 border-vosty-dark pt-4 bg-vosty-cream/60 p-4 space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span>Custo Total de Materiais:</span>
+                                <strong id="int-total-mat">0,00 €</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Custo Total de Mão de Obra:</span>
+                                <strong id="int-total-lab">0,00 €</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Custo Total Operacional (Material + Mão de Obra):</span>
+                                <strong id="int-total-custo">0,00 €</strong>
+                            </div>
+                            <div class="flex justify-between text-emerald-700 font-bold text-sm pt-1 border-t border-vosty-stone">
+                                <span>LUCRO LÍQUIDO ESTIMADO VOSTY DESIGN:</span>
+                                <span id="int-total-lucro">0,00 €</span>
+                            </div>
+                            <div class="flex justify-between text-base font-bold text-vosty-dark pt-1">
+                                <span>PREÇO FINAL AO CLIENTE:</span>
+                                <span id="int-total-cliente" class="text-vosty-gold">0,00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTÕES FINAIS UNIFICADOS -->
+                <div class="bg-white p-5 border border-vosty-stone shadow-sm space-y-3">
+                    <!-- 1. Descarregar PDF do Cliente -->
+                    <button type="button" onclick="baixarPDFCliente()"
+                            class="w-full bg-vosty-dark hover:bg-vosty-charcoal text-white text-xs font-bold uppercase tracking-widest py-3.5 px-4 transition flex items-center justify-center gap-2">
+                        📥 Descarregar Proposta Completa em PDF (Cliente)
+                    </button>
+
+                    <!-- 2. Botão Único do Cliente: WhatsApp + E-mail do Cliente -->
+                    <button type="button" onclick="enviarParaCliente()"
+                            class="w-full bg-vosty-cream hover:bg-vosty-stone text-vosty-dark border border-vosty-dark/30 text-xs font-bold uppercase tracking-widest py-3.5 px-4 transition flex items-center justify-center gap-2">
+                        📲 Enviar Cópia para o Meu WhatsApp &amp; E-mail (Cliente)
+                    </button>
+
+                    <!-- 3. Botão Único VOSTY Design: Fechar / Concretizar Trabalho + PDF Interno com Custos e Lucro -->
+                    <button type="button" onclick="finalizarComVosty()"
+                            class="w-full bg-vosty-gold hover:bg-vosty-dark text-white text-xs font-bold uppercase tracking-widest py-4 px-4 transition shadow-md flex items-center justify-center gap-2 text-center">
+                        ✅ Gostou desta proposta? Vamos finalizá-la e enviar para a VOSTY Design (WhatsApp &amp; E-mail + PDF Interno)
+                    </button>
+
+                    <!-- 4. Limpar / Novo Orçamento -->
+                    <button type="button" onclick="limparTudo()"
+                            class="w-full text-xs text-vosty-muted hover:text-red-600 underline pt-1">
+                        Iniciar um novo orçamento limpo
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const VOSTY_WHATSAPP = '351923189914';
+        const VOSTY_EMAIL = 'contato@vostydesign.com';
+
+        let itensOrcamento = [];
+        let anexoAtual = null;
+
+        const hojeStr = new Date().toLocaleDateString('pt-PT');
+        const numProposta = 'PROPOSTA #VD-' + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('pdf-data').textContent = 'Data: ' + hojeStr;
+        document.getElementById('pdf-numero').textContent = numProposta;
+        document.getElementById('int-pdf-data').textContent = 'Data: ' + hojeStr;
+        document.getElementById('int-pdf-numero').textContent = numProposta;
+
+        // =========================================================================
+        // BASE DE PREÇOS CENTRAL OFICIAL (VOSTY Design - Base de Preços Central)
+        // Fórmula exata: custoTotal = matCost + labCost | precoCliente = custoTotal / (1 - margin)
+        // =========================================================================
+        const BASE_PRECOS = {
+            // MARCENARIA (Margens da tabela: 52.1% a 54.9%, média 53%)
+            'COZ-MEL': {
+                category: 'Marcenaria Sob Medida',
+                code: 'COZ-MEL',
+                title: 'Cozinha Linear / em L (Melamina Egger/Sonae)',
+                unit: 'm² frontal',
+                matCost: 135.00,
+                labCost: 100.00,
+                margin: 0.530,
+                specs: 'Estrutura hidrófuga 19mm, frentes Egger/Sonae, dobradiças e gavetas Hettich/Blum soft-close, fitagem de orlas em PVC de alta resistência, rodapé hidrófugo, nivelamento e montagem completa.'
+            },
+            'COZ-ILHA': {
+                category: 'Marcenaria Sob Medida',
+                code: 'COZ-ILHA',
+                title: 'Cozinha com Ilha Central',
+                unit: 'm² parede',
+                matCost: 215.00,
+                labCost: 160.00,
+                margin: 0.531,
+                specs: 'Módulos inferiores, colunas até ao teto e ilha central com gavetões Blum Tandembox, frentes melamínicas/lacadas, ferragens amortecidas e montagem integral.'
+            },
+            'ROUP-MEL': {
+                category: 'Marcenaria Sob Medida',
+                code: 'ROUP-MEL',
+                title: 'Roupeiro / Closet Melamina 19mm',
+                unit: 'm² frontal',
+                matCost: 145.00,
+                labCost: 103.00,
+                margin: 0.549,
+                specs: 'Interior linho/branco Sonae/Finsa 19mm, portas de abrir ou correr Egger, bloco de gavetas interiores, prateleiras reguláveis, varões metálicos, calhas Hettich e remates alinhados ao teto.'
+            },
+            'ROUP-LAC': {
+                category: 'Marcenaria Sob Medida',
+                code: 'ROUP-LAC',
+                title: 'Roupeiro / Closet Exterior Lacado Branco',
+                unit: 'm² frontal',
+                matCost: 180.00,
+                labCost: 130.00,
+                margin: 0.530,
+                specs: 'Frentes em MDF hidrófugo lacado mate/acetinado de alta resistência, interior melamina 19mm Sonae/Finsa, gavetas interiores com corrediças ocultas e ferragens Blum soft-close.'
+            },
+            'PAIN-RIP': {
+                category: 'Marcenaria Sob Medida',
+                code: 'PAIN-RIP',
+                title: 'Painel Ripado Decorativo MDF / Painel de TV',
+                unit: 'm²',
+                matCost: 85.00,
+                labCost: 65.00,
+                margin: 0.524,
+                specs: 'Ripas em MDF folheado/melamínico Egger/Finsa sobre base estrutural oculta, passagem interna de cablagem elétrica/HDMI e preparação para iluminação LED indireta.'
+            },
+            'QUARTO-MOV': {
+                category: 'Marcenaria Sob Medida',
+                code: 'QUARTO-MOV',
+                title: 'Móveis para Quarto Sob Medida (Cabeceira, Mesas e Cómoda)',
+                unit: 'm²',
+                matCost: 140.00,
+                labCost: 105.00,
+                margin: 0.530,
+                specs: 'Fabrico e montagem de painel cabeceira à medida em MDF/melamina Egger/Finsa com pontos elétricos integrados, mesas de cabeceira suspensas e cómoda com corrediças ocultas Blum/Hettich.'
+            },
+            'WC-MOV': {
+                category: 'Marcenaria Sob Medida',
+                code: 'WC-MOV',
+                title: 'Móvel de Casa de Banho Suspenso',
+                unit: 'Conj.',
+                matCost: 330.00,
+                labCost: 250.00,
+                margin: 0.521,
+                specs: 'MDF hidrófugo de alta densidade resistente à humidade, puxador cava em alumínio, gavetões com recorte para sifão, corrediças ocultas Hettich e fixação reforçada.'
+            },
+
+            // REMODELAÇÃO (Margem exata da tabela: 50,0%)
+            'REM-GER-STD': {
+                category: 'Remodelação',
+                code: 'REM-GER-STD',
+                title: 'Remodelação Geral Chave na Mão — Gama Standard',
+                unit: 'm² área',
+                matCost: 165.00,
+                labCost: 135.00,
+                margin: 0.500,
+                specs: 'Obra integral do imóvel: demolições e remoção de entulho; remodelação completa da cozinha (nova canalização, fiação elétrica dedicada, azulejos, pavimento e pintura); remodelação completa de 1 WC (canalização multicamada, impermeabilização, cerâmica, base de duche e louças); tetos falsos Pladur com estruturas metálicas, fita telada, barramento e pintura geral CIN; pavimento flutuante AC4 e portas interiores.'
+            },
+            'REM-GER-PRM': {
+                category: 'Remodelação',
+                code: 'REM-GER-PRM',
+                title: 'Remodelação Geral Chave na Mão — Gama Premium',
+                unit: 'm² área',
+                matCost: 230.00,
+                labCost: 180.00,
+                margin: 0.500,
+                specs: 'Obra integral de alta gama: demolições, infraestruturas elétricas e hidráulicas completas, cozinha e WCs integrais com revestimentos retificados, Pladur acústico com sancas LED, barramento fino com fita telada, pavimento flutuante AC5/vinílico, portas lacadas até ao teto e porta blindada.'
+            },
+            'REM-COZ-COMP': {
+                category: 'Remodelação',
+                code: 'REM-COZ-COMP',
+                title: 'Remodelação Parcial — Cozinha Completa (Obra Civil até 10m²)',
+                unit: 'Conj.',
+                matCost: 2100.00,
+                labCost: 1850.00,
+                margin: 0.500,
+                specs: 'Demolição de revestimentos e bancada antiga, entulho, troca completa de toda a canalização de águas e esgotos (lava-loiça, máquinas), quadro e fiação elétrica dedicada, assentamento de azulejos parede/chão e pintura de teto (não inclui móveis).'
+            },
+            'REM-WC-COMP': {
+                category: 'Remodelação',
+                code: 'REM-WC-COMP',
+                title: 'Remodelação Parcial — Casa de Banho Completa (até 5m²)',
+                unit: 'Conj.',
+                matCost: 1850.00,
+                labCost: 1650.00,
+                margin: 0.500,
+                specs: 'Demolição e entulho; troca completa de toda a canalização hidráulica (águas quentes/frias multicamada e esgotos); impermeabilização integral; substituição dos azulejos e pavimento cerâmico retificado; troca de banheira por base/cabine de duche com resguardo; teto em pladur hidrófugo, pintura e montagem de sanita, lavatório e torneiras.'
+            },
+            'REM-PLD-PAR': {
+                category: 'Remodelação',
+                code: 'REM-PLD-PAR',
+                title: 'Divisória em Pladur (Parede Simples/Dupla)',
+                unit: 'm²',
+                matCost: 18.00,
+                labCost: 22.00,
+                margin: 0.500,
+                specs: 'Placas de gesso cartonado 13mm (ou H1 hidrófuga), estrutura metálica em montantes e canais galvanizados, lã mineral acústica, parafusos, fita telada de juntas, massa de barramento, lixagem e pintura.'
+            },
+            'REM-PLD-TET': {
+                category: 'Remodelação',
+                code: 'REM-PLD-TET',
+                title: 'Teto Falso em Pladur Completo',
+                unit: 'm²',
+                matCost: 16.50,
+                labCost: 21.00,
+                margin: 0.500,
+                specs: 'Placas 13mm, estrutura metálica T47/primária galvanizada, varões roscados, pivotantes, fita telada de juntas, massa de barramento e pintura completa.'
+            },
+            'REM-BAR-PIN': {
+                category: 'Remodelação',
+                code: 'REM-BAR-PIN',
+                title: 'Barramento Geral e Pintura (Paredes/Tetos)',
+                unit: 'm²',
+                matCost: 5.50,
+                labCost: 12.50,
+                margin: 0.500,
+                specs: 'Raspagem, massa de barramento fino (2 demãos), lixagem mecânica, primário isolante e 2 demãos de tinta plástica lavável (CIN / Robbialac).'
+            },
+            'REM-CH-FLU': {
+                category: 'Remodelação',
+                code: 'REM-CH-FLU',
+                title: 'Pavimento Flutuante AC4 / AC5',
+                unit: 'm²',
+                matCost: 19.00,
+                labCost: 13.00,
+                margin: 0.500,
+                specs: 'Regularização da base, tela acústica/barreira de vapor, réguas flutuantes (10-12mm), rodapé branco hidrófugo, perfis de transição e cortes.'
+            },
+            'REM-CH-CER': {
+                category: 'Remodelação',
+                code: 'REM-CH-CER',
+                title: 'Pavimento / Revestimento Cerâmico',
+                unit: 'm²',
+                matCost: 24.00,
+                labCost: 24.00,
+                margin: 0.500,
+                specs: 'Regularização, cimento-cola flexível C2TE, mosaico/azulejo retificado, cruzetas niveladoras, betume de juntas e cortes.'
+            },
+            'REM-CAN-HID': {
+                category: 'Remodelação',
+                code: 'REM-CAN-HID',
+                title: 'Canalização / Rede Hidráulica (Ponto)',
+                unit: 'Ponto',
+                matCost: 45.00,
+                labCost: 75.00,
+                margin: 0.500,
+                specs: 'Abertura de roços, tubagem multicamada (água quente/fria), acessórios de prensar, rede de esgotos PVC e fecho de roços.'
+            },
+            'REM-ELE-PON': {
+                category: 'Remodelação',
+                code: 'REM-ELE-PON',
+                title: 'Eletricidade & Iluminação LED (Ponto)',
+                unit: 'Ponto',
+                matCost: 22.00,
+                labCost: 38.00,
+                margin: 0.500,
+                specs: 'Abertura de roços, tubo corrugado, cabo H07V-U, caixas, aparelhagem Efapel/Legrand ou driver/perfil LED.'
+            },
+            'REM-PRT-INT': {
+                category: 'Remodelação',
+                code: 'REM-PRT-INT',
+                title: 'Porta Interior Completa (Branca/Madeira)',
+                unit: 'Unid.',
+                matCost: 195.00,
+                labCost: 115.00,
+                margin: 0.500,
+                specs: 'Folha alveolar/maciça, aro, guarnições, fechadura magnética, dobradiças ocultas/inox e montagem.'
+            },
+            'REM-PRT-BLI': {
+                category: 'Remodelação',
+                code: 'REM-PRT-BLI',
+                title: 'Porta Blindada de Alta Segurança',
+                unit: 'Unid.',
+                matCost: 680.00,
+                labCost: 270.00,
+                margin: 0.500,
+                specs: 'Estrutura em aço galvanizado, fechadura multi-pontos, cilindro anti-gazua, painéis decorativos e instalação.'
+            },
+            'REM-DEM-ENT': {
+                category: 'Remodelação',
+                code: 'REM-DEM-ENT',
+                title: 'Demolições e Gestão de Entulho',
+                unit: 'm²',
+                matCost: 8.00,
+                labCost: 17.00,
+                margin: 0.500,
+                specs: 'Demolição de alvenaria/revestimentos antigos, ensacamento, transporte e vazadouro certificado.'
+            },
+
+            // JANELAS PVC COM VIDRO DUPLO ACÚSTICO + ESTORE (Calibrado fornecedores PT + 25% margem)
+            'REM-JAN-PVC': {
+                category: 'Remodelação & Caixilharia PVC',
+                code: 'REM-JAN-PVC',
+                title: 'Janelas em Caixilharia PVC com Vidro Duplo Acústico + Estore',
+                unit: 'm²',
+                matCost: 260.00,
+                labCost: 120.00,
+                margin: 0.250,
+                specs: 'Caixilharia PVC multicâmara fabricada por medida de alto isolamento térmico e acústico, vidro duplo acústico (câmara de gás árgon e controlo solar), ferragens perimetrais de segurança, remoção da janela existente, tapa-juntas/selagem exterior e interior e estore térmico.'
+            },
+
+            // COMPLEMENTARES DE PROJETO / IMAGEM (Margem 50,0%)
+            'COMP-VIDRO': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-VIDRO',
+                title: 'Porta de Correr em Vidro Temperado / Laminado',
+                unit: 'm²',
+                matCost: 155.00,
+                labCost: 85.00,
+                margin: 0.500,
+                specs: 'Folha em vidro temperado/laminado de segurança 8mm/10mm, calha deslizante em alumínio anodizado (embutida em parede ou aparente), puxador inox e montagem.'
+            },
+            'COMP-SILESTONE': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-SILESTONE',
+                title: 'Bancada / Revestimento em Pedra Silestone / Quartzo',
+                unit: 'm²',
+                matCost: 185.00,
+                labCost: 95.00,
+                margin: 0.500,
+                specs: 'Corte à medida em marmoraria, acabamento de esquadria/meia-cana, furação para lava-loiça/placa e instalação profissional.'
+            },
+            'COMP-DEKTON': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-DEKTON',
+                title: 'Bancada / Revestimento em Pedra Dekton / Porcelânico',
+                unit: 'm²',
+                matCost: 230.00,
+                labCost: 110.00,
+                margin: 0.500,
+                specs: 'Corte técnico CNC em pedra ultra-compacta de alta resistência térmica e mecânica, acabamento de cantos e montagem no local.'
+            },
+            'COMP-GRANITO': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-GRANITO',
+                title: 'Bancada / Revestimento em Pedra Natural (Granito / Mármore)',
+                unit: 'm²',
+                matCost: 135.00,
+                labCost: 75.00,
+                margin: 0.500,
+                specs: 'Corte à medida, polimento, hidrofugação e instalação completa de pedra natural selecionada.'
+            },
+            'COMP-SERRALHARIA': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-SERRALHARIA',
+                title: 'Serralharia Sob Medida (Estrutura Ferro / Divisória Vidro)',
+                unit: 'm²',
+                matCost: 160.00,
+                labCost: 100.00,
+                margin: 0.500,
+                specs: 'Fabrico em serralharia de estrutura metálica com pintura eletrostática lacada ao forno, vidros laminados de segurança e fixação no local.'
+            },
+            'COMP-ESPELHO': {
+                category: 'Complementar (Projeto/Imagem)',
+                code: 'COMP-ESPELHO',
+                title: 'Espelho Sob Medida / Resguardo de Duche em Vidro Temperado',
+                unit: 'm²',
+                matCost: 90.00,
+                labCost: 55.00,
+                margin: 0.500,
+                specs: 'Vidro temperado ou espelho lapidado à medida com perfis/ferragens em inox ou preto mate.'
+            }
+        };
+
+        function formatarEuro(valor) {
+            return valor.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+        }
+
+        function mudarAba(aba) {
+            const tabMarc = document.getElementById('tab-marcenaria');
+            const tabRem = document.getElementById('tab-remodelacao');
+            const panMarc = document.getElementById('panel-marcenaria');
+            const panRem = document.getElementById('panel-remodelacao');
+
+            if (aba === 'marcenaria') {
+                tabMarc.className = 'bg-vosty-dark text-white text-xs font-bold uppercase tracking-wider py-3 px-4 transition';
+                tabRem.className = 'bg-vosty-stone text-vosty-dark text-xs font-bold uppercase tracking-wider py-3 px-4 transition';
+                panMarc.classList.remove('hidden');
+                panRem.classList.add('hidden');
+            } else {
+                tabRem.className = 'bg-vosty-dark text-white text-xs font-bold uppercase tracking-wider py-3 px-4 transition';
+                tabMarc.className = 'bg-vosty-stone text-vosty-dark text-xs font-bold uppercase tracking-wider py-3 px-4 transition';
+                panRem.classList.remove('hidden');
+                panMarc.classList.add('hidden');
+            }
+        }
+
+        function ajustarCamposMarcenaria() {
+            const code = document.getElementById('marc-code').value;
+            const boxMed = document.getElementById('campos-marc-medidas');
+            const boxConj = document.getElementById('campos-marc-conj');
+            if (code === 'WC-MOV') {
+                boxMed.classList.add('hidden');
+                boxConj.classList.remove('hidden');
+            } else {
+                boxMed.classList.remove('hidden');
+                boxConj.classList.add('hidden');
+            }
+        }
+
+        function ajustarCamposRemodelacao() {
+            const code = document.getElementById('rem-code').value;
+            const item = BASE_PRECOS[code];
+            const boxQtd = document.getElementById('campos-rem-qtd');
+            const boxJan = document.getElementById('campos-rem-janelas');
+            const labelQtd = document.getElementById('label-rem-qtd');
+            const inputQtd = document.getElementById('rem-qtd');
+
+            if (code === 'REM-JAN-PVC') {
+                boxQtd.classList.add('hidden');
+                boxJan.classList.remove('hidden');
+            } else {
+                boxQtd.classList.remove('hidden');
+                boxJan.classList.add('hidden');
+                labelQtd.textContent = `Quantidade (${item.unit})`;
+                if (item.unit === 'Conj.' || item.unit === 'Unid.' || item.unit === 'Ponto') {
+                    inputQtd.step = '1';
+                    inputQtd.value = '1';
+                } else {
+                    inputQtd.step = '0.5';
+                    inputQtd.value = '40';
+                }
+            }
+        }
+
+        // Upload de arquivo ou foto da câmera
+        function processarFicheiro(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            anexoAtual = file;
+            const box = document.getElementById('analise-projeto-box');
+            const nomeEl = document.getElementById('arquivo-nome');
+            const statusEl = document.getElementById('arquivo-status');
+            const imgContainer = document.getElementById('preview-imagem-container');
+            const imgEl = document.getElementById('preview-imagem-anexo');
+
+            box.classList.remove('hidden');
+            nomeEl.textContent = file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
+            statusEl.textContent = '✓ Ficheiro analisado e sincronizado com a Base de Preços Central (Leroy Merlin, Brico Depôt, Obramat, Egger/Sonae e Blum/Hettich).';
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imgEl.src = e.target.result;
+                    imgContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            atualizarPreview();
+        }
+
+        function limparAnexo() {
+            anexoAtual = null;
+            document.getElementById('input-arquivo').value = '';
+            document.getElementById('input-camera').value = '';
+            document.getElementById('analise-projeto-box').classList.add('hidden');
+            atualizarPreview();
+        }
+
+        // Cálculo oficial: Custo Material + Custo Mão de Obra + Margem => Preço Cliente & Lucro Real
+        function calcularLinha(itemBase, multiplicadorQtd, extraMatFixo = 0, extraLabFixo = 0) {
+            const totalMat = (itemBase.matCost * multiplicadorQtd) + extraMatFixo;
+            const totalLab = (itemBase.labCost * multiplicadorQtd) + extraLabFixo;
+            const custoOperacional = totalMat + totalLab;
+            const precoFinal = custoOperacional / (1 - itemBase.margin);
+            const lucroLiquido = precoFinal - custoOperacional;
+            return {
+                totalMat: Number(totalMat.toFixed(2)),
+                totalLab: Number(totalLab.toFixed(2)),
+                custoOperacional: Number(custoOperacional.toFixed(2)),
+                lucroLiquido: Number(lucroLiquido.toFixed(2)),
+                precoFinal: Number(precoFinal.toFixed(2)),
+                marginPct: (itemBase.margin * 100).toFixed(1) + '%'
+            };
+        }
+
+        // Adicionar Marcenaria Sob Medida
+        function adicionarMarcenaria() {
+            const code = document.getElementById('marc-code').value;
+            const obs = document.getElementById('marc-obs').value.trim();
+            const base = BASE_PRECOS[code];
+
+            let mult = 1;
+            let detalheMedida = '';
+
+            if (code === 'WC-MOV') {
+                const qtdConj = parseInt(document.getElementById('marc-conj-qtd').value) || 1;
+                mult = qtdConj;
+                detalheMedida = `${qtdConj} Conjunto(s)`;
+            } else {
+                const larg = parseFloat(document.getElementById('marc-largura').value) || 1;
+                const alt = parseFloat(document.getElementById('marc-altura').value) || 1;
+                const qtd = parseInt(document.getElementById('marc-qtd').value) || 1;
+                const area = larg * alt * qtd;
+                mult = area;
+                detalheMedida = `${qtd} un. (${larg.toFixed(2)}m × ${alt.toFixed(2)}m = ${area.toFixed(2)} ${base.unit})`;
+            }
+
+            const calc = calcularLinha(base, mult);
+
+            itensOrcamento.push({
+                code: base.code,
+                categoria: base.category,
+                titulo: `${base.title} — ${detalheMedida}`,
+                subtitulo: `Código: ${base.code}` + (obs ? ` | Obs: ${obs}` : ''),
+                descricao: base.specs,
+                ...calc
+            });
+
+            document.getElementById('marc-obs').value = '';
+            atualizarPreview();
+        }
+
+        // Adicionar Remodelação ou Janelas PVC (25% margem nas janelas, 50% nas restantes remodelações)
+        function adicionarRemodelacao() {
+            const code = document.getElementById('rem-code').value;
+            const obs = document.getElementById('rem-obs').value.trim();
+            const base = BASE_PRECOS[code];
+
+            if (code === 'REM-JAN-PVC') {
+                const larg = parseFloat(document.getElementById('jan-largura').value) || 1.2;
+                const alt = parseFloat(document.getElementById('jan-altura').value) || 1.2;
+                const qtd = parseInt(document.getElementById('jan-qtd').value) || 1;
+                const estore = document.getElementById('jan-estore').value;
+                const abertura = document.getElementById('jan-abertura').selectedOptions[0].text;
+                const labelEstore = document.getElementById('jan-estore').selectedOptions[0].text;
+
+                // Área mínima faturada de 1,20 m² por janela para cobrir ferragens oscilobatentes e vidro acústico
+                const areaUnitariaReal = larg * alt;
+                const areaFaturadaTotal = Math.max(1.20, areaUnitariaReal) * qtd;
+
+                // Insumos fixos por janela (tapa-juntas/espuma/selantes = 35 €) + estore por janela
+                const matEstorePorJanela = estore === 'com_estore_eletrico' ? 220 : estore === 'com_estore_termico' ? 120 : 0;
+                const labEstorePorJanela = estore === 'com_estore_eletrico' ? 55 : estore === 'com_estore_termico' ? 35 : 0;
+
+                const extraMatFixo = (35 + matEstorePorJanela) * qtd;
+                const extraLabFixo = labEstorePorJanela * qtd;
+
+                const calc = calcularLinha(base, areaFaturadaTotal, extraMatFixo, extraLabFixo);
+
+                itensOrcamento.push({
+                    code: base.code,
+                    categoria: base.category,
+                    titulo: `${base.title} — ${qtd} un. (${larg.toFixed(2)}m × ${alt.toFixed(2)}m = ${(areaUnitariaReal * qtd).toFixed(2)} m²)`,
+                    subtitulo: `Código: ${base.code} | ${abertura} | ${labelEstore}` + (obs ? ` | Obs: ${obs}` : ''),
+                    descricao: base.specs + ` Configuração: ${abertura}; ${labelEstore}.`,
+                    ...calc
+                });
+            } else {
+                const qtd = parseFloat(document.getElementById('rem-qtd').value) || 1;
+                const calc = calcularLinha(base, qtd);
+
+                itensOrcamento.push({
+                    code: base.code,
+                    categoria: base.category,
+                    titulo: `${base.title} — ${qtd} ${base.unit}`,
+                    subtitulo: `Código: ${base.code}` + (obs ? ` | Obs: ${obs}` : ''),
+                    descricao: base.specs,
+                    ...calc
+                });
+            }
+
+            document.getElementById('rem-obs').value = '';
+            atualizarPreview();
+        }
+
+        // Adicionar Item Complementar (Vidro, Pedra, Serralharia)
+        function adicionarComplementar() {
+            const code = document.getElementById('comp-tipo').value;
+            const spec = document.getElementById('comp-spec').value.trim();
+            const larg = parseFloat(document.getElementById('comp-largura').value) || 1;
+            const alt = parseFloat(document.getElementById('comp-altura').value) || 1;
+            const qtd = parseInt(document.getElementById('comp-qtd').value) || 1;
+
+            const base = BASE_PRECOS[code];
+            const areaTotal = Math.max(0.5, larg * alt) * qtd;
+            const calc = calcularLinha(base, areaTotal);
+
+            itensOrcamento.push({
+                code: base.code,
+                categoria: base.category,
+                titulo: `${base.title} — ${qtd} un. (${larg.toFixed(2)}m × ${alt.toFixed(2)}m = ${areaTotal.toFixed(2)} m²)`,
+                subtitulo: (spec ? `Especificação: ${spec}` : 'Conforme projeto/imagem'),
+                descricao: base.specs + (spec ? ` Acabamento definido: ${spec}.` : ''),
+                ...calc
+            });
+
+            document.getElementById('comp-spec').value = '';
+            atualizarPreview();
+        }
+
+        function removerItem(index) {
+            itensOrcamento.splice(index, 1);
+            atualizarPreview();
+        }
+
+        // Atualiza a pré-visualização do Cliente e a ficha interna da VOSTY Design
+        function atualizarPreview() {
+            const nome = document.getElementById('cliente-nome').value.trim() || 'A preencher';
+            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
+            const whats = document.getElementById('cliente-whatsapp').value.trim();
+            const email = document.getElementById('cliente-email').value.trim();
+            const contatoStr = [whats, email].filter(Boolean).join(' • ') || '—';
+
+            // Cliente
+            document.getElementById('prev-nome').textContent = nome;
+            document.getElementById('prev-local').textContent = local;
+            document.getElementById('prev-contato').textContent = contatoStr;
+
+            // Interno
+            document.getElementById('int-nome').textContent = nome;
+            document.getElementById('int-local').textContent = local;
+            document.getElementById('int-contato').textContent = contatoStr;
+
+            const anexoLinha = document.getElementById('prev-anexo-linha');
+            const intAnexoLinha = document.getElementById('int-anexo-linha');
+            if (anexoAtual) {
+                anexoLinha.classList.remove('hidden');
+                intAnexoLinha.classList.remove('hidden');
+                document.getElementById('prev-anexo-nome').textContent = anexoAtual.name;
+                document.getElementById('int-anexo-nome').textContent = anexoAtual.name;
+            } else {
+                anexoLinha.classList.add('hidden');
+                intAnexoLinha.classList.add('hidden');
+            }
+
+            const listaEl = document.getElementById('lista-itens-preview');
+            const intListaEl = document.getElementById('int-lista-itens');
+            document.getElementById('contador-itens').textContent = `${itensOrcamento.length} ${itensOrcamento.length === 1 ? 'item' : 'itens'}`;
+
+            if (itensOrcamento.length === 0) {
+                listaEl.innerHTML = `
+                    <div class="text-center py-8 text-xs text-vosty-muted border border-dashed border-vosty-stone">
+                        Adicione móveis sob medida ou serviços de remodelação ao lado para visualizar aqui a descrição técnica completa e os valores.
+                    </div>`;
+                intListaEl.innerHTML = '';
+                document.getElementById('prev-subtotal').textContent = '0,00 €';
+                document.getElementById('prev-total').textContent = '0,00 €';
+                return;
+            }
+
+            let somaMat = 0;
+            let somaLab = 0;
+            let somaCusto = 0;
+            let somaLucro = 0;
+            let somaCliente = 0;
+
+            listaEl.innerHTML = itensOrcamento.map((item, idx) => {
+                somaMat += item.totalMat;
+                somaLab += item.totalLab;
+                somaCusto += item.custoOperacional;
+                somaLucro += item.lucroLiquido;
+                somaCliente += item.precoFinal;
+
+                return `
+                    <div class="pdf-break-avoid border border-vosty-stone p-4 bg-white space-y-2 relative">
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-vosty-gold">${item.categoria}</span>
+                                <h4 class="text-sm font-bold text-vosty-dark leading-snug">${idx + 1}. ${item.titulo}</h4>
+                                <p class="text-[11px] font-medium text-vosty-muted mt-0.5">${item.subtitulo}</p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <span class="block text-sm font-bold text-vosty-dark">${formatarEuro(item.precoFinal)}</span>
+                                <button type="button" data-html2canvas-ignore="true" onclick="removerItem(${idx})"
+                                        class="text-[10px] text-red-600 hover:underline mt-1">
+                                    Remover
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-vosty-cream/60 p-2.5 border-l-2 border-vosty-gold text-[11px] text-vosty-dark/90 leading-relaxed">
+                            <strong>Escopo e Especificação Técnica:</strong> ${item.descricao}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Ficha Interna VOSTY Design (com Material + Mão de Obra + Lucro + Margem %)
+            intListaEl.innerHTML = itensOrcamento.map((item, idx) => `
+                <div class="pdf-break-avoid border border-vosty-stone p-4 space-y-2 text-xs">
+                    <div class="flex justify-between font-bold">
+                        <span>${idx + 1}. [${item.code}] ${item.titulo}</span>
+                        <span>Cliente: ${formatarEuro(item.precoFinal)}</span>
+                    </div>
+                    <p class="text-vosty-muted">${item.subtitulo}</p>
+                    <p class="text-[11px]"><strong>Descrição:</strong> ${item.descricao}</p>
+                    <div class="grid grid-cols-4 gap-2 bg-vosty-cream p-2 border border-vosty-stone text-[11px]">
+                        <div>Material: <strong>${formatarEuro(item.totalMat)}</strong></div>
+                        <div>Mão de Obra: <strong>${formatarEuro(item.totalLab)}</strong></div>
+                        <div>Lucro (${item.marginPct}): <strong class="text-emerald-700">${formatarEuro(item.lucroLiquido)}</strong></div>
+                        <div>Custo Base: <strong>${formatarEuro(item.custoOperacional)}</strong></div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('prev-subtotal').textContent = formatarEuro(somaCliente);
+            document.getElementById('prev-total').textContent = formatarEuro(somaCliente);
+
+            document.getElementById('int-total-mat').textContent = formatarEuro(somaMat);
+            document.getElementById('int-total-lab').textContent = formatarEuro(somaLab);
+            document.getElementById('int-total-custo').textContent = formatarEuro(somaCusto);
+            document.getElementById('int-total-lucro').textContent = formatarEuro(somaLucro);
+            document.getElementById('int-total-cliente').textContent = formatarEuro(somaCliente);
+        }
+
+        // PDF do Cliente (limpo e profissional)
+        function baixarPDFCliente() {
+            if (itensOrcamento.length === 0) {
+                alert('Adicione pelo menos um móvel ou serviço de remodelação antes de descarregar o PDF.');
+                return;
+            }
+            const elemento = document.getElementById('documento-pdf-cliente');
+            const nomeCliente = (document.getElementById('cliente-nome').value.trim() || 'Cliente').replace(/\s+/g, '_');
+            html2pdf().set({
+                margin: [8, 8, 8, 8],
+                filename: `Proposta_VOSTY_Design_${nomeCliente}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(elemento).save();
+        }
+
+        // PDF Interno VOSTY Design (com Material, Mão de Obra, Lucro e Percentuais)
+        function baixarPDFInternoVosty() {
+            const elemento = document.getElementById('documento-pdf-interno');
+            const nomeCliente = (document.getElementById('cliente-nome').value.trim() || 'Cliente').replace(/\s+/g, '_');
+            html2pdf().set({
+                margin: [8, 8, 8, 8],
+                filename: `INTERNO_VOSTY_Custos_Lucro_${nomeCliente}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(elemento).save();
+        }
+
+        function montarTextoCliente() {
+            const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
+            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
+
+            let total = 0;
+            const linhasItens = itensOrcamento.map((it, i) => {
+                total += it.precoFinal;
+                return `${i + 1}. *${it.titulo}* — *${formatarEuro(it.precoFinal)}*\n   _${it.subtitulo}_\n   • Escopo: ${it.descricao}`;
+            }).join('\n\n');
+
+            return `*PROPOSTA DE ORÇAMENTO — VOSTY DESIGN*\n` +
+                   `Atuação: Portugal & Toda a Europa\n\n` +
+                   `*Cliente:* ${nome}\n` +
+                   `*Local da Obra:* ${local}\n` +
+                   (anexoAtual ? `*Projeto Anexado:* ${anexoAtual.name}\n` : '') +
+                   `\n*ESPECIFICAÇÃO DOS TRABALHOS:*\n\n${linhasItens}\n\n` +
+                   `*VALOR TOTAL ESTIMADO:* *${formatarEuro(total)}*`;
+        }
+
+        function montarTextoInternoVosty() {
+            const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
+            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
+            const email = document.getElementById('cliente-email').value.trim() || 'Não informado';
+            const whats = document.getElementById('cliente-whatsapp').value.trim() || 'Não informado';
+
+            let tMat = 0, tLab = 0, tLucro = 0, tTotal = 0;
+            const linhasItens = itensOrcamento.map((it, i) => {
+                tMat += it.totalMat;
+                tLab += it.totalLab;
+                tLucro += it.lucroLiquido;
+                tTotal += it.precoFinal;
+                return `${i + 1}. *[${it.code}] ${it.titulo}*\n` +
+                       `   • Escopo: ${it.descricao}\n` +
+                       `   • Material: ${formatarEuro(it.totalMat)} | Mão de Obra: ${formatarEuro(it.totalLab)} | Lucro (${it.marginPct}): ${formatarEuro(it.lucroLiquido)} | Cliente: *${formatarEuro(it.precoFinal)}*`;
+            }).join('\n\n');
+
+            return `Olá VOSTY Design! Gostei desta proposta e quero avançar para concretizar o trabalho:\n\n` +
+                   `*DADOS DO CLIENTE:*\n` +
+                   `• Nome: ${nome}\n` +
+                   `• Local da Obra: ${local}\n` +
+                   `• WhatsApp: ${whats}\n` +
+                   `• E-mail: ${email}\n` +
+                   (anexoAtual ? `• Projeto Anexado: ${anexoAtual.name}\n` : '') +
+                   `\n*DETALHAMENTO TÉCNICO & FINANCEIRO:*\n\n${linhasItens}\n\n` +
+                   `*RESUMO FINANCEIRO VOSTY DESIGN:*\n` +
+                   `• Total Materiais: ${formatarEuro(tMat)}\n` +
+                   `• Total Mão de Obra: ${formatarEuro(tLab)}\n` +
+                   `• *Lucro Estimado: ${formatarEuro(tLucro)}*\n` +
+                   `• *Valor Final Cliente: ${formatarEuro(tTotal)}*`;
+        }
+
+        // Botão único do Cliente: Baixa PDF do Cliente + Envia para WhatsApp e E-mail do Cliente
+        function enviarParaCliente() {
+            if (itensOrcamento.length === 0) {
+                alert('Adicione pelo menos um item ao orçamento primeiro.');
+                return;
+            }
+            const whatsRaw = document.getElementById('cliente-whatsapp').value.replace(/\D/g, '');
+            const emailCliente = document.getElementById('cliente-email').value.trim();
+            if (!whatsRaw && !emailCliente) {
+                alert('Preencha o seu WhatsApp ou E-mail no passo 1 para receber a cópia da proposta.');
+                return;
+            }
+
+            baixarPDFCliente();
+            const texto = montarTextoCliente();
+
+            if (whatsRaw) {
+                window.open(`https://wa.me/${whatsRaw}?text=${encodeURIComponent(texto)}`, '_blank');
+            }
+            if (emailCliente) {
+                const assunto = encodeURIComponent('Sua Proposta de Orçamento — VOSTY Design');
+                const corpo = encodeURIComponent(texto.replace(/\*/g, '').replace(/_/g, ''));
+                setTimeout(() => {
+                    window.location.href = `mailto:${emailCliente}?subject=${assunto}&body=${corpo}`;
+                }, 600);
+            }
+        }
+
+        // Botão único VOSTY Design: Baixa PDF Interno (Material + Mão de Obra + Lucro) + Envia para WhatsApp e E-mail VOSTY Design
+        function finalizarComVosty() {
+            if (itensOrcamento.length === 0) {
+                alert('Adicione pelo menos um item ao orçamento antes de enviar para a VOSTY Design.');
+                return;
+            }
+
+            baixarPDFInternoVosty();
+            const textoInterno = montarTextoInternoVosty();
+
+            window.open(`https://wa.me/${VOSTY_WHATSAPP}?text=${encodeURIComponent(textoInterno)}`, '_blank');
+
+            const assunto = encodeURIComponent('Fechamento de Proposta (Custos, Lucro & Especificações) — VOSTY Design');
+            const corpo = encodeURIComponent(textoInterno.replace(/\*/g, '').replace(/_/g, ''));
+            setTimeout(() => {
+                window.location.href = `mailto:${VOSTY_EMAIL}?subject=${assunto}&body=${corpo}`;
+            }, 600);
+        }
+
+        function limparTudo() {
+            itensOrcamento = [];
+            limparAnexo();
+            document.getElementById('cliente-nome').value = '';
+            document.getElementById('cliente-local').value = '';
+            document.getElementById('cliente-whatsapp').value = '';
+            document.getElementById('cliente-email').value = '';
+            atualizarPreview();
+        }
+    </script>
 </body>
 </html>
