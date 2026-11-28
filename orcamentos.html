@@ -121,7 +121,7 @@
                         </span>
                     </div>
                     <p class="text-xs text-vosh-muted mb-4">
-                        Carregue a planta, PDF ou fotografia do ambiente (ou tire uma foto agora) para discriminar os itens, calcular materiais pelos fornecedores (Leroy Merlin, Brico Depôt, Obramat, Robbialac, chapas/ferragens) e adicionar itens complementares (vidro, pedra, serralharia).
+                        Carregue o PDF do projeto de referência, planta ou fotografia do ambiente para preencher automaticamente os itens, medidas, materiais e valores ou extrair itens adicionais.
                     </p>
 
                     <div class="grid sm:grid-cols-2 gap-3 mb-4">
@@ -138,6 +138,14 @@
                             <span class="text-[11px] text-vosh-muted">Abrir câmara do telemóvel</span>
                             <input type="file" id="input-camera" accept="image/*" capture="environment" class="hidden" onchange="processarFicheiro(event)">
                         </label>
+                    </div>
+
+                    <div class="mb-4 flex flex-wrap items-center justify-between gap-2 bg-vosh-warm/70 border border-vosh-border rounded-lg px-3.5 py-2.5">
+                        <span class="text-xs text-vosh-ink font-medium">Base completa de marcenaria, marmoraria, serralheria e vidraçaria:</span>
+                        <button type="button" onclick="carregarProjetoReferenciaCompleto(true)"
+                                class="bg-vosh-ink hover:bg-vosh-charcoal text-white text-[11px] font-bold uppercase tracking-wider rounded px-3 py-1.5 transition">
+                            + Preencher Todos os Itens do Projeto
+                        </button>
                     </div>
 
                     <!-- Caixa de Análise do Projeto / Foto -->
@@ -386,14 +394,12 @@
                             </select>
                         </div>
 
-                        <!-- Campo Padrão de Área / Quantidade -->
                         <div id="campos-rem-qtd">
                             <label id="label-rem-qtd" class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Área / Quantidade Estimada (m²)</label>
                             <input type="number" id="rem-qtd" step="0.5" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 80"
                                    class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
                         </div>
 
-                        <!-- Campos Específicos para Divisórias em Pladur (Qtd de Paredes + Portas Internas) -->
                         <div id="campos-rem-pladur" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
                             <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
                                 Configuração de Paredes de Pladur (2 Lados + Lã + Estrutura) e Portas Internas de Abertura
@@ -417,7 +423,6 @@
                             </div>
                         </div>
 
-                        <!-- Campos Específicos para Pintura Robbialac / Externa / Telhado -->
                         <div id="campos-rem-pintura" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
                             <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
                                 Detalhes da Tinta &amp; Rendimento (Primário + 2 Demãos)
@@ -436,7 +441,6 @@
                             </div>
                         </div>
 
-                        <!-- Campos Específicos para Janelas e Portas em Caixilharia PVC + Vidro Duplo Acústico -->
                         <div id="campos-rem-janelas" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
                             <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
                                 Medidas em Caixilharia PVC com Vidro Duplo Acústico (Margem 25%)
@@ -466,7 +470,6 @@
                                    class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
                         </div>
 
-                        <!-- PRÉ-VISUALIZAÇÃO AO VIVO DA REMODELAÇÃO -->
                         <div id="live-preview-rem" class="hidden bg-amber-50/70 border border-vosh-amber/50 rounded-lg p-4 space-y-1.5">
                             <div class="flex justify-between items-start gap-2">
                                 <span class="text-[11px] font-bold uppercase tracking-wider text-vosh-terracotta">Pré-Visualização ao Vivo do Item</span>
@@ -493,7 +496,6 @@
 
                 <!-- FOLHA DO ORÇAMENTO DO CLIENTE (PDF) -->
                 <div id="documento-pdf-cliente" class="pdf-sheet border border-vosh-border rounded-lg shadow-md p-6 sm:p-8 space-y-6">
-                    <!-- Cabeçalho PDF -->
                     <div class="border-b-2 border-vosh-amber pb-4 flex justify-between items-start gap-4">
                         <div>
                             <p class="text-2xl font-bold tracking-tight text-vosh-ink leading-none">Vosh design</p>
@@ -510,7 +512,6 @@
                         </div>
                     </div>
 
-                    <!-- Dados do Cliente no PDF -->
                     <div class="bg-vosh-warm/80 p-3.5 rounded border border-vosh-border text-xs space-y-1">
                         <p><strong class="uppercase tracking-wider text-vosh-muted">Cliente:</strong> <span id="prev-nome" class="font-semibold text-vosh-ink">A preencher</span></p>
                         <p><strong class="uppercase tracking-wider text-vosh-muted">Local da Obra:</strong> <span id="prev-local" class="font-semibold text-vosh-ink">Portugal / Toda a Europa</span></p>
@@ -520,14 +521,12 @@
                         </p>
                     </div>
 
-                    <!-- Lista Completa de Itens e Especificações (Visão Cliente) -->
                     <div id="lista-itens-preview" class="space-y-4">
                         <div class="text-center py-8 text-xs text-vosh-muted border border-dashed border-vosh-border rounded">
-                            Adicione móveis sob medida ou serviços de remodelação ao lado para visualizar aqui a descrição técnica completa e os valores.
+                            Adicione móveis sob medida ou serviços de remodelação ao lado (ou carregue o PDF do projeto de referência) para visualizar aqui a descrição técnica completa e os valores.
                         </div>
                     </div>
 
-                    <!-- Resumo Financeiro Cliente -->
                     <div class="border-t-2 border-vosh-ink pt-4 space-y-2">
                         <div class="flex justify-between items-center text-xs text-vosh-muted">
                             <span>Subtotal Serviços &amp; Fabrico</span>
@@ -543,7 +542,7 @@
                     </div>
                 </div>
 
-                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF DA VOSH DESIGN (CUSTO MATERIAL + MÃO DE OBRA + LUCRO) -->
+                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF DA VOSH DESIGN -->
                 <div style="position: absolute; left: -9999px; top: 0; width: 780px;">
                     <div id="documento-pdf-interno" class="pdf-sheet p-8 space-y-6 bg-white text-vosh-ink">
                         <div class="border-b-2 border-vosh-ink pb-4 flex justify-between items-start">
@@ -593,31 +592,26 @@
 
                 <!-- BOTÕES FINAIS -->
                 <div class="bg-white p-5 rounded-lg border border-vosh-border shadow-xs space-y-3">
-                    <!-- 1. Finalizar Orçamento -->
                     <button type="button" onclick="finalizarOrcamentoResumo()"
                             class="w-full bg-vosh-ink hover:bg-vosh-charcoal text-white text-xs font-bold uppercase tracking-widest rounded py-3 px-4 transition">
                         ✓ Finalizar Orçamento
                     </button>
 
-                    <!-- 2. Descarregar PDF do Cliente -->
                     <button type="button" onclick="baixarPDFCliente()"
                             class="w-full bg-vosh-amber hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
                         📥 Descarregar Proposta Completa em PDF (Cliente)
                     </button>
 
-                    <!-- 3. Enviar Cópia para o Meu WhatsApp e E-mail (Cliente) -->
                     <button type="button" onclick="enviarParaCliente()"
                             class="w-full bg-vosh-warm hover:bg-vosh-sand text-vosh-ink border border-vosh-ink/30 text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
                         📲 Enviar cópia para o meu WhatsApp e e-mail
                     </button>
 
-                    <!-- 4. Fechar Projeto com a Vosh design -->
                     <button type="button" onclick="finalizarComVosh()"
                             class="w-full bg-vosh-terracotta hover:bg-vosh-terracottadark text-white text-xs font-bold uppercase tracking-widest rounded py-4 px-4 transition shadow-sm flex items-center justify-center gap-2 text-center">
                         Gostou desta proposta? Vamos fechar este projeto com a Vosh design? Entre em contato
                     </button>
 
-                    <!-- 5. Limpar / Novo Orçamento -->
                     <button type="button" onclick="limparTudo()"
                             class="w-full text-xs text-vosh-muted hover:text-red-700 underline pt-1">
                         Iniciar um novo orçamento limpo
@@ -642,541 +636,142 @@
         document.getElementById('int-pdf-data').textContent = 'Data: ' + hojeStr;
         document.getElementById('int-pdf-numero').textContent = numProposta;
 
-        // =========================================================================
-        // BASE DE PREÇOS CENTRAL OFICIAL
-        // Marcenaria ~53% | Remodelação 50% | Janelas & Portas PVC Vidro Duplo 25%
-        // =========================================================================
         const BASE_PRECOS = {
-            // MARCENARIA (~53% margem)
-            'COZ-MAD-INTBR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cozinha com Interno Branco e Portas Amadeiradas',
-                unit: 'm²',
-                matCost: 145.00,
-                labCost: 105.00,
-                margin: 0.530,
-                specs: 'Portas inteiras sob medida com acabamento amadeirado, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.'
-            },
-            'COZ-MEL-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cozinha Branca em Melamina',
-                unit: 'm²',
-                matCost: 135.00,
-                labCost: 100.00,
-                margin: 0.530,
-                specs: 'Portas inteiras em melamina branca (Egger/Sonae/Finsa), interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.'
-            },
-            'COZ-LAC-MATE': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cozinha Lacada Mate',
-                unit: 'm²',
-                matCost: 195.00,
-                labCost: 140.00,
-                margin: 0.530,
-                specs: 'Portas inteiras lacadas mate, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.'
-            },
-            'COZ-TERM-BRILHO': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cozinha em Termolaminado Branco Brilho',
-                unit: 'm²',
-                matCost: 165.00,
-                labCost: 120.00,
-                margin: 0.530,
-                specs: 'Portas inteiras em termolaminado branco brilho, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.'
-            },
-            'COZ-LAC-BRILHO': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cozinha Lacada Branco Brilho',
-                unit: 'm²',
-                matCost: 210.00,
-                labCost: 150.00,
-                margin: 0.530,
-                specs: 'Portas inteiras lacadas branco brilho, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.'
-            },
-            'COZ-ILHA-PEN': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Ilha ou Península de Cozinha Sob Medida',
-                unit: 'm²',
-                matCost: 215.00,
-                labCost: 160.00,
-                margin: 0.531,
-                specs: 'Módulos sob medida para ilha ou península, interno em melamina branca de 16 mm, ferragens com amortecimento e discriminação de qualquer item comprado à parte.'
-            },
-            'COZ-TORRE': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Despenseiro / Torre de Fornos e Micro-ondas',
-                unit: 'm²',
-                matCost: 160.00,
-                labCost: 115.00,
-                margin: 0.530,
-                specs: 'Torre vertical sob medida para forno e micro-ondas com portas inteiras, interno em melamina branca de 16 mm e ferragens com amortecimento.'
-            },
-            'ROUP-COR-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Roupeiro de Correr em Melamina Branca com Interno de 19 mm',
-                unit: 'm²',
-                matCost: 145.00,
-                labCost: 103.00,
-                margin: 0.549,
-                specs: 'Roupeiro de correr em melamina branca com estrutura/interno de 19 mm, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'ROUP-COR-LINHO-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Roupeiro de Correr com Portas Brancas com Interior de Linho em 19 mm',
-                unit: 'm²',
-                matCost: 155.00,
-                labCost: 110.00,
-                margin: 0.530,
-                specs: 'Portas brancas com interior em linho de 19 mm, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'ROUP-CLOSET-MEL19': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Roupeiro / Closet Melamina 19 mm, Interno Linho, Portas Brancas Melamina',
-                unit: 'm²',
-                matCost: 155.00,
-                labCost: 110.00,
-                margin: 0.530,
-                specs: 'Melamina 19 mm com interior em linho e portas brancas em melamina, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'ROUP-CLOSET-LED': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Roupeiro / Closet Melamina 19 mm, Interno Linho, Portas Brancas com LED nas Laterais',
-                unit: 'm²',
-                matCost: 185.00,
-                labCost: 130.00,
-                margin: 0.530,
-                specs: 'Melamina 19 mm com interior em linho, portas brancas e iluminação LED nas laterais, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'ROUP-CLOSET-LAC': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Closet / Roupeiro Lacado Branco, Portas em Lacado Branco',
-                unit: 'm²',
-                matCost: 180.00,
-                labCost: 130.00,
-                margin: 0.530,
-                specs: 'Closet/roupeiro lacado branco com portas em lacado branco, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'ROUP-COR-MAD': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Roupeiro de Correr — Interno Linho e Portas Amadeiradas',
-                unit: 'm²',
-                matCost: 165.00,
-                labCost: 118.00,
-                margin: 0.530,
-                specs: 'Roupeiro de correr com interior em linho e portas amadeiradas, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.'
-            },
-            'CLOSET-ABERTO': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Closet Aberto / Walk-in Closet',
-                unit: 'm²',
-                matCost: 150.00,
-                labCost: 110.00,
-                margin: 0.530,
-                specs: 'Closet aberto / walk-in closet planejado sob medida, com gavetas de extração total e amortecimento e opção de gavetas/gavetões extras.'
-            },
-            'SALA-TV-GAV': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Painel de Televisão / Sala com Gavetas Incluídas',
-                unit: 'm²',
-                matCost: 120.00,
-                labCost: 90.00,
-                margin: 0.530,
-                specs: 'Painel de televisão/sala com 2 gavetas incluídas de extração total e amortecimento (sem dobradiça de porta), com possibilidade de adicionar mais gavetas e gavetões.'
-            },
-            'PAIN-RIP-DEC': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Painel Ripado Decorativo',
-                unit: 'm²',
-                matCost: 85.00,
-                labCost: 65.00,
-                margin: 0.524,
-                specs: 'Painel ripado decorativo sob medida com réguas alinhadas e montagem completa.'
-            },
-            'PAIN-RIP-SALA': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Painel Ripado de Televisão de Sala',
-                unit: 'm²',
-                matCost: 95.00,
-                labCost: 70.00,
-                margin: 0.530,
-                specs: 'Painel ripado de televisão de sala sob medida com organização para cabos e instalação completa.'
-            },
-            'COMODA-MESAS': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Cómoda / Conjunto de Mesas de Cabeceira',
-                unit: 'm²',
-                matCost: 135.00,
-                labCost: 100.00,
-                margin: 0.530,
-                specs: 'Cómoda e/ou conjunto de mesas de cabeceira sob medida com corrediças de extração total e amortecimento.'
-            },
-            'SECRETARIA-MOV': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Secretária / Móvel de Escritório',
-                unit: 'm²',
-                matCost: 125.00,
-                labCost: 90.00,
-                margin: 0.530,
-                specs: 'Secretária / móvel de escritório sob medida com montagem completa.'
-            },
-            'ENTRADA-MOV': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Móvel de Entrada / Sapateira / Consola',
-                unit: 'm²',
-                matCost: 130.00,
-                labCost: 95.00,
-                margin: 0.530,
-                specs: 'Móvel de entrada / sapateira / consola sob medida com montagem completa.'
-            },
-            'LAVANDARIA-MOV': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Móvel para Lavanderia',
-                unit: 'm²',
-                matCost: 145.00,
-                labCost: 105.00,
-                margin: 0.530,
-                specs: 'Móvel para lavanderia sob medida com resistência à humidade e instalação completa.'
-            },
-            'WC-MOV-SUSP': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Móvel para Casa de Banho',
-                unit: 'm²',
-                matCost: 165.00,
-                labCost: 120.00,
-                margin: 0.521,
-                specs: 'Móvel para casa de banho sob medida com proteção contra humidade e instalação completa.'
-            },
-            'PORTA-BAT-80-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Porta de Batente 2,00 m × 0,80 m Completa com Aro e Guarnição (Branca)',
-                unit: 'm²',
-                matCost: 120.00,
-                labCost: 75.00,
-                margin: 0.530,
-                specs: 'Porta de batente 2,00 m × 0,80 m branca completa com aro, guarnição e ferragens instaladas.'
-            },
-            'PORTA-BAT-80-LAC': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Porta de Batente 2,00 m × 0,80 m Completa com Aro e Guarnição (Branco Lacado)',
-                unit: 'm²',
-                matCost: 150.00,
-                labCost: 90.00,
-                margin: 0.530,
-                specs: 'Porta de batente 2,00 m × 0,80 m em branco lacado completa com aro, guarnição e ferragens instaladas.'
-            },
-            'PORTA-BAT-70-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Porta de Batente 2,00 m × 0,70 m Completa com Aro e Guarnição (Branca)',
-                unit: 'm²',
-                matCost: 120.00,
-                labCost: 75.00,
-                margin: 0.530,
-                specs: 'Porta de batente 2,00 m × 0,70 m branca completa com aro, guarnição e ferragens instaladas.'
-            },
-            'PORTA-BAT-70-LAC': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Porta de Batente 2,00 m × 0,70 m Completa com Aro e Guarnição (Branco Lacado)',
-                unit: 'm²',
-                matCost: 150.00,
-                labCost: 90.00,
-                margin: 0.530,
-                specs: 'Porta de batente 2,00 m × 0,70 m em branco lacado completa com aro, guarnição e ferragens instaladas.'
-            },
-            'PORTA-COR-EMB-BR': {
-                category: 'Marcenaria Sob Medida',
-                title: 'Porta de Correr Interna Embutida Branca',
-                unit: 'm²',
-                matCost: 145.00,
-                labCost: 95.00,
-                margin: 0.530,
-                specs: 'Porta de correr interna embutida branca completa com ferragens e instalação.'
-            },
+            'COZ-MAD-INTBR': { category: 'Marcenaria Sob Medida', title: 'Cozinha com Interno Branco e Portas Amadeiradas', matCost: 145.00, labCost: 105.00, margin: 0.530, specs: 'Portas inteiras sob medida com acabamento amadeirado, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
+            'COZ-MEL-BR': { category: 'Marcenaria Sob Medida', title: 'Cozinha Branca em Melamina', matCost: 135.00, labCost: 100.00, margin: 0.530, specs: 'Portas inteiras em melamina branca (Egger/Sonae/Finsa), interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
+            'COZ-LAC-MATE': { category: 'Marcenaria Sob Medida', title: 'Cozinha Lacada Mate', matCost: 195.00, labCost: 140.00, margin: 0.530, specs: 'Portas inteiras lacadas mate, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
+            'COZ-TERM-BRILHO': { category: 'Marcenaria Sob Medida', title: 'Cozinha em Termolaminado Branco Brilho', matCost: 165.00, labCost: 120.00, margin: 0.530, specs: 'Portas inteiras em termolaminado branco brilho, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
+            'COZ-LAC-BRILHO': { category: 'Marcenaria Sob Medida', title: 'Cozinha Lacada Branco Brilho', matCost: 210.00, labCost: 150.00, margin: 0.530, specs: 'Portas inteiras lacadas branco brilho, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
+            'COZ-ILHA-PEN': { category: 'Marcenaria Sob Medida', title: 'Ilha ou Península de Cozinha Sob Medida', matCost: 215.00, labCost: 160.00, margin: 0.531, specs: 'Módulos sob medida para ilha ou península, interno em melamina branca de 16 mm, ferragens com amortecimento e discriminação de qualquer item comprado à parte.' },
+            'COZ-TORRE': { category: 'Marcenaria Sob Medida', title: 'Despenseiro / Torre de Fornos e Micro-ondas', matCost: 160.00, labCost: 115.00, margin: 0.530, specs: 'Torre vertical sob medida para forno e micro-ondas com portas inteiras, interno em melamina branca de 16 mm e ferragens com amortecimento.' },
+            'ROUP-COR-BR': { category: 'Marcenaria Sob Medida', title: 'Roupeiro de Correr em Melamina Branca com Interno de 19 mm', matCost: 145.00, labCost: 103.00, margin: 0.549, specs: 'Roupeiro de correr em melamina branca com estrutura/interno de 19 mm, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'ROUP-COR-LINHO-BR': { category: 'Marcenaria Sob Medida', title: 'Roupeiro de Correr com Portas Brancas com Interior de Linho em 19 mm', matCost: 155.00, labCost: 110.00, margin: 0.530, specs: 'Portas brancas com interior em linho de 19 mm, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'ROUP-CLOSET-MEL19': { category: 'Marcenaria Sob Medida', title: 'Roupeiro / Closet Melamina 19 mm, Interno Linho, Portas Brancas Melamina', matCost: 155.00, labCost: 110.00, margin: 0.530, specs: 'Melamina 19 mm com interior em linho e portas brancas em melamina, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'ROUP-CLOSET-LED': { category: 'Marcenaria Sob Medida', title: 'Roupeiro / Closet Melamina 19 mm, Interno Linho, Portas Brancas com LED nas Laterais', matCost: 185.00, labCost: 130.00, margin: 0.530, specs: 'Melamina 19 mm com interior em linho, portas brancas e iluminação LED nas laterais, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'ROUP-CLOSET-LAC': { category: 'Marcenaria Sob Medida', title: 'Closet / Roupeiro Lacado Branco, Portas em Lacado Branco', matCost: 180.00, labCost: 130.00, margin: 0.530, specs: 'Closet/roupeiro lacado branco com portas em lacado branco, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'ROUP-COR-MAD': { category: 'Marcenaria Sob Medida', title: 'Roupeiro de Correr — Interno Linho e Portas Amadeiradas', matCost: 165.00, labCost: 118.00, margin: 0.530, specs: 'Roupeiro de correr com interior em linho e portas amadeiradas, 4 jogos de gavetas, corrediças com extração total e amortecimento, e dobradiças com amortecimento.' },
+            'CLOSET-ABERTO': { category: 'Marcenaria Sob Medida', title: 'Closet Aberto / Walk-in Closet', matCost: 150.00, labCost: 110.00, margin: 0.530, specs: 'Closet aberto / walk-in closet planejado sob medida, com gavetas de extração total e amortecimento e opção de gavetas/gavetões extras.' },
+            'SALA-TV-GAV': { category: 'Marcenaria Sob Medida', title: 'Painel de Televisão / Sala com Gavetas Incluídas', matCost: 120.00, labCost: 90.00, margin: 0.530, specs: 'Painel de televisão/sala com 2 gavetas incluídas de extração total e amortecimento (sem dobradiça de porta), com possibilidade de adicionar mais gavetas e gavetões.' },
+            'PAIN-RIP-DEC': { category: 'Marcenaria Sob Medida', title: 'Painel Ripado Decorativo', matCost: 85.00, labCost: 65.00, margin: 0.524, specs: 'Painel ripado decorativo sob medida com réguas alinhadas e montagem completa.' },
+            'PAIN-RIP-SALA': { category: 'Marcenaria Sob Medida', title: 'Painel Ripado de Televisão de Sala', matCost: 95.00, labCost: 70.00, margin: 0.530, specs: 'Painel ripado de televisão de sala sob medida com organização para cabos e instalação completa.' },
+            'COMODA-MESAS': { category: 'Marcenaria Sob Medida', title: 'Cómoda / Conjunto de Mesas de Cabeceira', matCost: 135.00, labCost: 100.00, margin: 0.530, specs: 'Cómoda e/ou conjunto de mesas de cabeceira sob medida com corrediças de extração total e amortecimento.' },
+            'SECRETARIA-MOV': { category: 'Marcenaria Sob Medida', title: 'Secretária / Móvel de Escritório', matCost: 125.00, labCost: 90.00, margin: 0.530, specs: 'Secretária / móvel de escritório sob medida com montagem completa.' },
+            'ENTRADA-MOV': { category: 'Marcenaria Sob Medida', title: 'Móvel de Entrada / Sapateira / Consola', matCost: 130.00, labCost: 95.00, margin: 0.530, specs: 'Móvel de entrada / sapateira / consola sob medida com montagem completa.' },
+            'LAVANDARIA-MOV': { category: 'Marcenaria Sob Medida', title: 'Móvel para Lavanderia', matCost: 145.00, labCost: 105.00, margin: 0.530, specs: 'Móvel para lavanderia sob medida com resistência à humidade e instalação completa.' },
+            'WC-MOV-SUSP': { category: 'Marcenaria Sob Medida', title: 'Móvel para Casa de Banho', matCost: 165.00, labCost: 120.00, margin: 0.521, specs: 'Móvel para casa de banho sob medida com proteção contra humidade e instalação completa.' },
+            'PORTA-BAT-80-BR': { category: 'Marcenaria Sob Medida', title: 'Porta de Batente 2,00 m × 0,80 m Completa com Aro e Guarnição (Branca)', matCost: 120.00, labCost: 75.00, margin: 0.530, specs: 'Porta de batente 2,00 m × 0,80 m branca completa com aro, guarnição e ferragens instaladas.' },
+            'PORTA-BAT-80-LAC': { category: 'Marcenaria Sob Medida', title: 'Porta de Batente 2,00 m × 0,80 m Completa com Aro e Guarnição (Branco Lacado)', matCost: 150.00, labCost: 90.00, margin: 0.530, specs: 'Porta de batente 2,00 m × 0,80 m em branco lacado completa com aro, guarnição e ferragens instaladas.' },
+            'PORTA-BAT-70-BR': { category: 'Marcenaria Sob Medida', title: 'Porta de Batente 2,00 m × 0,70 m Completa com Aro e Guarnição (Branca)', matCost: 120.00, labCost: 75.00, margin: 0.530, specs: 'Porta de batente 2,00 m × 0,70 m branca completa com aro, guarnição e ferragens instaladas.' },
+            'PORTA-BAT-70-LAC': { category: 'Marcenaria Sob Medida', title: 'Porta de Batente 2,00 m × 0,70 m Completa com Aro e Guarnição (Branco Lacado)', matCost: 150.00, labCost: 90.00, margin: 0.530, specs: 'Porta de batente 2,00 m × 0,70 m em branco lacado completa com aro, guarnição e ferragens instaladas.' },
+            'PORTA-COR-EMB-BR': { category: 'Marcenaria Sob Medida', title: 'Porta de Correr Interna Embutida Branca', matCost: 145.00, labCost: 95.00, margin: 0.530, specs: 'Porta de correr interna embutida branca completa com ferragens e instalação.' },
 
-            // REMODELAÇÃO (50% margem)
-            'REM-GER-START': {
-                category: 'Remodelação',
-                title: 'Remodelação Geral Chave na Mão — Gama Start',
-                unit: 'm²',
-                matCost: 165.00,
-                labCost: 135.00,
-                margin: 0.500,
-                specs: 'Inclui materiais da Gama Start e execução discriminada por ambiente: (1) Cozinha: remoção de chão existente e azulejos antigos, colocação de novo pavimento e revestimentos cerâmicos, substituição da canalização e fiação elétrica, pladur com estrutura metálica, primário e 2 demãos de tinta; (2) Casa de Banho: substituição de chão e azulejos existentes, troca de louças/sanita, remoção de banheira para colocação de cabine/base de duche, nova bancada/pia com móvel inferior, pintura e iluminação; (3) Quartos e Sala: troca de chão e rodapés, atualização de fiação de iluminação e pintura com primário e 2 demãos de tinta.'
-            },
-            'REM-GER-STD': {
-                category: 'Remodelação',
-                title: 'Remodelação Geral Chave na Mão — Gama Standard',
-                unit: 'm²',
-                matCost: 165.00,
-                labCost: 135.00,
-                margin: 0.500,
-                specs: 'Obra integral discriminada por ambiente (cozinha, casa de banho, quartos e sala) com demolições/entulho, canalização, eletricidade, pavimentos e revestimentos cerâmicos, pladur e pintura (primário + 2 demãos).'
-            },
-            'REM-GER-PRM': {
-                category: 'Remodelação',
-                title: 'Remodelação Geral Chave na Mão — Gama Premium',
-                unit: 'm²',
-                matCost: 230.00,
-                labCost: 180.00,
-                margin: 0.500,
-                specs: 'Remodelação integral de gama superior discriminada por ambiente, com materiais selecionados, infraestruturas renovadas, acabamentos detalhados e pintura completa (primário + 2 demãos).'
-            },
-            'REM-COZ-COMP': {
-                category: 'Remodelação',
-                title: 'Remodelação Parcial — Cozinha Completa',
-                unit: 'm²',
-                matCost: 210.00,
-                labCost: 185.00,
-                margin: 0.500,
-                specs: 'Remoção de revestimentos e entulho, troca de canalização de água e esgoto, fiação elétrica, novo chão e azulejos, e pintura do teto.'
-            },
-            'REM-WC-COMP': {
-                category: 'Remodelação',
-                title: 'Remodelação Parcial — Casa de Banho Completa',
-                unit: 'm²',
-                matCost: 220.00,
-                labCost: 195.00,
-                margin: 0.500,
-                specs: 'Remoção de revestimentos e entulho, nova canalização, impermeabilização, chão e azulejos novos, troca de banheira por cabine/base de duche, instalação de sanita, bancada/pia e iluminação.'
-            },
-            'REM-PLD-PAR': {
-                category: 'Remodelação',
-                title: 'Divisórias em Pladur (Paredes + Portas Internas Brancas)',
-                unit: 'm²',
-                matCost: 18.00,
-                labCost: 22.00,
-                margin: 0.500,
-                specs: 'Cálculo por m² e cobertura de materiais de fornecedor (placas para cada face, estrutura metálica, lã, fita, barramento e pintura) e portas internas brancas de abertura conforme indicado.'
-            },
-            'REM-PLD-TET': {
-                category: 'Remodelação',
-                title: 'Teto Falso em Pladur Completo',
-                unit: 'm²',
-                matCost: 16.50,
-                labCost: 21.00,
-                margin: 0.500,
-                specs: 'Cálculo por m² e cobertura de materiais de fornecedor: estrutura metálica, apoios, placas de pladur, fita, barramento, lixamento e pintura.'
-            },
-            'REM-PINT-INT': {
-                category: 'Remodelação',
-                title: 'Pintura Interna (Robbialac — Primário + 2 Demãos)',
-                unit: 'm²',
-                matCost: 6.50,
-                labCost: 12.00,
-                margin: 0.500,
-                specs: 'Preparação, 1 demão de primário e 2 demãos de tinta Robbialac, calculadas conforme área (m²), rendimento por lata e demãos.'
-            },
-            'REM-PINT-EXT': {
-                category: 'Remodelação',
-                title: 'Pintura Externa (por m² — Primário + 2 Demãos)',
-                unit: 'm²',
-                matCost: 8.50,
-                labCost: 14.50,
-                margin: 0.500,
-                specs: 'Pintura externa por m² com 1 demão de primário e 2 demãos de tinta exterior, calculada conforme área, rendimento por lata e demãos.'
-            },
-            'REM-TELHADO': {
-                category: 'Remodelação',
-                title: 'Pintura de Telhado e Reformas de Telhado',
-                unit: 'm²',
-                matCost: 28.00,
-                labCost: 34.00,
-                margin: 0.500,
-                specs: 'Limpeza, reforma/substituição de telhas e vedações, primário e aplicação de tinta/revestimento para telhado conforme área e rendimento.'
-            },
-            'REM-BAR-PIN': {
-                category: 'Remodelação',
-                title: 'Barramento Geral e Pintura',
-                unit: 'm²',
-                matCost: 5.50,
-                labCost: 12.50,
-                margin: 0.500,
-                specs: 'Preparação, barramento, lixamento, primário e 2 demãos de tinta.'
-            },
-            'REM-CH-FLU': {
-                category: 'Remodelação',
-                title: 'Pavimento Flutuante AC4 / AC5',
-                unit: 'm²',
-                matCost: 19.00,
-                labCost: 13.00,
-                margin: 0.500,
-                specs: 'Colocação de pavimento flutuante, base isolante, rodapés e acabamentos.'
-            },
-            'REM-CH-CER': {
-                category: 'Remodelação',
-                title: 'Pavimento / Revestimento Cerâmico',
-                unit: 'm²',
-                matCost: 24.00,
-                labCost: 24.00,
-                margin: 0.500,
-                specs: 'Assentamento de pavimento ou revestimento cerâmico com cola, nivelamento e betume.'
-            },
-            'REM-CAN-HID': {
-                category: 'Remodelação',
-                title: 'Canalização / Rede Hidráulica',
-                unit: 'm²',
-                matCost: 45.00,
-                labCost: 75.00,
-                margin: 0.500,
-                specs: 'Substituição e execução de rede hidráulica de água e esgotos.'
-            },
-            'REM-ELE-PON': {
-                category: 'Remodelação',
-                title: 'Eletricidade & Iluminação LED',
-                unit: 'm²',
-                matCost: 22.00,
-                labCost: 38.00,
-                margin: 0.500,
-                specs: 'Execução de pontos elétricos, cablagem e iluminação LED.'
-            },
-            'REM-PRT-INT-BR': {
-                category: 'Remodelação',
-                title: 'Porta Interior Completa (Branca — 2,00 m × 0,80 m)',
-                unit: 'm²',
-                matCost: 195.00,
-                labCost: 115.00,
-                margin: 0.500,
-                specs: 'Porta interior branca de 2,00 m × 0,80 m completa com aro, guarnição e instalação.'
-            },
-            'REM-PRT-INT-LAC': {
-                category: 'Remodelação',
-                title: 'Porta Interior Completa (Branco Lacado — 2,00 m × 0,80 m)',
-                unit: 'm²',
-                matCost: 235.00,
-                labCost: 130.00,
-                margin: 0.500,
-                specs: 'Porta interior em branco lacado de 2,00 m × 0,80 m completa com aro, guarnição e instalação.'
-            },
-            'REM-PRT-INT-70': {
-                category: 'Remodelação',
-                title: 'Porta Interior Completa (2,00 m × 0,70 m)',
-                unit: 'm²',
-                matCost: 195.00,
-                labCost: 115.00,
-                margin: 0.500,
-                specs: 'Porta interior de 2,00 m × 0,70 m completa com aro, guarnição e instalação.'
-            },
-            'REM-PRT-COR-INT': {
-                category: 'Remodelação',
-                title: 'Porta de Correr Interna',
-                unit: 'm²',
-                matCost: 220.00,
-                labCost: 125.00,
-                margin: 0.500,
-                specs: 'Porta de correr interna completa com ferragens e montagem.'
-            },
-            'REM-PRT-BLI': {
-                category: 'Remodelação',
-                title: 'Porta Blindada de Alta Segurança',
-                unit: 'm²',
-                matCost: 680.00,
-                labCost: 270.00,
-                margin: 0.500,
-                specs: 'Porta blindada de segurança completa com instalação.'
-            },
-            'REM-DEM-ENT': {
-                category: 'Remodelação',
-                title: 'Demolições e Gestão de Entulho',
-                unit: 'm²',
-                matCost: 8.00,
-                labCost: 17.00,
-                margin: 0.500,
-                specs: 'Demolição e remoção/gestão de entulho.'
-            },
+            'REM-GER-START': { category: 'Remodelação', title: 'Remodelação Geral Chave na Mão — Gama Start', matCost: 165.00, labCost: 135.00, margin: 0.500, specs: 'Inclui materiais da Gama Start e execução discriminada por ambiente: cozinha, casa de banho, quartos e sala com demolições, infraestruturas, revestimentos e pintura (primário + 2 demãos).' },
+            'REM-GER-STD': { category: 'Remodelação', title: 'Remodelação Geral Chave na Mão — Gama Standard', matCost: 165.00, labCost: 135.00, margin: 0.500, specs: 'Obra integral discriminada por ambiente (cozinha, casa de banho, quartos e sala) com demolições/entulho, canalização, eletricidade, pavimentos e revestimentos cerâmicos, pladur e pintura (primário + 2 demãos).' },
+            'REM-GER-PRM': { category: 'Remodelação', title: 'Remodelação Geral Chave na Mão — Gama Premium', matCost: 230.00, labCost: 180.00, margin: 0.500, specs: 'Remodelação integral de gama superior discriminada por ambiente, com materiais selecionados, infraestruturas renovadas, acabamentos detalhados e pintura completa (primário + 2 demãos).' },
+            'REM-COZ-COMP': { category: 'Remodelação', title: 'Remodelação Parcial — Cozinha Completa', matCost: 210.00, labCost: 185.00, margin: 0.500, specs: 'Remoção de revestimentos e entulho, troca de canalização de água e esgoto, fiação elétrica, novo chão e azulejos, e pintura do teto.' },
+            'REM-WC-COMP': { category: 'Remodelação', title: 'Remodelação Parcial — Casa de Banho Completa', matCost: 220.00, labCost: 195.00, margin: 0.500, specs: 'Remoção de revestimentos e entulho, nova canalização, impermeabilização, chão e azulejos novos, troca de banheira por cabine/base de duche, instalação de sanita, bancada/pia e iluminação.' },
+            'REM-PLD-PAR': { category: 'Remodelação', title: 'Divisórias em Pladur (Paredes + Portas Internas Brancas)', matCost: 18.00, labCost: 22.00, margin: 0.500, specs: 'Cálculo por m² e cobertura de materiais de fornecedor (placas para cada face, estrutura metálica, lã, fita, barramento e pintura) e portas internas brancas de abertura conforme indicado.' },
+            'REM-PLD-TET': { category: 'Remodelação', title: 'Teto Falso em Pladur Completo', matCost: 16.50, labCost: 21.00, margin: 0.500, specs: 'Cálculo por m² e cobertura de materiais de fornecedor: estrutura metálica, apoios, placas de pladur, fita, barramento, lixamento e pintura.' },
+            'REM-PINT-INT': { category: 'Remodelação', title: 'Pintura Interna (Robbialac — Primário + 2 Demãos)', matCost: 6.50, labCost: 12.00, margin: 0.500, specs: 'Preparação, 1 demão de primário e 2 demãos de tinta Robbialac, calculadas conforme área (m²), rendimento por lata e demãos.' },
+            'REM-PINT-EXT': { category: 'Remodelação', title: 'Pintura Externa (por m² — Primário + 2 Demãos)', matCost: 8.50, labCost: 14.50, margin: 0.500, specs: 'Pintura externa por m² com 1 demão de primário e 2 demãos de tinta exterior, calculada conforme área, rendimento por lata e demãos.' },
+            'REM-TELHADO': { category: 'Remodelação', title: 'Pintura de Telhado e Reformas de Telhado', matCost: 28.00, labCost: 34.00, margin: 0.500, specs: 'Limpeza, reforma/substituição de telhas e vedações, primário e aplicação de tinta/revestimento para telhado conforme área e rendimento.' },
+            'REM-BAR-PIN': { category: 'Remodelação', title: 'Barramento Geral e Pintura', matCost: 5.50, labCost: 12.50, margin: 0.500, specs: 'Preparação, barramento, lixamento, primário e 2 demãos de tinta.' },
+            'REM-CH-FLU': { category: 'Remodelação', title: 'Pavimento Flutuante AC4 / AC5', matCost: 19.00, labCost: 13.00, margin: 0.500, specs: 'Colocação de pavimento flutuante, base isolante, rodapés e acabamentos.' },
+            'REM-CH-CER': { category: 'Remodelação', title: 'Pavimento / Revestimento Cerâmico', matCost: 24.00, labCost: 24.00, margin: 0.500, specs: 'Assentamento de pavimento ou revestimento cerâmico com cola, nivelamento e betume.' },
+            'REM-CAN-HID': { category: 'Remodelação', title: 'Canalização / Rede Hidráulica', matCost: 45.00, labCost: 75.00, margin: 0.500, specs: 'Substituição e execução de rede hidráulica de água e esgotos.' },
+            'REM-ELE-PON': { category: 'Remodelação', title: 'Eletricidade & Iluminação LED', matCost: 22.00, labCost: 38.00, margin: 0.500, specs: 'Execução de pontos elétricos, cablagem e iluminação LED.' },
+            'REM-PRT-INT-BR': { category: 'Remodelação', title: 'Porta Interior Completa (Branca — 2,00 m × 0,80 m)', matCost: 195.00, labCost: 115.00, margin: 0.500, specs: 'Porta interior branca de 2,00 m × 0,80 m completa com aro, guarnição e instalação.' },
+            'REM-PRT-INT-LAC': { category: 'Remodelação', title: 'Porta Interior Completa (Branco Lacado — 2,00 m × 0,80 m)', matCost: 235.00, labCost: 130.00, margin: 0.500, specs: 'Porta interior em branco lacado de 2,00 m × 0,80 m completa com aro, guarnição e instalação.' },
+            'REM-PRT-INT-70': { category: 'Remodelação', title: 'Porta Interior Completa (2,00 m × 0,70 m)', matCost: 195.00, labCost: 115.00, margin: 0.500, specs: 'Porta interior de 2,00 m × 0,70 m completa com aro, guarnição e instalação.' },
+            'REM-PRT-COR-INT': { category: 'Remodelação', title: 'Porta de Correr Interna', matCost: 220.00, labCost: 125.00, margin: 0.500, specs: 'Porta de correr interna completa com ferragens e montagem.' },
+            'REM-PRT-BLI': { category: 'Remodelação', title: 'Porta Blindada de Alta Segurança', matCost: 680.00, labCost: 270.00, margin: 0.500, specs: 'Porta blindada de segurança completa com instalação.' },
+            'REM-DEM-ENT': { category: 'Remodelação', title: 'Demolições e Gestão de Entulho', matCost: 8.00, labCost: 17.00, margin: 0.500, specs: 'Demolição e remoção/gestão de entulho.' },
+            'REM-JAN-ELETRICO': { category: 'Remodelação', title: 'Janela em Caixilharia PVC com Vidro Duplo Acústico + Estore Elétrico', matCost: 260.00, labCost: 120.00, margin: 0.250, specs: 'Janela em caixilharia PVC com vidro duplo acústico e estore elétrico, incluindo remoção da janela anterior, acabamentos e instalação.' },
+            'REM-JAN-ROLO': { category: 'Remodelação', title: 'Janela em Caixilharia PVC com Vidro Duplo Acústico + Estore de Rolo', matCost: 260.00, labCost: 120.00, margin: 0.250, specs: 'Janela em caixilharia PVC com vidro duplo acústico e estore de rolo, incluindo remoção da janela anterior, acabamentos e instalação.' },
+            'REM-PORTA-PVC-ABRIR': { category: 'Remodelação', title: 'Porta de Vidro / Sacada / Varanda / Lavanderia em Caixilharia PVC com Vidro Duplo Acústico (Branca — De Abrir)', matCost: 290.00, labCost: 130.00, margin: 0.250, specs: 'Porta branca de abertura em caixilharia PVC com vidro duplo acústico para vidro/sacada/varanda/lavanderia, com instalação completa.' },
+            'REM-PORTA-PVC-CORRER': { category: 'Remodelação', title: 'Porta de Vidro / Sacada / Varanda / Lavanderia em Caixilharia PVC com Vidro Duplo Acústico (Branca — De Correr)', matCost: 300.00, labCost: 135.00, margin: 0.250, specs: 'Porta branca de correr em caixilharia PVC com vidro duplo acústico para vidro/sacada/varanda/lavanderia, com instalação completa.' },
 
-            // JANELAS E PORTAS DE VIDRO / PVC COM VIDRO DUPLO ACÚSTICO (25% MARGEM)
-            'REM-JAN-ELETRICO': {
-                category: 'Remodelação',
-                title: 'Janela em Caixilharia PVC com Vidro Duplo Acústico + Estore Elétrico',
-                unit: 'm²',
-                matCost: 260.00,
-                labCost: 120.00,
-                margin: 0.250,
-                specs: 'Janela em caixilharia PVC com vidro duplo acústico e estore elétrico, incluindo remoção da janela anterior, acabamentos e instalação.'
-            },
-            'REM-JAN-ROLO': {
-                category: 'Remodelação',
-                title: 'Janela em Caixilharia PVC com Vidro Duplo Acústico + Estore de Rolo',
-                unit: 'm²',
-                matCost: 260.00,
-                labCost: 120.00,
-                margin: 0.250,
-                specs: 'Janela em caixilharia PVC com vidro duplo acústico e estore de rolo, incluindo remoção da janela anterior, acabamentos e instalação.'
-            },
-            'REM-PORTA-PVC-ABRIR': {
-                category: 'Remodelação',
-                title: 'Porta de Vidro / Sacada / Varanda / Lavanderia em Caixilharia PVC com Vidro Duplo Acústico (Branca — De Abrir)',
-                unit: 'm²',
-                matCost: 290.00,
-                labCost: 130.00,
-                margin: 0.250,
-                specs: 'Porta branca de abertura em caixilharia PVC com vidro duplo acústico para vidro/sacada/varanda/lavanderia, com instalação completa.'
-            },
-            'REM-PORTA-PVC-CORRER': {
-                category: 'Remodelação',
-                title: 'Porta de Vidro / Sacada / Varanda / Lavanderia em Caixilharia PVC com Vidro Duplo Acústico (Branca — De Correr)',
-                unit: 'm²',
-                matCost: 300.00,
-                labCost: 135.00,
-                margin: 0.250,
-                specs: 'Porta branca de correr em caixilharia PVC com vidro duplo acústico para vidro/sacada/varanda/lavanderia, com instalação completa.'
-            },
-
-            // COMPLEMENTARES DE PROJETO / IMAGEM (50% margem)
-            'COMP-VIDRO': {
-                category: 'Complementar',
-                title: 'Porta de Correr em Vidro Temperado / Laminado',
-                unit: 'm²',
-                matCost: 155.00,
-                labCost: 85.00,
-                margin: 0.500,
-                specs: 'Porta de correr em vidro de segurança com ferragens e instalação.'
-            },
-            'COMP-SILESTONE': {
-                category: 'Complementar',
-                title: 'Bancada / Revestimento em Pedra Silestone / Quartzo',
-                unit: 'm²',
-                matCost: 185.00,
-                labCost: 95.00,
-                margin: 0.500,
-                specs: 'Bancada ou revestimento em pedra Silestone / quartzo sob medida com instalação.'
-            },
-            'COMP-DEKTON': {
-                category: 'Complementar',
-                title: 'Bancada / Revestimento em Pedra Dekton / Porcelânico',
-                unit: 'm²',
-                matCost: 230.00,
-                labCost: 110.00,
-                margin: 0.500,
-                specs: 'Bancada ou revestimento em pedra Dekton / porcelânico sob medida com instalação.'
-            },
-            'COMP-GRANITO': {
-                category: 'Complementar',
-                title: 'Bancada / Revestimento em Pedra Natural',
-                unit: 'm²',
-                matCost: 135.00,
-                labCost: 75.00,
-                margin: 0.500,
-                specs: 'Bancada ou revestimento em pedra natural sob medida com instalação.'
-            },
-            'COMP-SERRALHARIA': {
-                category: 'Complementar',
-                title: 'Serralharia Sob Medida (Estrutura Ferro / Divisória Vidro)',
-                unit: 'm²',
-                matCost: 160.00,
-                labCost: 100.00,
-                margin: 0.500,
-                specs: 'Serralharia sob medida com estrutura metálica e instalação.'
-            },
-            'COMP-ESPELHO': {
-                category: 'Complementar',
-                title: 'Espelho Sob Medida / Resguardo de Duche em Vidro Temperado',
-                unit: 'm²',
-                matCost: 90.00,
-                labCost: 55.00,
-                margin: 0.500,
-                specs: 'Espelho sob medida ou resguardo de duche em vidro temperado com instalação.'
-            }
+            'COMP-VIDRO': { category: 'Complementar', title: 'Porta de Correr em Vidro Temperado / Laminado', matCost: 155.00, labCost: 85.00, margin: 0.500, specs: 'Porta de correr em vidro de segurança com ferragens e instalação.' },
+            'COMP-SILESTONE': { category: 'Complementar', title: 'Bancada / Revestimento em Pedra Silestone / Quartzo', matCost: 185.00, labCost: 95.00, margin: 0.500, specs: 'Bancada ou revestimento em pedra Silestone / quartzo sob medida com instalação.' },
+            'COMP-DEKTON': { category: 'Complementar', title: 'Bancada / Revestimento em Pedra Dekton / Porcelânico', matCost: 230.00, labCost: 110.00, margin: 0.500, specs: 'Bancada ou revestimento em pedra Dekton / porcelânico sob medida com instalação.' },
+            'COMP-GRANITO': { category: 'Complementar', title: 'Bancada / Revestimento em Pedra Natural', matCost: 135.00, labCost: 75.00, margin: 0.500, specs: 'Bancada ou revestimento em pedra natural sob medida com instalação.' },
+            'COMP-SERRALHARIA': { category: 'Complementar', title: 'Serralharia Sob Medida (Estrutura Ferro / Divisória Vidro)', matCost: 160.00, labCost: 100.00, margin: 0.500, specs: 'Serralharia sob medida com estrutura metálica e instalação.' },
+            'COMP-ESPELHO': { category: 'Complementar', title: 'Espelho Sob Medida / Resguardo de Duche em Vidro Temperado', matCost: 90.00, labCost: 55.00, margin: 0.500, specs: 'Espelho sob medida ou resguardo de duche em vidro temperado com instalação.' }
         };
+
+        // Base completa extraída do projeto de referência (Marcenaria, Marmoraria, Serralheria e Vidraçaria)
+        const PROJETO_REFERENCIA_ITENS = [
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M01 — Casa de Banho: Gaveteiro Suspenso + Prateleira (0,60 m × 0,50 m × 0,20 m)',
+                subtitulo: 'Chapas Egger Branco Porcelana W1200 ST9 • Corrediças Hettich',
+                descricao: 'Gaveteiro suspenso (0,60 m × 0,50 m × 0,20 m) em MDF Branco Porcelana W1200 ST9 (Egger), puxador cava alumínio, corrediças Hettich + prateleira inferior (0,60 m × 0,40 m × 0,05 m).',
+                matCost: 105.00, labCost: 85.00, margin: 0.525
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M02 — Sala de Unhas: Bancada Lava-Pés & Letreiro VIP Nails (0,80 m × 0,55 m × 0,60 m)',
+                subtitulo: 'Nogueira Pacífico H3700 ST10 • Degrau (0,20 m × 0,40 m × 0,16 m)',
+                descricao: 'Bancada lava-pés (0,80 m × 0,55 m × 0,60 m) em Nogueira Pacífico H3700 ST10, degrau (0,20 m × 0,40 m × 0,16 m), gavetas cava, base estofada e letreiro VIP Nails em MDF colorido.',
+                matCost: 290.00, labCost: 230.00, margin: 0.523
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M03 — Sala de Unhas: Par de Bancadas de Manicure (0,85 m × 0,40 m × 0,85 m)',
+                subtitulo: '2 un. • Branco Porcelana W1200 ST9 • Gaveteiro 3 gavetas',
+                descricao: '2 bancadas de manicure (0,85 m × 0,40 m × 0,85 m) em Branco Porcelana W1200 ST9, gaveteiro lateral com 3 gavetas, nicho para catalisador e furação para aspirador e tomada.',
+                matCost: 310.00, labCost: 240.00, margin: 0.524
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M04 — Sala de Unhas: Armário Alto c/ Basculante AC (1,20 m × 0,30 m × 2,80 m)',
+                subtitulo: 'Nogueira Pacífico H3700 ST10 • LED embutido • 4 gavetas',
+                descricao: 'Armário alto (1,20 m × 0,30 m × 2,80 m) em Nogueira Pacífico H3700 ST10, porta basculante ripada para ar condicionado, LED embutido, portas de correr e 4 gavetas.',
+                matCost: 460.00, labCost: 360.00, margin: 0.525
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M05/M06 — Spa: Prateleiras LED (0,80 m × 1,80 m) & Móvel Alto Bancada (1,80 m × 0,55 m × 2,80 m)',
+                subtitulo: 'Nogueira / Branco • Basculante ripado AC • 4 gavetas & nichos LED',
+                descricao: 'Conjunto de prateleiras suspensas com LED (0,80 m × 1,80 m) + móvel alto de bancada Spa (1,80 m × 0,55 m × 2,80 m) em Nogueira/Branco com basculante ripado para AC, 4 gavetas e nichos iluminados.',
+                matCost: 785.00, labCost: 615.00, margin: 0.524
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M07/M09 — Recepção: Painel Ripado (1,45 m × 3,20 m), Balcão Logo LED (1,10 m × 1,35 m) & Armário (2,15 m × 2,50 m)',
+                subtitulo: 'Painel 3 nichos LED • Balcão recepção • Armário 3 portas correr',
+                descricao: 'Painel ripado com 3 nichos LED (1,45 m × 3,20 m), balcão de recepção (1,10 m × 1,35 m) com logo circular LED e armário de 3 portas de correr (2,15 m × 2,50 m).',
+                matCost: 1540.00, labCost: 1200.00, margin: 0.524
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M10/M12 — Lavatório: Móvel Principal (2,60 m × 2,50 m), Copa (2,00 m × 2,50 m) & Módulo Central (1,45 m × 0,65 m)',
+                subtitulo: 'Nichos toalhas LED • Tulha • Armário copa • Módulo central',
+                descricao: 'Móvel principal de lavatório (2,60 m × 2,50 m) com nichos para toalhas LED e tulha, armário de copa (2,00 m × 2,50 m) e módulo central (1,45 m × 0,65 m).',
+                matCost: 1695.00, labCost: 1310.00, margin: 0.524
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M13/M18 — Salão Principal: Bancada (4,50 m), Painel Ripado (3,65 m × 3,20 m), Porta Oculta & Montra',
+                subtitulo: 'Bancada 13 gavetas • Porta oculta • Divisória • Base sofá • Montra',
+                descricao: 'Bancada de cabeleireiro de 4,50 m (13 gavetas), painel ripado (3,65 m × 3,20 m) com porta oculta, painel divisor, base de sofá, painel lateral e bancada de montra.',
+                matCost: 3525.00, labCost: 2730.00, margin: 0.524
+            },
+            {
+                categoria: 'Marcenaria Sob Medida',
+                titulo: 'M19/M24 — Sótão / Depósito: 6 Módulos de Estantes (2,00 m; 1,90 m; 1,50 m; 2,00 m; 1,20 m e comp. × 0,50 m × 2,10 m)',
+                subtitulo: '6 módulos • Estrutura metálica & prateleiras MDF',
+                descricao: '6 módulos de estantes de armazenamento (2,00 m, 1,90 m, 1,50 m, 2,00 m, 1,20 m e módulo complementar × 0,50 m × 2,10 m) com estrutura metálica e prateleiras em MDF.',
+                matCost: 1080.00, labCost: 780.00, margin: 0.524
+            },
+            {
+                categoria: 'Complementar',
+                titulo: 'Marmoraria, Serralheria & Vidraçaria — Espelhos, Estruturas, Bancadas em Pedra & Vidros',
+                subtitulo: 'Espelhos moldura metal • Estrutura Spa • Pedras naturais • Vidros',
+                descricao: 'Espelhos com moldura metálica, estrutura metálica do Spa, bancadas em pedra natural/marmoraria, espelhos e vidros sob medida conforme projeto.',
+                matCost: 1560.00, labCost: 1115.00, margin: 0.523
+            }
+        ];
 
         function formatarEuro(valor) {
             return valor.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -1278,6 +873,23 @@
             };
         }
 
+        function carregarProjetoReferenciaCompleto(mostrarAviso = true) {
+            itensOrcamento = PROJETO_REFERENCIA_ITENS.map(ref => {
+                const calc = calcularLinha(ref, 1);
+                return {
+                    categoria: ref.categoria,
+                    titulo: ref.titulo,
+                    subtitulo: ref.subtitulo,
+                    descricao: ref.descricao,
+                    ...calc
+                };
+            });
+            atualizarPreview();
+            if (mostrarAviso) {
+                alert('Todos os itens do projeto de referência (medidas, materiais, valores e lucro) foram carregados no orçamento e no PDF!');
+            }
+        }
+
         function montarObjetoMarcenaria() {
             const code = document.getElementById('marc-code').value;
             if (!code || !BASE_PRECOS[code]) return null;
@@ -1308,18 +920,12 @@
             }
 
             let extraTexto = '';
-            if (gavExtra > 0) {
-                extraTexto += ` +${gavExtra} gaveta(s) extra(s).`;
-            }
-            if (gavetoesExtra > 0) {
-                extraTexto += ` +${gavetoesExtra} gavetão(ões) extra(s).`;
-            }
+            if (gavExtra > 0) extraTexto += ` +${gavExtra} gaveta(s) extra(s).`;
+            if (gavetoesExtra > 0) extraTexto += ` +${gavetoesExtra} gavetão(ões) extra(s).`;
             if (itemAparteNome || itemAparteMed) {
                 extraTexto += ` Item comprado à parte: ${itemAparteNome || 'Item adicional'}${itemAparteMed ? ` (${itemAparteMed})` : ''}.`;
             }
-            if (obs) {
-                extraTexto += ` Observações: ${obs}.`;
-            }
+            if (obs) extraTexto += ` Observações: ${obs}.`;
 
             return {
                 categoria: base.category,
@@ -1370,9 +976,7 @@
             if (itemAparteNome || itemAparteMed) {
                 extraTexto += ` Item comprado à parte: ${itemAparteNome || 'Item adicional'}${itemAparteMed ? ` (${itemAparteMed})` : ''}.`;
             }
-            if (obs) {
-                extraTexto += ` Observações: ${obs}.`;
-            }
+            if (obs) extraTexto += ` Observações: ${obs}.`;
 
             itensOrcamento.push({
                 categoria: base.category,
@@ -1568,7 +1172,14 @@
 
             box.classList.remove('hidden');
             nomeEl.textContent = file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
-            statusEl.textContent = '✓ Projeto / imagem carregado. Pode extrair itens pelas medidas acima, adicionar itens complementares ou adicionar na secção 3.';
+
+            const nomeUpper = file.name.toUpperCase();
+            if (nomeUpper.includes('MARCENARIA') || nomeUpper.includes('MARMORARIA') || nomeUpper.includes('SERRALHERIA') || nomeUpper.includes('VIRE')) {
+                carregarProjetoReferenciaCompleto(false);
+                statusEl.textContent = '✓ Projeto de referência reconhecido! Todos os itens (medidas, materiais, valores e lucro) foram preenchidos automaticamente na proposta ao lado.';
+            } else {
+                statusEl.textContent = '✓ Projeto / imagem carregado. Pode extrair itens pelas medidas acima, adicionar itens complementares ou adicionar na secção 3.';
+            }
 
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -1624,7 +1235,6 @@
         }
 
         function atualizarPreview() {
-            // Garante que qualquer item em edição ao vivo também seja contabilizado se o utilizador clicar em Finalizar Orçamento diretamente
             const nome = document.getElementById('cliente-nome').value.trim() || 'A preencher';
             const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
             const whats = document.getElementById('cliente-whatsapp').value.trim();
@@ -1658,7 +1268,7 @@
             if (itensOrcamento.length === 0) {
                 listaEl.innerHTML = `
                     <div class="text-center py-8 text-xs text-vosh-muted border border-dashed border-vosh-border rounded">
-                        Adicione móveis sob medida ou serviços de remodelação ao lado para visualizar aqui a descrição técnica completa e os valores.
+                        Adicione móveis sob medida ou serviços de remodelação ao lado (ou carregue o PDF do projeto de referência) para visualizar aqui a descrição técnica completa e os valores.
                     </div>`;
                 intListaEl.innerHTML = '';
                 document.getElementById('prev-subtotal').textContent = '0,00 €';
@@ -1666,11 +1276,7 @@
                 return;
             }
 
-            let somaMat = 0;
-            let somaLab = 0;
-            let somaCusto = 0;
-            let somaLucro = 0;
-            let somaCliente = 0;
+            let somaMat = 0, somaLab = 0, somaCusto = 0, somaLucro = 0, somaCliente = 0;
 
             listaEl.innerHTML = itensOrcamento.map((item, idx) => {
                 somaMat += item.totalMat;
