@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vosh design | Simulador oficial de marcenaria e remodelação</title>
-    <meta name="description" content="Simulador oficial de marcenaria e remodelação — Vosh design marcenaria e remodelação em Portugal e toda a Europa.">
+    <title>VOSTY DESIGN | Simulador oficial de marcenaria e remodelação</title>
+    <meta name="description" content="Simulador oficial de marcenaria e remodelação — VOSTY DESIGN Marcenaria e Remodelação em Portugal e toda a Europa.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,11 @@
                         serif: ['"Cormorant Garamond"', 'serif'],
                     },
                     colors: {
-                        vosh: {
+                        vosty: {
                             ink: '#1F2421',
                             charcoal: '#2E3532',
-                            amber: '#B87A3D',
-                            terracotta: '#B5532A',
-                            terracottadark: '#8F3E1D',
+                            slatebtn: '#3F4744',
+                            slatehover: '#262B29',
                             warm: '#F5F3EF',
                             sand: '#ECE8E0',
                             border: '#DFD9CE',
@@ -46,17 +45,17 @@
         }
     </style>
 </head>
-<body class="bg-vosh-warm text-vosh-ink antialiased">
+<body class="bg-vosty-warm text-vosty-ink antialiased">
 
     <!-- Barra Superior -->
-    <div class="bg-vosh-ink text-white text-xs py-2.5 px-4 border-b border-white/10">
+    <div class="bg-vosty-ink text-white text-xs py-2.5 px-4 border-b border-white/10">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-vosh-amber"></span>
+                <span class="w-2 h-2 rounded-full bg-white"></span>
                 <span>Simulador oficial de marcenaria e remodelação • Portugal &amp; toda a Europa</span>
             </div>
             <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
-                <a href="https://vostydesign.com" target="_blank" class="text-amber-300 hover:underline font-medium whitespace-nowrap">vostydesign.com</a>
+                <a href="https://vostydesign.com" target="_blank" class="text-white hover:underline font-medium whitespace-nowrap">vostydesign.com</a>
                 <span class="whitespace-nowrap">WhatsApp: <strong>+351 923 189 914</strong></span>
                 <span class="whitespace-nowrap">E-mail: <strong>vostydesign@gmail.com</strong></span>
             </div>
@@ -64,15 +63,15 @@
     </div>
 
     <!-- Cabeçalho -->
-    <header class="bg-white border-b border-vosh-border sticky top-0 z-30 shadow-xs">
+    <header class="bg-white border-b border-vosty-border sticky top-0 z-30 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
             <div>
-                <span class="block text-2xl font-bold tracking-tight text-vosh-ink leading-none">Vosh design</span>
-                <span class="block text-xs font-semibold text-vosh-amber mt-1">Vosh design marcenaria e remodelação</span>
-                <span class="block text-[11px] font-medium text-vosh-muted mt-0.5">Simulador oficial de marcenaria e remodelação</span>
+                <span class="block text-2xl font-bold tracking-tight text-vosty-ink leading-none">VOSTY DESIGN</span>
+                <span class="block text-xs font-semibold text-vosty-charcoal mt-1">VOSTY DESIGN Marcenaria e Remodelação</span>
+                <span class="block text-[11px] font-medium text-vosty-muted mt-0.5">Simulador oficial de marcenaria e remodelação</span>
             </div>
-            <div class="text-xs text-vosh-muted text-right">
-                <div>Fornecedores &amp; Referências: <strong class="text-vosh-ink">Leroy Merlin • Brico Depôt • Obramat • Robbialac • Egger/Sonae/Finsa • Blum/Hettich</strong></div>
+            <div class="text-xs text-vosty-muted text-right">
+                <div>Fornecedores &amp; Referências: <strong class="text-vosty-ink">Leroy Merlin • Brico Depôt • Obramat • Robbialac • Egger/Sonae/Finsa • Blum/Hettich</strong></div>
                 <div class="mt-0.5">vostydesign@gmail.com • +351 923 189 914</div>
             </div>
         </div>
@@ -86,119 +85,119 @@
             <div class="lg:col-span-7 space-y-6">
 
                 <!-- 1. Dados do Cliente -->
-                <section class="bg-white p-6 rounded-lg border border-vosh-border shadow-xs">
-                    <h2 class="font-serif text-2xl font-bold text-vosh-ink mb-4">1. Dados do Cliente &amp; Local da Obra</h2>
+                <section class="bg-white p-6 rounded-lg border border-vosty-border shadow-xs">
+                    <h2 class="font-serif text-2xl font-bold text-vosty-ink mb-4">1. Dados do Cliente &amp; Local da Obra</h2>
                     <div class="grid sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">Nome Completo *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">Nome Completo *</label>
                             <input type="text" id="cliente-nome" oninput="atualizarPreview()" placeholder="Ex: Carlos Mendes"
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosh-amber focus:bg-white">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-ink focus:bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">Cidade / País (Portugal ou Europa) *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">Cidade / País (Portugal ou Europa) *</label>
                             <input type="text" id="cliente-local" oninput="atualizarPreview()" placeholder="Ex: Lisboa / Portugal, Espanha, França, Itália..."
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosh-amber focus:bg-white">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-ink focus:bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">WhatsApp do Cliente (com indicativo) *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">WhatsApp do Cliente (com indicativo) *</label>
                             <input type="tel" id="cliente-whatsapp" oninput="atualizarPreview()" placeholder="Ex: +351 912 345 678"
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosh-amber focus:bg-white">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-ink focus:bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">E-mail do Cliente *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">E-mail do Cliente *</label>
                             <input type="email" id="cliente-email" oninput="atualizarPreview()" placeholder="Ex: cliente@email.com"
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosh-amber focus:bg-white">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:border-vosty-ink focus:bg-white">
                         </div>
                     </div>
                 </section>
 
                 <!-- 2. Carregar Projeto, Planta, Imagem ou Tirar Foto -->
-                <section class="bg-white p-6 rounded-lg border border-vosh-border shadow-xs">
+                <section class="bg-white p-6 rounded-lg border border-vosty-border shadow-xs">
                     <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                        <h2 class="font-serif text-2xl font-bold text-vosh-ink">2. Carregar Projeto, Planta ou Foto do Espaço</h2>
-                        <span class="text-[11px] bg-amber-50 text-vosh-ink border border-vosh-amber/40 rounded px-2.5 py-1 font-semibold">
+                        <h2 class="font-serif text-2xl font-bold text-vosty-ink">2. Carregar Projeto, Planta ou Foto do Espaço</h2>
+                        <span class="text-[11px] bg-vosty-warm text-vosty-ink border border-vosty-border rounded px-2.5 py-1 font-semibold">
                             Leitura de Itens, Medidas &amp; Materiais Ativa
                         </span>
                     </div>
-                    <p class="text-xs text-vosh-muted mb-4">
+                    <p class="text-xs text-vosty-muted mb-4">
                         Carregue o PDF do projeto de referência, planta ou fotografia do ambiente para preencher automaticamente os itens, medidas, materiais e valores ou extrair itens adicionais.
                     </p>
 
                     <div class="grid sm:grid-cols-2 gap-3 mb-4">
-                        <label for="input-arquivo" class="cursor-pointer border-2 border-dashed border-vosh-amber/70 hover:border-vosh-terracotta bg-vosh-warm/70 rounded-lg p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
+                        <label for="input-arquivo" class="cursor-pointer border-2 border-dashed border-vosty-border hover:border-vosty-ink bg-vosty-warm/70 rounded-lg p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
                             <span class="text-lg">📄</span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-vosh-ink">Carregar Imagem ou PDF</span>
-                            <span class="text-[11px] text-vosh-muted">JPG, PNG, WEBP ou PDF</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-vosty-ink">Carregar Imagem ou PDF</span>
+                            <span class="text-[11px] text-vosty-muted">JPG, PNG, WEBP ou PDF</span>
                             <input type="file" id="input-arquivo" accept="image/*,.pdf,application/pdf" class="hidden" onchange="processarFicheiro(event)">
                         </label>
 
-                        <label for="input-camera" class="cursor-pointer border-2 border-dashed border-vosh-ink/40 hover:border-vosh-amber bg-vosh-warm/70 rounded-lg p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
+                        <label for="input-camera" class="cursor-pointer border-2 border-dashed border-vosty-border hover:border-vosty-ink bg-vosty-warm/70 rounded-lg p-4 text-center transition flex flex-col items-center justify-center gap-1.5">
                             <span class="text-lg">📷</span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-vosh-ink">Tirar Foto Agora</span>
-                            <span class="text-[11px] text-vosh-muted">Abrir câmara do telemóvel</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-vosty-ink">Tirar Foto Agora</span>
+                            <span class="text-[11px] text-vosty-muted">Abrir câmara do telemóvel</span>
                             <input type="file" id="input-camera" accept="image/*" capture="environment" class="hidden" onchange="processarFicheiro(event)">
                         </label>
                     </div>
 
-                    <div class="mb-4 flex flex-wrap items-center justify-between gap-2 bg-vosh-warm/70 border border-vosh-border rounded-lg px-3.5 py-2.5">
-                        <span class="text-xs text-vosh-ink font-medium">Base completa de marcenaria, marmoraria, serralheria e vidraçaria:</span>
+                    <div class="mb-4 flex flex-wrap items-center justify-between gap-2 bg-vosty-warm/70 border border-vosty-border rounded-lg px-3.5 py-2.5">
+                        <span class="text-xs text-vosty-ink font-medium">Base completa de marcenaria, marmoraria, serralheria e vidraçaria:</span>
                         <button type="button" onclick="carregarProjetoReferenciaCompleto(true)"
-                                class="bg-vosh-ink hover:bg-vosh-charcoal text-white text-[11px] font-bold uppercase tracking-wider rounded px-3 py-1.5 transition">
+                                class="bg-vosty-ink hover:bg-vosty-charcoal text-white text-[11px] font-bold uppercase tracking-wider rounded px-3 py-1.5 transition">
                             + Preencher Todos os Itens do Projeto
                         </button>
                     </div>
 
                     <!-- Caixa de Análise do Projeto / Foto -->
-                    <div id="analise-projeto-box" class="hidden border border-vosh-border bg-vosh-warm/80 rounded-lg p-4 space-y-4">
+                    <div id="analise-projeto-box" class="hidden border border-vosty-border bg-vosty-warm/80 rounded-lg p-4 space-y-4">
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-vosh-amber">Projeto / Referência Carregada</p>
-                                <p id="arquivo-nome" class="text-sm font-semibold text-vosh-ink mt-0.5"></p>
-                                <p id="arquivo-status" class="text-xs text-emerald-800 mt-1"></p>
+                                <p class="text-xs font-bold uppercase tracking-wider text-vosty-charcoal">Projeto / Referência Carregada</p>
+                                <p id="arquivo-nome" class="text-sm font-semibold text-vosty-ink mt-0.5"></p>
+                                <p id="arquivo-status" class="text-xs text-vosty-ink mt-1"></p>
                             </div>
                             <button type="button" onclick="limparAnexo()" class="text-xs text-red-700 hover:underline">Remover anexo</button>
                         </div>
 
                         <div id="preview-imagem-container" class="hidden">
-                            <img id="preview-imagem-anexo" src="" alt="Pré-visualização do projeto" class="max-h-48 rounded border border-vosh-border object-contain bg-white p-1">
+                            <img id="preview-imagem-anexo" src="" alt="Pré-visualização do projeto" class="max-h-48 rounded border border-vosty-border object-contain bg-white p-1">
                         </div>
 
                         <!-- Leitura Rápida / Extração de Itens do Projeto ou Descrição -->
-                        <div class="bg-white p-4 rounded border border-vosh-border space-y-2.5">
-                            <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
+                        <div class="bg-white p-4 rounded border border-vosty-border space-y-2.5">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-ink">
                                 Extrair Item do Projeto / Descrição para o Orçamento
                             </p>
                             <div class="grid sm:grid-cols-3 gap-2.5">
-                                <select id="proj-tipo-item" class="border border-vosh-border rounded px-2.5 py-2 text-xs bg-vosh-warm/50">
+                                <select id="proj-tipo-item" class="border border-vosty-border rounded px-2.5 py-2 text-xs bg-vosty-warm/50">
                                     <option value="REM-PLD-PAR">Divisória em Pladur (2 faces + lã + estrutura)</option>
                                     <option value="REM-PLD-TET">Teto Falso em Pladur (estrutura + placas + pintura)</option>
                                     <option value="ROUP-COR-BR">Roupeiro / Móvel Sob Medida (chapas + ferragens)</option>
                                     <option value="REM-JAN-ELETRICO">Janela PVC Vidro Duplo Acústico + Estore Elétrico</option>
                                 </select>
                                 <input type="number" id="proj-largura" step="0.05" min="0.2" placeholder="Largura (m) Ex: 5.00"
-                                       class="border border-vosh-border rounded px-2.5 py-2 text-xs">
+                                       class="border border-vosty-border rounded px-2.5 py-2 text-xs">
                                 <input type="number" id="proj-altura" step="0.05" min="0.2" placeholder="Altura / Compr. (m) Ex: 3.00"
-                                       class="border border-vosh-border rounded px-2.5 py-2 text-xs">
+                                       class="border border-vosty-border rounded px-2.5 py-2 text-xs">
                             </div>
                             <div class="flex flex-wrap gap-2">
                                 <input type="text" id="proj-nota-leitura" placeholder="Detalhes lidos do projeto/planta (ex: lã de rocha, 2 lados, ferragens Blum...)"
-                                       class="flex-1 min-w-[200px] border border-vosh-border rounded px-2.5 py-2 text-xs">
+                                       class="flex-1 min-w-[200px] border border-vosty-border rounded px-2.5 py-2 text-xs">
                                 <button type="button" onclick="adicionarItemDoProjeto()"
-                                        class="bg-vosh-ink hover:bg-vosh-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded px-4 py-2 transition">
+                                        class="bg-vosty-ink hover:bg-vosty-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded px-4 py-2 transition">
                                     + Adicionar Item Lido
                                 </button>
                             </div>
                         </div>
 
                         <!-- Itens Complementares Identificados na Imagem -->
-                        <div class="bg-white p-4 rounded border border-vosh-border space-y-3">
-                            <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
+                        <div class="bg-white p-4 rounded border border-vosty-border space-y-3">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-ink">
                                 Adicionar Item Complementar Identificado na Imagem / Planta (Vidro, Pedra, Serralharia)
                             </p>
                             <div class="grid sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Tipo de Item Complementar</label>
-                                    <select id="comp-tipo" class="w-full border border-vosh-border rounded px-3 py-2 text-xs bg-vosh-warm/50">
+                                    <select id="comp-tipo" class="w-full border border-vosty-border rounded px-3 py-2 text-xs bg-vosty-warm/50">
                                         <option value="COMP-VIDRO">Porta de Correr em Vidro Temperado/Laminado</option>
                                         <option value="COMP-SILESTONE">Bancada / Revestimento em Pedra Silestone / Quartzo</option>
                                         <option value="COMP-DEKTON">Bancada / Revestimento em Pedra Dekton / Porcelânico</option>
@@ -210,23 +209,23 @@
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Especificação / Nome da Pedra ou Acabamento</label>
                                     <input type="text" id="comp-spec" placeholder="Ex: Calacatta Gold, Vidro Fumê 8mm, Ferro Preto..."
-                                           class="w-full border border-vosh-border rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Largura (m)</label>
-                                    <input type="number" id="comp-largura" step="0.01" min="0.1" placeholder="Ex: 1.20" class="w-full border border-vosh-border rounded px-3 py-2 text-xs">
+                                    <input type="number" id="comp-largura" step="0.01" min="0.1" placeholder="Ex: 1.20" class="w-full border border-vosty-border rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Altura ou Profundidade (m)</label>
-                                    <input type="number" id="comp-altura" step="0.01" min="0.1" placeholder="Ex: 2.10" class="w-full border border-vosh-border rounded px-3 py-2 text-xs">
+                                    <input type="number" id="comp-altura" step="0.01" min="0.1" placeholder="Ex: 2.10" class="w-full border border-vosty-border rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade</label>
-                                    <input type="number" id="comp-qtd" min="1" placeholder="Ex: 1" class="w-full border border-vosh-border rounded px-3 py-2 text-xs">
+                                    <input type="number" id="comp-qtd" min="1" placeholder="Ex: 1" class="w-full border border-vosty-border rounded px-3 py-2 text-xs">
                                 </div>
                                 <div class="flex items-end">
                                     <button type="button" onclick="adicionarComplementar()"
-                                            class="w-full bg-vosh-terracotta hover:bg-vosh-terracottadark text-white text-xs font-semibold uppercase tracking-wider rounded py-2.5 px-4 transition">
+                                            class="w-full bg-vosty-slatebtn hover:bg-vosty-slatehover text-white text-xs font-semibold uppercase tracking-wider rounded py-2.5 px-4 transition">
                                         + Incluir Item no Orçamento
                                     </button>
                                 </div>
@@ -236,17 +235,17 @@
                 </section>
 
                 <!-- 3. Selecionar Categoria: Marcenaria OU Remodelação -->
-                <section class="bg-white p-6 rounded-lg border border-vosh-border shadow-xs">
-                    <h2 class="font-serif text-2xl font-bold text-vosh-ink mb-4">3. Adicionar Serviços de Marcenaria Sob Medida ou Remodelação</h2>
+                <section class="bg-white p-6 rounded-lg border border-vosty-border shadow-xs">
+                    <h2 class="font-serif text-2xl font-bold text-vosty-ink mb-4">3. Adicionar Serviços de Marcenaria Sob Medida ou Remodelação</h2>
 
                     <!-- Separadores -->
                     <div class="grid grid-cols-2 gap-2 mb-6">
                         <button type="button" id="tab-marcenaria" onclick="mudarAba('marcenaria')"
-                                class="bg-vosh-terracotta text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs">
+                                class="bg-vosty-ink text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs">
                             Marcenaria &amp; Móveis Planejados
                         </button>
                         <button type="button" id="tab-remodelacao" onclick="mudarAba('remodelacao')"
-                                class="bg-vosh-warm text-vosh-ink border border-vosh-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition">
+                                class="bg-vosty-warm text-vosty-ink border border-vosty-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition">
                             Remodelação
                         </button>
                     </div>
@@ -254,9 +253,9 @@
                     <!-- PAINEL A: MARCENARIA SOB MEDIDA -->
                     <div id="panel-marcenaria" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">Tipo de Móvel — Marcenaria *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">Tipo de Móvel — Marcenaria *</label>
                             <select id="marc-code" onchange="ajustarCamposMarcenaria(); atualizarAoVivoMarcenaria();"
-                                    class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                    class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                                 <option value="" selected disabled>-- Escolha o tipo de móvel --</option>
                                 <option value="COZ-MAD-INTBR">Cozinha com Interno Branco e Portas Amadeiradas</option>
                                 <option value="COZ-MEL-BR">Cozinha Branca em Melamina</option>
@@ -293,68 +292,68 @@
                             <div>
                                 <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Largura (m)</label>
                                 <input type="number" id="marc-largura" step="0.05" min="0.2" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: 2.40"
-                                       class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                       class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Altura (m)</label>
                                 <input type="number" id="marc-altura" step="0.05" min="0.2" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: 2.50"
-                                       class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                       class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Quantidade</label>
                                 <input type="number" id="marc-qtd" min="1" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: 1"
-                                       class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                       class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                             </div>
                         </div>
 
                         <!-- Gavetas Extras e Gavetões (Cozinhas, Roupeiros e Painel de TV) -->
-                        <div id="campos-marc-gavetas" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-2.5">
-                            <p id="label-gavetas-base" class="text-xs font-bold uppercase tracking-wider text-vosh-ink"></p>
+                        <div id="campos-marc-gavetas" class="hidden bg-vosty-warm/80 p-4 rounded-lg border border-vosty-border space-y-2.5">
+                            <p id="label-gavetas-base" class="text-xs font-bold uppercase tracking-wider text-vosty-ink"></p>
                             <div class="grid sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade de Gavetas a Mais</label>
                                     <input type="number" id="marc-gavetas-extra" min="0" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: 2"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade de Gavetões</label>
                                     <input type="number" id="marc-gavetoes-extra" min="0" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: 2"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Campo Extra para Item Comprado à Parte (Ilha / Península / Cozinha) -->
-                        <div id="campo-item-aparte" class="hidden bg-amber-50/80 p-3.5 rounded-lg border border-vosh-amber/40 space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-vosh-ink">
+                        <div id="campo-item-aparte" class="hidden bg-vosty-warm/80 p-3.5 rounded-lg border border-vosty-border space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-vosty-ink">
                                 Item Comprado à Parte (Largura, Altura e Profundidade discriminados)
                             </label>
                             <div class="grid sm:grid-cols-2 gap-3">
                                 <input type="text" id="marc-item-aparte-nome" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: Bancada / Tampo / Eletrodoméstico à parte"
-                                       class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                       class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 <input type="text" id="marc-item-aparte-medidas" oninput="atualizarAoVivoMarcenaria()" placeholder="Largura × Altura × Profundidade (Ex: 2.00m × 0.90m × 0.65m)"
-                                       class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                       class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Observações Específicas deste Móvel (Opcional)</label>
                             <input type="text" id="marc-obs" oninput="atualizarAoVivoMarcenaria()" placeholder="Ex: LED nas laterais, puxadores, ferragens..."
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                         </div>
 
                         <!-- PRÉ-VISUALIZAÇÃO AO VIVO DO ITEM EM EDIÇÃO -->
-                        <div id="live-preview-marc" class="hidden bg-amber-50/70 border border-vosh-amber/50 rounded-lg p-4 space-y-1.5">
+                        <div id="live-preview-marc" class="hidden bg-vosty-warm border border-vosty-border rounded-lg p-4 space-y-1.5">
                             <div class="flex justify-between items-start gap-2">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-vosh-terracotta">Pré-Visualização ao Vivo do Item</span>
-                                <span id="live-marc-valor" class="text-sm font-bold text-vosh-ink">0,00 €</span>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-vosty-charcoal">Pré-Visualização ao Vivo do Item</span>
+                                <span id="live-marc-valor" class="text-sm font-bold text-vosty-ink">0,00 €</span>
                             </div>
-                            <p id="live-marc-titulo" class="text-xs font-bold text-vosh-ink"></p>
-                            <p id="live-marc-desc" class="text-[11px] text-vosh-muted leading-relaxed"></p>
+                            <p id="live-marc-titulo" class="text-xs font-bold text-vosty-ink"></p>
+                            <p id="live-marc-desc" class="text-[11px] text-vosty-muted leading-relaxed"></p>
                         </div>
 
                         <button type="button" onclick="adicionarMarcenaria()"
-                                class="w-full bg-vosh-terracotta hover:bg-vosh-terracottadark text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 transition shadow-xs">
+                                class="w-full bg-vosty-slatebtn hover:bg-vosty-slatehover text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 transition shadow-xs">
                             + Adicionar Móvel ao Orçamento
                         </button>
                     </div>
@@ -362,16 +361,16 @@
                     <!-- PAINEL B: REMODELAÇÃO -->
                     <div id="panel-remodelacao" class="hidden space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosh-ink">Item a ser remodelado *</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-vosty-ink">Item a ser remodelado *</label>
                             <select id="rem-code" onchange="ajustarCamposRemodelacao(); atualizarAoVivoRemodelacao();"
-                                    class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                    class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                                 <option value="" selected disabled>-- Escolha o item a ser remodelado --</option>
                                 <option value="REM-GER-START">Remodelação Geral Chave na Mão — Gama Start (Detalhado por Ambiente)</option>
                                 <option value="REM-GER-STD">Remodelação Geral Chave na Mão — Gama Standard (Detalhado por Ambiente)</option>
                                 <option value="REM-GER-PRM">Remodelação Geral Chave na Mão — Gama Premium (Detalhado por Ambiente)</option>
                                 <option value="REM-COZ-COMP">Remodelação Parcial — Cozinha Completa</option>
                                 <option value="REM-WC-COMP">Remodelação Parcial — Casa de Banho Completa</option>
-                                <option value="REM-PLD-PAR">Divisórias em Pladur (Quantidade de Paredes + Portas Internas Brancas)</option>
+                                <option value="REM-PLD-PAR">Divisórias em Pladur (Largura, Altura, Área Total + Paredes e Portas Internas)</option>
                                 <option value="REM-PLD-TET">Teto Falso em Pladur Completo</option>
                                 <option value="REM-PINT-INT">Pintura Interna (Robbialac — Primário + 2 Demãos)</option>
                                 <option value="REM-PINT-EXT">Pintura Externa (por m² — Primário + 2 Demãos)</option>
@@ -397,69 +396,83 @@
                         <div id="campos-rem-qtd">
                             <label id="label-rem-qtd" class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Área / Quantidade Estimada (m²)</label>
                             <input type="number" id="rem-qtd" step="0.5" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 80"
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                         </div>
 
-                        <div id="campos-rem-pladur" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
-                            <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
-                                Configuração de Paredes de Pladur (2 Lados + Lã + Estrutura) e Portas Internas de Abertura
+                        <!-- Divisórias em Pladur: Largura, Altura, Área Total + Quantidade de Paredes [espaço] Quantidade de Portas -->
+                        <div id="campos-rem-pladur" class="hidden bg-vosty-warm/80 p-4 rounded-lg border border-vosty-border space-y-4">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-ink">
+                                Medidas da Área em Pladur (2 Lados + Lã + Estrutura)
                             </p>
                             <div class="grid sm:grid-cols-3 gap-3">
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade de Paredes</label>
-                                    <input type="number" id="pladur-qtd-paredes" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 3"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Largura (m)</label>
+                                    <input type="number" id="pladur-largura" step="0.05" min="0.2" oninput="calcularAreaPladurAutomatica(); atualizarAoVivoRemodelacao();" placeholder="Ex: 5.00"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase mb-1">Área Total das Paredes (m²)</label>
-                                    <input type="number" id="pladur-area-m2" step="0.5" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 24"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Altura (m)</label>
+                                    <input type="number" id="pladur-altura" step="0.05" min="0.2" oninput="calcularAreaPladurAutomatica(); atualizarAoVivoRemodelacao();" placeholder="Ex: 2.60"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase mb-1">Portas Internas Brancas (Qtd)</label>
-                                    <input type="number" id="pladur-qtd-portas" min="0" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 2"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Área Total (m²)</label>
+                                    <input type="number" id="pladur-area-m2" step="0.1" min="0.5" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 13.0"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
+                                </div>
+                            </div>
+
+                            <div class="pt-1 flex flex-wrap items-end gap-6">
+                                <div class="w-44">
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade de paredes</label>
+                                    <input type="number" id="pladur-qtd-paredes" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 2"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
+                                </div>
+                                <div class="w-44">
+                                    <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade de portas</label>
+                                    <input type="number" id="pladur-qtd-portas" min="0" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 1"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                             </div>
                         </div>
 
-                        <div id="campos-rem-pintura" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
-                            <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
+                        <div id="campos-rem-pintura" class="hidden bg-vosty-warm/80 p-4 rounded-lg border border-vosty-border space-y-3">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-ink">
                                 Detalhes da Tinta &amp; Rendimento (Primário + 2 Demãos)
                             </p>
                             <div class="grid sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Área a Pintar (m²)</label>
-                                    <input type="number" id="pintura-m2" step="1" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 120"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                    <input type="number" id="pintura-m2" step="1" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 180"
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Cor / Acabamento Escolhido</label>
                                     <input type="text" id="pintura-cor" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: Branco mate Robbialac"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                             </div>
                         </div>
 
-                        <div id="campos-rem-janelas" class="hidden bg-vosh-warm/80 p-4 rounded-lg border border-vosh-border space-y-3">
-                            <p class="text-xs font-bold uppercase tracking-wider text-vosh-ink">
+                        <div id="campos-rem-janelas" class="hidden bg-vosty-warm/80 p-4 rounded-lg border border-vosty-border space-y-3">
+                            <p class="text-xs font-bold uppercase tracking-wider text-vosty-ink">
                                 Medidas em Caixilharia PVC com Vidro Duplo Acústico (Margem 25%)
                             </p>
                             <div class="grid grid-cols-3 gap-3">
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Largura (m)</label>
                                     <input type="number" id="jan-largura" step="0.05" min="0.3" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 1.50"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Altura (m)</label>
                                     <input type="number" id="jan-altura" step="0.05" min="0.3" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 1.20"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase mb-1">Quantidade</label>
                                     <input type="number" id="jan-qtd" min="1" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: 1"
-                                           class="w-full border border-vosh-border bg-white rounded px-3 py-2 text-xs">
+                                           class="w-full border border-vosty-border bg-white rounded px-3 py-2 text-xs">
                                 </div>
                             </div>
                         </div>
@@ -467,20 +480,20 @@
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Notas Adicionais da Obra (Opcional)</label>
                             <input type="text" id="rem-obs" oninput="atualizarAoVivoRemodelacao()" placeholder="Ex: Apartamento T2, acesso fácil, incluir remoção de entulho..."
-                                   class="w-full border border-vosh-border bg-vosh-warm/60 rounded px-3.5 py-2.5 text-sm">
+                                   class="w-full border border-vosty-border bg-vosty-warm/60 rounded px-3.5 py-2.5 text-sm">
                         </div>
 
-                        <div id="live-preview-rem" class="hidden bg-amber-50/70 border border-vosh-amber/50 rounded-lg p-4 space-y-1.5">
+                        <div id="live-preview-rem" class="hidden bg-vosty-warm border border-vosty-border rounded-lg p-4 space-y-1.5">
                             <div class="flex justify-between items-start gap-2">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-vosh-terracotta">Pré-Visualização ao Vivo do Item</span>
-                                <span id="live-rem-valor" class="text-sm font-bold text-vosh-ink">0,00 €</span>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-vosty-charcoal">Pré-Visualização ao Vivo do Item</span>
+                                <span id="live-rem-valor" class="text-sm font-bold text-vosty-ink">0,00 €</span>
                             </div>
-                            <p id="live-rem-titulo" class="text-xs font-bold text-vosh-ink"></p>
-                            <p id="live-rem-desc" class="text-[11px] text-vosh-muted leading-relaxed"></p>
+                            <p id="live-rem-titulo" class="text-xs font-bold text-vosty-ink"></p>
+                            <p id="live-rem-desc" class="text-[11px] text-vosty-muted leading-relaxed"></p>
                         </div>
 
                         <button type="button" onclick="adicionarRemodelacao()"
-                                class="w-full bg-vosh-terracotta hover:bg-vosh-terracottadark text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 transition shadow-xs">
+                                class="w-full bg-vosty-slatebtn hover:bg-vosty-slatehover text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 transition shadow-xs">
                             + Adicionar Item de Remodelação ao Orçamento
                         </button>
                     </div>
@@ -490,65 +503,65 @@
             <!-- COLUNA DIREITA: PRÉ-VISUALIZAÇÃO DO ORÇAMENTO & PDF (5 colunas) -->
             <div class="lg:col-span-5 space-y-5">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-serif text-2xl font-bold text-vosh-ink">Pré-Visualização da Proposta (PDF)</h2>
-                    <span id="contador-itens" class="text-xs font-semibold bg-vosh-ink text-white rounded px-3 py-1">0 itens</span>
+                    <h2 class="font-serif text-2xl font-bold text-vosty-ink">Pré-Visualização da Proposta (PDF)</h2>
+                    <span id="contador-itens" class="text-xs font-semibold bg-vosty-ink text-white rounded px-3 py-1">0 itens</span>
                 </div>
 
                 <!-- FOLHA DO ORÇAMENTO DO CLIENTE (PDF) -->
-                <div id="documento-pdf-cliente" class="pdf-sheet border border-vosh-border rounded-lg shadow-md p-6 sm:p-8 space-y-6">
-                    <div class="border-b-2 border-vosh-amber pb-4 flex justify-between items-start gap-4">
+                <div id="documento-pdf-cliente" class="pdf-sheet border border-vosty-border rounded-lg shadow-md p-6 sm:p-8 space-y-6">
+                    <div class="border-b-2 border-vosty-ink pb-4 flex justify-between items-start gap-4">
                         <div>
-                            <p class="text-2xl font-bold tracking-tight text-vosh-ink leading-none">Vosh design</p>
-                            <p class="text-xs font-semibold text-vosh-amber mt-1">Vosh design marcenaria e remodelação</p>
-                            <p class="text-[11px] font-medium text-vosh-ink mt-0.5">Simulador oficial de marcenaria e remodelação</p>
-                            <p class="text-[11px] text-vosh-muted mt-0.5">Atuação: Portugal &amp; toda a Europa</p>
+                            <p class="text-2xl font-bold tracking-tight text-vosty-ink leading-none">VOSTY DESIGN</p>
+                            <p class="text-xs font-semibold text-vosty-charcoal mt-1">VOSTY DESIGN Marcenaria e Remodelação</p>
+                            <p class="text-[11px] font-medium text-vosty-ink mt-0.5">Simulador oficial de marcenaria e remodelação</p>
+                            <p class="text-[11px] text-vosty-muted mt-0.5">Atuação: Portugal &amp; toda a Europa</p>
                         </div>
-                        <div class="text-right text-[11px] text-vosh-muted space-y-0.5">
-                            <p class="font-bold text-vosh-ink" id="pdf-numero">PROPOSTA #VD-2026</p>
+                        <div class="text-right text-[11px] text-vosty-muted space-y-0.5">
+                            <p class="font-bold text-vosty-ink" id="pdf-numero">PROPOSTA #VD-2026</p>
                             <p id="pdf-data"></p>
-                            <p class="pt-1">Site: <strong class="text-vosh-ink">vostydesign.com</strong></p>
-                            <p class="whitespace-nowrap">WhatsApp: <strong class="text-vosh-ink">+351 923 189 914</strong></p>
-                            <p class="whitespace-nowrap">E-mail: <strong class="text-vosh-ink">vostydesign@gmail.com</strong></p>
+                            <p class="pt-1">Site: <strong class="text-vosty-ink">vostydesign.com</strong></p>
+                            <p class="whitespace-nowrap">WhatsApp: <strong class="text-vosty-ink">+351 923 189 914</strong></p>
+                            <p class="whitespace-nowrap">E-mail: <strong class="text-vosty-ink">vostydesign@gmail.com</strong></p>
                         </div>
                     </div>
 
-                    <div class="bg-vosh-warm/80 p-3.5 rounded border border-vosh-border text-xs space-y-1">
-                        <p><strong class="uppercase tracking-wider text-vosh-muted">Cliente:</strong> <span id="prev-nome" class="font-semibold text-vosh-ink">A preencher</span></p>
-                        <p><strong class="uppercase tracking-wider text-vosh-muted">Local da Obra:</strong> <span id="prev-local" class="font-semibold text-vosh-ink">Portugal / Toda a Europa</span></p>
-                        <p><strong class="uppercase tracking-wider text-vosh-muted">Contacto:</strong> <span id="prev-contato" class="text-vosh-ink">—</span></p>
-                        <p id="prev-anexo-linha" class="hidden text-emerald-800 font-medium pt-1">
+                    <div class="bg-vosty-warm/80 p-3.5 rounded border border-vosty-border text-xs space-y-1">
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Cliente:</strong> <span id="prev-nome" class="font-semibold text-vosty-ink">A preencher</span></p>
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Local da Obra:</strong> <span id="prev-local" class="font-semibold text-vosty-ink">Portugal / Toda a Europa</span></p>
+                        <p><strong class="uppercase tracking-wider text-vosty-muted">Contacto:</strong> <span id="prev-contato" class="text-vosty-ink">—</span></p>
+                        <p id="prev-anexo-linha" class="hidden text-vosty-ink font-medium pt-1">
                             📎 Projeto / Referência anexada: <span id="prev-anexo-nome"></span>
                         </p>
                     </div>
 
                     <div id="lista-itens-preview" class="space-y-4">
-                        <div class="text-center py-8 text-xs text-vosh-muted border border-dashed border-vosh-border rounded">
+                        <div class="text-center py-8 text-xs text-vosty-muted border border-dashed border-vosty-border rounded">
                             Adicione móveis sob medida ou serviços de remodelação ao lado (ou carregue o PDF do projeto de referência) para visualizar aqui a descrição técnica completa e os valores.
                         </div>
                     </div>
 
-                    <div class="border-t-2 border-vosh-ink pt-4 space-y-2">
-                        <div class="flex justify-between items-center text-xs text-vosh-muted">
+                    <div class="border-t-2 border-vosty-ink pt-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs text-vosty-muted">
                             <span>Subtotal Serviços &amp; Fabrico</span>
                             <span id="prev-subtotal">0,00 €</span>
                         </div>
-                        <div class="flex justify-between items-center text-base font-bold text-vosh-ink pt-1">
+                        <div class="flex justify-between items-center text-base font-bold text-vosty-ink pt-1">
                             <span>VALOR TOTAL ESTIMADO</span>
-                            <span id="prev-total" class="text-xl text-vosh-terracotta">0,00 €</span>
+                            <span id="prev-total" class="text-xl text-vosty-ink">0,00 €</span>
                         </div>
-                        <p class="text-[10px] text-vosh-muted leading-relaxed pt-2">
+                        <p class="text-[10px] text-vosty-muted leading-relaxed pt-2">
                             * Estimativa preliminar sujeita a confirmação técnica de medidas no local, escolha final de materiais e condições de acesso da obra. Site: vostydesign.com • E-mail: vostydesign@gmail.com • WhatsApp: +351 923 189 914.
                         </p>
                     </div>
                 </div>
 
-                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF DA VOSH DESIGN -->
+                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF DA VOSTY DESIGN -->
                 <div style="position: absolute; left: -9999px; top: 0; width: 780px;">
-                    <div id="documento-pdf-interno" class="pdf-sheet p-8 space-y-6 bg-white text-vosh-ink">
-                        <div class="border-b-2 border-vosh-ink pb-4 flex justify-between items-start">
+                    <div id="documento-pdf-interno" class="pdf-sheet p-8 space-y-6 bg-white text-vosty-ink">
+                        <div class="border-b-2 border-vosty-ink pb-4 flex justify-between items-start">
                             <div>
-                                <p class="text-xl font-bold tracking-tight">Vosh design — FICHA TÉCNICA &amp; FINANCEIRA INTERNA</p>
-                                <p class="text-xs text-vosh-amber font-bold uppercase mt-1">Discriminação de Custos (Material + Mão de Obra) &amp; Lucro Líquido</p>
+                                <p class="text-xl font-bold tracking-tight">VOSTY DESIGN — FICHA TÉCNICA &amp; FINANCEIRA INTERNA</p>
+                                <p class="text-xs text-vosty-charcoal font-bold uppercase mt-1">VOSTY DESIGN Marcenaria e Remodelação — Custo Material, Mão de Obra &amp; Lucro</p>
                             </div>
                             <div class="text-right text-xs">
                                 <p class="font-bold" id="int-pdf-numero"></p>
@@ -556,7 +569,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-vosh-warm p-4 rounded border border-vosh-border text-xs space-y-1">
+                        <div class="bg-vosty-warm p-4 rounded border border-vosty-border text-xs space-y-1">
                             <p><strong>Cliente:</strong> <span id="int-nome"></span></p>
                             <p><strong>Local da Obra:</strong> <span id="int-local"></span></p>
                             <p><strong>WhatsApp / E-mail do Cliente:</strong> <span id="int-contato"></span></p>
@@ -565,55 +578,51 @@
 
                         <div id="int-lista-itens" class="space-y-4"></div>
 
-                        <div class="border-t-2 border-vosh-ink pt-4 bg-vosh-warm/80 rounded p-4 space-y-2 text-xs">
+                        <div class="border-t-2 border-vosty-ink pt-4 bg-vosty-warm/80 rounded p-4 space-y-2 text-xs">
                             <div class="flex justify-between">
-                                <span>Custo Total de Materiais (Fornecedores / Unidades):</span>
+                                <span>Custo do Material:</span>
                                 <strong id="int-total-mat">0,00 €</strong>
                             </div>
                             <div class="flex justify-between">
-                                <span>Custo Total de Mão de Obra:</span>
+                                <span>Mão de Obra:</span>
                                 <strong id="int-total-lab">0,00 €</strong>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Custo Total Operacional (Material + Mão de Obra):</span>
-                                <strong id="int-total-custo">0,00 €</strong>
-                            </div>
-                            <div class="flex justify-between text-emerald-800 font-bold text-sm pt-1 border-t border-vosh-border">
-                                <span>LUCRO LÍQUIDO ESTIMADO Vosh design:</span>
+                            <div class="flex justify-between text-vosty-ink font-bold text-sm pt-1 border-t border-vosty-border">
+                                <span>Lucro VOSTY DESIGN:</span>
                                 <span id="int-total-lucro">0,00 €</span>
                             </div>
-                            <div class="flex justify-between text-base font-bold text-vosh-ink pt-1">
-                                <span>PREÇO FINAL AO CLIENTE:</span>
-                                <span id="int-total-cliente" class="text-vosh-terracotta">0,00 €</span>
+                            <div class="flex justify-between text-base font-bold text-vosty-ink pt-1">
+                                <span>Valor de Venda / Preço Final Cliente:</span>
+                                <span id="int-total-cliente">0,00 €</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- BOTÕES FINAIS -->
-                <div class="bg-white p-5 rounded-lg border border-vosh-border shadow-xs space-y-3">
+                <div class="bg-white p-5 rounded-lg border border-vosty-border shadow-xs space-y-3">
                     <button type="button" onclick="finalizarOrcamentoResumo()"
-                            class="w-full bg-vosh-ink hover:bg-vosh-charcoal text-white text-xs font-bold uppercase tracking-widest rounded py-3 px-4 transition">
+                            class="w-full bg-vosty-ink hover:bg-vosty-charcoal text-white text-xs font-bold uppercase tracking-widest rounded py-3 px-4 transition">
                         ✓ Finalizar Orçamento
                     </button>
 
                     <button type="button" onclick="baixarPDFCliente()"
-                            class="w-full bg-vosh-amber hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
+                            class="w-full bg-vosty-slatebtn hover:bg-vosty-slatehover text-white text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
                         📥 Descarregar Proposta Completa em PDF (Cliente)
                     </button>
 
                     <button type="button" onclick="enviarParaCliente()"
-                            class="w-full bg-vosh-warm hover:bg-vosh-sand text-vosh-ink border border-vosh-ink/30 text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
+                            class="w-full bg-vosty-warm hover:bg-vosty-sand text-vosty-ink border border-vosty-ink/30 text-xs font-bold uppercase tracking-widest rounded py-3.5 px-4 transition flex items-center justify-center gap-2">
                         📲 Enviar cópia para o meu WhatsApp e e-mail
                     </button>
 
-                    <button type="button" onclick="finalizarComVosh()"
-                            class="w-full bg-vosh-terracotta hover:bg-vosh-terracottadark text-white text-xs font-bold uppercase tracking-widest rounded py-4 px-4 transition shadow-sm flex items-center justify-center gap-2 text-center">
-                        Gostou desta proposta? Vamos fechar este projeto com a Vosh design? Entre em contato
+                    <button type="button" onclick="finalizarComVosty()"
+                            class="w-full bg-vosty-ink hover:bg-vosty-charcoal text-white text-xs font-bold uppercase tracking-widest rounded py-4 px-4 transition shadow-sm flex items-center justify-center gap-2 text-center">
+                        Gostou desta proposta? Vamos fechar este projeto com a VOSTY DESIGN? Entre em contato
                     </button>
 
                     <button type="button" onclick="limparTudo()"
-                            class="w-full text-xs text-vosh-muted hover:text-red-700 underline pt-1">
+                            class="w-full text-xs text-vosty-muted hover:text-red-700 underline pt-1">
                         Iniciar um novo orçamento limpo
                     </button>
                 </div>
@@ -623,8 +632,8 @@
     </main>
 
     <script>
-        const VOSH_WHATSAPP = '351923189914';
-        const VOSH_EMAIL = 'vostydesign@gmail.com';
+        const VOSTY_WHATSAPP = '351923189914';
+        const VOSTY_EMAIL = 'vostydesign@gmail.com';
 
         let itensOrcamento = [];
         let anexoAtual = null;
@@ -699,7 +708,6 @@
             'COMP-ESPELHO': { category: 'Complementar', title: 'Espelho Sob Medida / Resguardo de Duche em Vidro Temperado', matCost: 90.00, labCost: 55.00, margin: 0.500, specs: 'Espelho sob medida ou resguardo de duche em vidro temperado com instalação.' }
         };
 
-        // Base completa extraída do projeto de referência (Marcenaria, Marmoraria, Serralheria e Vidraçaria)
         const PROJETO_REFERENCIA_ITENS = [
             {
                 categoria: 'Marcenaria Sob Medida',
@@ -784,13 +792,13 @@
             const panRem = document.getElementById('panel-remodelacao');
 
             if (aba === 'marcenaria') {
-                tabMarc.className = 'bg-vosh-terracotta text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs';
-                tabRem.className = 'bg-vosh-warm text-vosh-ink border border-vosh-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition';
+                tabMarc.className = 'bg-vosty-ink text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs';
+                tabRem.className = 'bg-vosty-warm text-vosty-ink border border-vosty-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition';
                 panMarc.classList.remove('hidden');
                 panRem.classList.add('hidden');
             } else {
-                tabRem.className = 'bg-vosh-terracotta text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs';
-                tabMarc.className = 'bg-vosh-warm text-vosh-ink border border-vosh-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition';
+                tabRem.className = 'bg-vosty-ink text-white text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition shadow-xs';
+                tabMarc.className = 'bg-vosty-warm text-vosty-ink border border-vosty-border text-xs font-bold uppercase tracking-wider rounded py-3 px-4 transition';
                 panRem.classList.remove('hidden');
                 panMarc.classList.add('hidden');
             }
@@ -857,6 +865,14 @@
             }
         }
 
+        function calcularAreaPladurAutomatica() {
+            const larg = parseFloat(document.getElementById('pladur-largura').value);
+            const alt = parseFloat(document.getElementById('pladur-altura').value);
+            if (larg > 0 && alt > 0) {
+                document.getElementById('pladur-area-m2').value = (larg * alt).toFixed(2);
+            }
+        }
+
         function calcularLinha(itemBase, multiplicadorQtd, extraMatFixo = 0, extraLabFixo = 0) {
             const totalMat = (itemBase.matCost * multiplicadorQtd) + extraMatFixo;
             const totalLab = (itemBase.labCost * multiplicadorQtd) + extraLabFixo;
@@ -890,7 +906,7 @@
             }
         }
 
-        function montarObjetoMarcenaria() {
+        function montarObjetoMarcenaria(permitirSoSelecao = false) {
             const code = document.getElementById('marc-code').value;
             if (!code || !BASE_PRECOS[code]) return null;
             const base = BASE_PRECOS[code];
@@ -903,7 +919,7 @@
             const itemAparteNome = document.getElementById('marc-item-aparte-nome').value.trim();
             const itemAparteMed = document.getElementById('marc-item-aparte-medidas').value.trim();
 
-            if (!larg && !alt && !qtd && !gavExtra && !gavetoesExtra && !obs && !itemAparteNome && !itemAparteMed) return null;
+            if (!permitirSoSelecao && !larg && !alt && !qtd && !gavExtra && !gavetoesExtra && !obs && !itemAparteNome && !itemAparteMed) return null;
 
             const lVal = larg > 0 ? larg : 1;
             const aVal = alt > 0 ? alt : 1;
@@ -937,7 +953,7 @@
         }
 
         function atualizarAoVivoMarcenaria() {
-            const obj = montarObjetoMarcenaria();
+            const obj = montarObjetoMarcenaria(false);
             const box = document.getElementById('live-preview-marc');
             if (!obj) {
                 box.classList.add('hidden');
@@ -949,43 +965,7 @@
             document.getElementById('live-marc-desc').textContent = obj.descricao;
         }
 
-        function adicionarMarcenaria() {
-            const code = document.getElementById('marc-code').value;
-            if (!code || !BASE_PRECOS[code]) {
-                alert('Selecione primeiro o tipo de móvel.');
-                return;
-            }
-            const base = BASE_PRECOS[code];
-            const larg = parseFloat(document.getElementById('marc-largura').value) || 1;
-            const alt = parseFloat(document.getElementById('marc-altura').value) || 1;
-            const qtd = parseInt(document.getElementById('marc-qtd').value) || 1;
-            const gavExtra = parseInt(document.getElementById('marc-gavetas-extra').value) || 0;
-            const gavetoesExtra = parseInt(document.getElementById('marc-gavetoes-extra').value) || 0;
-            const area = larg * alt * qtd;
-            const obs = document.getElementById('marc-obs').value.trim();
-            const itemAparteNome = document.getElementById('marc-item-aparte-nome').value.trim();
-            const itemAparteMed = document.getElementById('marc-item-aparte-medidas').value.trim();
-
-            const extraMat = (gavExtra * 28) + (gavetoesExtra * 48);
-            const extraLab = (gavExtra * 18) + (gavetoesExtra * 30);
-
-            const calc = calcularLinha(base, area, extraMat, extraLab);
-            let extraTexto = '';
-            if (gavExtra > 0) extraTexto += ` +${gavExtra} gaveta(s) extra(s).`;
-            if (gavetoesExtra > 0) extraTexto += ` +${gavetoesExtra} gavetão(ões) extra(s).`;
-            if (itemAparteNome || itemAparteMed) {
-                extraTexto += ` Item comprado à parte: ${itemAparteNome || 'Item adicional'}${itemAparteMed ? ` (${itemAparteMed})` : ''}.`;
-            }
-            if (obs) extraTexto += ` Observações: ${obs}.`;
-
-            itensOrcamento.push({
-                categoria: base.category,
-                titulo: `${base.title} — ${qtd} un. (${larg.toFixed(2)} m × ${alt.toFixed(2)} m = ${area.toFixed(2)} m²)`,
-                subtitulo: extraTexto.trim(),
-                descricao: base.specs + extraTexto,
-                ...calc
-            });
-
+        function limparCamposMarcenaria() {
             document.getElementById('marc-code').selectedIndex = 0;
             document.getElementById('marc-largura').value = '';
             document.getElementById('marc-altura').value = '';
@@ -998,35 +978,55 @@
             document.getElementById('campo-item-aparte').classList.add('hidden');
             document.getElementById('campos-marc-gavetas').classList.add('hidden');
             document.getElementById('live-preview-marc').classList.add('hidden');
-
-            atualizarPreview();
         }
 
-        function montarObjetoRemodelacao() {
+        function adicionarMarcenaria(silencioso = false) {
+            const obj = montarObjetoMarcenaria(true);
+            if (!obj) {
+                if (!silencioso) alert('Selecione primeiro o tipo de móvel.');
+                return false;
+            }
+            itensOrcamento.push(obj);
+            limparCamposMarcenaria();
+            atualizarPreview();
+            return true;
+        }
+
+        function montarObjetoRemodelacao(permitirSoSelecao = false) {
             const code = document.getElementById('rem-code').value;
             if (!code || !BASE_PRECOS[code]) return null;
             const base = BASE_PRECOS[code];
             const obs = document.getElementById('rem-obs').value.trim();
 
             if (code === 'REM-PLD-PAR') {
-                const qtdParedes = parseInt(document.getElementById('pladur-qtd-paredes').value) || 1;
-                const areaParedes = parseFloat(document.getElementById('pladur-area-m2').value) || (qtdParedes * 6);
-                const qtdPortas = parseInt(document.getElementById('pladur-qtd-portas').value) || 0;
+                const larg = parseFloat(document.getElementById('pladur-largura').value);
+                const alt = parseFloat(document.getElementById('pladur-altura').value);
+                const qtdParedes = parseInt(document.getElementById('pladur-qtd-paredes').value);
+                const areaInput = parseFloat(document.getElementById('pladur-area-m2').value);
+                const qtdPortas = parseInt(document.getElementById('pladur-qtd-portas').value);
+
+                if (!permitirSoSelecao && !larg && !alt && !qtdParedes && !areaInput && !qtdPortas && !obs) return null;
+
+                const areaCalculada = (larg > 0 && alt > 0) ? (larg * alt) : ((qtdParedes || 1) * 6);
+                const areaParedes = areaInput > 0 ? areaInput : areaCalculada;
+                const pVal = qtdParedes > 0 ? qtdParedes : 1;
+                const portasVal = qtdPortas > 0 ? qtdPortas : 0;
 
                 const calc = calcularLinha(base, areaParedes);
-                const extraMatPortas = qtdPortas * 145;
-                const extraLabPortas = qtdPortas * 85;
+                const extraMatPortas = portasVal * 145;
+                const extraLabPortas = portasVal * 85;
                 const totalMat = Number((calc.totalMat + extraMatPortas).toFixed(2));
                 const totalLab = Number((calc.totalLab + extraLabPortas).toFixed(2));
                 const custoOperacional = Number((totalMat + totalLab).toFixed(2));
                 const precoFinal = Number((custoOperacional / (1 - base.margin)).toFixed(2));
                 const lucroLiquido = Number((precoFinal - custoOperacional).toFixed(2));
 
-                const extraDesc = ` Quantidade de paredes: ${qtdParedes}; área total: ${areaParedes.toFixed(2)} m² (2 faces, estrutura, lã e pintura); portas internas brancas de abertura incluídas: ${qtdPortas}.${obs ? ` Observações: ${obs}.` : ''}`;
+                const dimTexto = (larg > 0 && alt > 0) ? `${larg.toFixed(2)} m × ${alt.toFixed(2)} m = ` : '';
+                const extraDesc = ` Medidas: ${dimTexto}${areaParedes.toFixed(2)} m² (2 faces, estrutura, lã e pintura); quantidade de paredes: ${pVal}; quantidade de portas internas brancas: ${portasVal}.${obs ? ` Observações: ${obs}.` : ''}`;
 
                 return {
                     categoria: base.category,
-                    titulo: `${base.title} — ${qtdParedes} parede(s) (${areaParedes.toFixed(2)} m²) + ${qtdPortas} porta(s)`,
+                    titulo: `${base.title} — ${dimTexto}${areaParedes.toFixed(2)} m² • ${pVal} parede(s) • ${portasVal} porta(s)`,
                     subtitulo: extraDesc.trim(),
                     descricao: base.specs + extraDesc,
                     totalMat,
@@ -1039,13 +1039,15 @@
             }
 
             if (code === 'REM-PINT-INT' || code === 'REM-PINT-EXT' || code === 'REM-TELHADO') {
-                const areaPint = parseFloat(document.getElementById('pintura-m2').value) || 1;
+                const areaPint = parseFloat(document.getElementById('pintura-m2').value);
                 const corPint = document.getElementById('pintura-cor').value.trim();
-                const calc = calcularLinha(base, areaPint);
+                if (!permitirSoSelecao && !areaPint && !corPint && !obs) return null;
+                const aVal = areaPint > 0 ? areaPint : 1;
+                const calc = calcularLinha(base, aVal);
                 const extraDesc = `${corPint ? ` Cor/acabamento: ${corPint}.` : ''}${obs ? ` Observações: ${obs}.` : ''}`;
                 return {
                     categoria: base.category,
-                    titulo: `${base.title} — ${areaPint.toFixed(2)} m²`,
+                    titulo: `${base.title} — ${aVal.toFixed(2)} m²`,
                     subtitulo: extraDesc.trim(),
                     descricao: base.specs + extraDesc,
                     ...calc
@@ -1058,36 +1060,43 @@
                 code === 'REM-PORTA-PVC-ABRIR' ||
                 code === 'REM-PORTA-PVC-CORRER'
             ) {
-                const larg = parseFloat(document.getElementById('jan-largura').value) || 1.20;
-                const alt = parseFloat(document.getElementById('jan-altura').value) || 1.20;
-                const qtd = parseInt(document.getElementById('jan-qtd').value) || 1;
-                const areaUnit = larg * alt;
-                const areaFaturada = Math.max(1.20, areaUnit) * qtd;
+                const larg = parseFloat(document.getElementById('jan-largura').value);
+                const alt = parseFloat(document.getElementById('jan-altura').value);
+                const qtd = parseInt(document.getElementById('jan-qtd').value);
+                if (!permitirSoSelecao && !larg && !alt && !qtd && !obs) return null;
+
+                const lVal = larg > 0 ? larg : 1.20;
+                const aVal = alt > 0 ? alt : 1.20;
+                const qVal = qtd > 0 ? qtd : 1;
+                const areaUnit = lVal * aVal;
+                const areaFaturada = Math.max(1.20, areaUnit) * qVal;
 
                 const isEletrico = code === 'REM-JAN-ELETRICO';
                 const isRolo = code === 'REM-JAN-ROLO';
-                const extraMat = ((isEletrico ? 220 : isRolo ? 120 : 40) + 35) * qtd;
-                const extraLab = ((isEletrico ? 55 : isRolo ? 35 : 25)) * qtd;
+                const extraMat = ((isEletrico ? 220 : isRolo ? 120 : 40) + 35) * qVal;
+                const extraLab = ((isEletrico ? 55 : isRolo ? 35 : 25)) * qVal;
 
                 const calc = calcularLinha(base, areaFaturada, extraMat, extraLab);
                 const extraDesc = `${obs ? ` Observações: ${obs}.` : ''}`;
 
                 return {
                     categoria: base.category,
-                    titulo: `${base.title} — ${qtd} un. (${larg.toFixed(2)} m × ${alt.toFixed(2)} m = ${(areaUnit * qtd).toFixed(2)} m²)`,
+                    titulo: `${base.title} — ${qVal} un. (${lVal.toFixed(2)} m × ${aVal.toFixed(2)} m = ${(areaUnit * qVal).toFixed(2)} m²)`,
                     subtitulo: extraDesc.trim(),
                     descricao: base.specs + extraDesc,
                     ...calc
                 };
             }
 
-            const qtdPadrao = parseFloat(document.getElementById('rem-qtd').value) || 1;
-            const calc = calcularLinha(base, qtdPadrao);
+            const qtdPadrao = parseFloat(document.getElementById('rem-qtd').value);
+            if (!permitirSoSelecao && !qtdPadrao && !obs) return null;
+            const qVal = qtdPadrao > 0 ? qtdPadrao : 1;
+            const calc = calcularLinha(base, qVal);
             const extraDesc = `${obs ? ` Observações: ${obs}.` : ''}`;
 
             return {
                 categoria: base.category,
-                titulo: `${base.title} — ${qtdPadrao} m²`,
+                titulo: `${base.title} — ${qVal} m²`,
                 subtitulo: extraDesc.trim(),
                 descricao: base.specs + extraDesc,
                 ...calc
@@ -1095,7 +1104,7 @@
         }
 
         function atualizarAoVivoRemodelacao() {
-            const obj = montarObjetoRemodelacao();
+            const obj = montarObjetoRemodelacao(false);
             const box = document.getElementById('live-preview-rem');
             if (!obj) {
                 box.classList.add('hidden');
@@ -1107,19 +1116,11 @@
             document.getElementById('live-rem-desc').textContent = obj.descricao;
         }
 
-        function adicionarRemodelacao() {
-            const code = document.getElementById('rem-code').value;
-            if (!code || !BASE_PRECOS[code]) {
-                alert('Selecione primeiro o item a ser remodelado.');
-                return;
-            }
-            const obj = montarObjetoRemodelacao();
-            if (!obj) return;
-
-            itensOrcamento.push(obj);
-
+        function limparCamposRemodelacao() {
             document.getElementById('rem-code').selectedIndex = 0;
             document.getElementById('rem-qtd').value = '';
+            document.getElementById('pladur-largura').value = '';
+            document.getElementById('pladur-altura').value = '';
             document.getElementById('pladur-qtd-paredes').value = '';
             document.getElementById('pladur-area-m2').value = '';
             document.getElementById('pladur-qtd-portas').value = '';
@@ -1131,8 +1132,44 @@
             document.getElementById('rem-obs').value = '';
             document.getElementById('live-preview-rem').classList.add('hidden');
             ajustarCamposRemodelacao();
+        }
 
+        function adicionarRemodelacao(silencioso = false) {
+            const obj = montarObjetoRemodelacao(true);
+            if (!obj) {
+                if (!silencioso) alert('Selecione primeiro o item a ser remodelado.');
+                return false;
+            }
+            itensOrcamento.push(obj);
+            limparCamposRemodelacao();
             atualizarPreview();
+            return true;
+        }
+
+        function consolidarItemEmEdicao() {
+            let adicionou = false;
+            const marcCode = document.getElementById('marc-code').value;
+            if (marcCode && BASE_PRECOS[marcCode]) {
+                const objMarc = montarObjetoMarcenaria(true);
+                if (objMarc) {
+                    itensOrcamento.push(objMarc);
+                    limparCamposMarcenaria();
+                    adicionou = true;
+                }
+            }
+            const remCode = document.getElementById('rem-code').value;
+            if (remCode && BASE_PRECOS[remCode]) {
+                const objRem = montarObjetoRemodelacao(true);
+                if (objRem) {
+                    itensOrcamento.push(objRem);
+                    limparCamposRemodelacao();
+                    adicionou = true;
+                }
+            }
+            if (adicionou) {
+                atualizarPreview();
+            }
+            return adicionou;
         }
 
         function adicionarItemDoProjeto() {
@@ -1267,7 +1304,7 @@
 
             if (itensOrcamento.length === 0) {
                 listaEl.innerHTML = `
-                    <div class="text-center py-8 text-xs text-vosh-muted border border-dashed border-vosh-border rounded">
+                    <div class="text-center py-8 text-xs text-vosty-muted border border-dashed border-vosty-border rounded">
                         Adicione móveis sob medida ou serviços de remodelação ao lado (ou carregue o PDF do projeto de referência) para visualizar aqui a descrição técnica completa e os valores.
                     </div>`;
                 intListaEl.innerHTML = '';
@@ -1286,22 +1323,22 @@
                 somaCliente += item.precoFinal;
 
                 return `
-                    <div class="pdf-break-avoid border border-vosh-border rounded p-4 bg-white space-y-2 relative">
+                    <div class="pdf-break-avoid border border-vosty-border rounded p-4 bg-white space-y-2 relative">
                         <div class="flex justify-between items-start gap-2">
                             <div>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-vosh-amber">${item.categoria}</span>
-                                <h4 class="text-sm font-bold text-vosh-ink leading-snug">${idx + 1}. ${item.titulo}</h4>
-                                ${item.subtitulo ? `<p class="text-[11px] font-medium text-vosh-muted mt-0.5">${item.subtitulo}</p>` : ''}
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-vosty-charcoal">${item.categoria}</span>
+                                <h4 class="text-sm font-bold text-vosty-ink leading-snug">${idx + 1}. ${item.titulo}</h4>
+                                ${item.subtitulo ? `<p class="text-[11px] font-medium text-vosty-muted mt-0.5">${item.subtitulo}</p>` : ''}
                             </div>
                             <div class="text-right shrink-0">
-                                <span class="block text-sm font-bold text-vosh-ink">${formatarEuro(item.precoFinal)}</span>
+                                <span class="block text-sm font-bold text-vosty-ink">${formatarEuro(item.precoFinal)}</span>
                                 <button type="button" data-html2canvas-ignore="true" onclick="removerItem(${idx})"
                                         class="text-[10px] text-red-700 hover:underline mt-1">
                                     Remover
                                 </button>
                             </div>
                         </div>
-                        <div class="bg-vosh-warm/80 p-2.5 rounded border-l-2 border-vosh-amber text-[11px] text-vosh-ink/90 leading-relaxed">
+                        <div class="bg-vosty-warm/80 p-2.5 rounded border-l-2 border-vosty-ink text-[11px] text-vosty-ink/90 leading-relaxed">
                             <strong>O que será executado:</strong> ${item.descricao}
                         </div>
                     </div>
@@ -1309,17 +1346,16 @@
             }).join('');
 
             intListaEl.innerHTML = itensOrcamento.map((item, idx) => `
-                <div class="pdf-break-avoid border border-vosh-border rounded p-4 space-y-2 text-xs">
+                <div class="pdf-break-avoid border border-vosty-border rounded p-4 space-y-2 text-xs">
                     <div class="flex justify-between font-bold">
                         <span>${idx + 1}. ${item.titulo}</span>
-                        <span>Cliente: ${formatarEuro(item.precoFinal)}</span>
+                        <span>Valor de Venda: ${formatarEuro(item.precoFinal)}</span>
                     </div>
                     <p class="text-[11px]"><strong>Descrição:</strong> ${item.descricao}</p>
-                    <div class="grid grid-cols-4 gap-2 bg-vosh-warm p-2 rounded border border-vosh-border text-[11px]">
-                        <div>Material: <strong>${formatarEuro(item.totalMat)}</strong></div>
+                    <div class="grid grid-cols-3 gap-2 bg-vosty-warm p-2 rounded border border-vosty-border text-[11px]">
+                        <div>Custo do Material: <strong>${formatarEuro(item.totalMat)}</strong></div>
                         <div>Mão de Obra: <strong>${formatarEuro(item.totalLab)}</strong></div>
-                        <div>Lucro (${item.marginPct}): <strong class="text-emerald-800">${formatarEuro(item.lucroLiquido)}</strong></div>
-                        <div>Custo Base: <strong>${formatarEuro(item.custoOperacional)}</strong></div>
+                        <div>Lucro VOSTY DESIGN (${item.marginPct}): <strong>${formatarEuro(item.lucroLiquido)}</strong></div>
                     </div>
                 </div>
             `).join('');
@@ -1335,16 +1371,18 @@
         }
 
         function finalizarOrcamentoResumo() {
+            consolidarItemEmEdicao();
             if (itensOrcamento.length === 0) {
                 alert('Adicione pelo menos um item ao orçamento antes de finalizar.');
                 return;
             }
             atualizarPreview();
             document.getElementById('documento-pdf-cliente').scrollIntoView({ behavior: 'smooth' });
-            alert('Orçamento finalizado na pré-visualização! Pode descarregar o PDF, enviar para o seu WhatsApp/e-mail ou fechar o projeto com a Vosh design.');
+            alert('Orçamento finalizado! O último item entrou na proposta, os campos foram limpos e o PDF já está pronto para descarregar ou enviar.');
         }
 
         function baixarPDFCliente() {
+            consolidarItemEmEdicao();
             if (itensOrcamento.length === 0) {
                 alert('Adicione pelo menos um móvel ou serviço de remodelação antes de descarregar o PDF.');
                 return;
@@ -1354,20 +1392,21 @@
             const nomeCliente = (document.getElementById('cliente-nome').value.trim() || 'Cliente').replace(/\s+/g, '_');
             html2pdf().set({
                 margin: [8, 8, 8, 8],
-                filename: `Proposta_Vosh_Design_${nomeCliente}.pdf`,
+                filename: `Proposta_VOSTY_DESIGN_${nomeCliente}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).from(elemento).save();
         }
 
-        function baixarPDFInternoVosh() {
+        function baixarPDFInternoVosty() {
+            consolidarItemEmEdicao();
             atualizarPreview();
             const elemento = document.getElementById('documento-pdf-interno');
             const nomeCliente = (document.getElementById('cliente-nome').value.trim() || 'Cliente').replace(/\s+/g, '_');
             html2pdf().set({
                 margin: [8, 8, 8, 8],
-                filename: `INTERNO_Vosh_Design_Custos_Lucro_${nomeCliente}.pdf`,
+                filename: `INTERNO_VOSTY_DESIGN_Material_MaoDeObra_Lucro_${nomeCliente}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -1384,8 +1423,8 @@
                 return `${i + 1}. *${it.titulo}* — *${formatarEuro(it.precoFinal)}*\n   • O que será executado: ${it.descricao}`;
             }).join('\n\n');
 
-            return `*PROPOSTA DE ORÇAMENTO — Vosh design*\n` +
-                   `Vosh design marcenaria e remodelação\n` +
+            return `*PROPOSTA DE ORÇAMENTO — VOSTY DESIGN*\n` +
+                   `VOSTY DESIGN Marcenaria e Remodelação\n` +
                    `Simulador oficial de marcenaria e remodelação\n` +
                    `Site: vostydesign.com | E-mail: vostydesign@gmail.com | WhatsApp: +351 923 189 914\n\n` +
                    `*Cliente:* ${nome}\n` +
@@ -1395,7 +1434,7 @@
                    `*VALOR TOTAL ESTIMADO:* *${formatarEuro(total)}*`;
         }
 
-        function montarTextoInternoVosh() {
+        function montarTextoInternoVosty() {
             const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
             const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
             const email = document.getElementById('cliente-email').value.trim() || 'Não informado';
@@ -1408,26 +1447,30 @@
                 tLucro += it.lucroLiquido;
                 tTotal += it.precoFinal;
                 return `${i + 1}. *${it.titulo}*\n` +
-                       `   • Escopo: ${it.descricao}\n` +
-                       `   • Material: ${formatarEuro(it.totalMat)} | Mão de Obra: ${formatarEuro(it.totalLab)} | Lucro (${it.marginPct}): ${formatarEuro(it.lucroLiquido)} | Cliente: *${formatarEuro(it.precoFinal)}*`;
+                       `   • Detalhamento: ${it.descricao}\n` +
+                       `   • Custo do Material: ${formatarEuro(it.totalMat)}\n` +
+                       `   • Mão de Obra: ${formatarEuro(it.totalLab)}\n` +
+                       `   • Lucro (${it.marginPct}): ${formatarEuro(it.lucroLiquido)}\n` +
+                       `   • Valor de Venda / Cliente: *${formatarEuro(it.precoFinal)}*`;
             }).join('\n\n');
 
-            return `Olá Vosh design! Gostei desta proposta e quero fechar este projeto com a Vosh design:\n\n` +
+            return `Olá VOSTY DESIGN! Registo completo do orçamento — VOSTY DESIGN Marcenaria e Remodelação:\n\n` +
                    `*DADOS DO CLIENTE:*\n` +
                    `• Nome: ${nome}\n` +
-                   `• Local da Obra: ${local}\n` +
-                   `• WhatsApp: ${whats}\n` +
+                   `• Localidade: ${local}\n` +
+                   `• Telemóvel / WhatsApp: ${whats}\n` +
                    `• E-mail: ${email}\n` +
-                   (anexoAtual ? `• Projeto Anexado: ${anexoAtual.name}\n` : '') +
-                   `\n*DETALHAMENTO TÉCNICO & FINANCEIRO:*\n\n${linhasItens}\n\n` +
-                   `*RESUMO FINANCEIRO INTERNO (Vosh design):*\n` +
-                   `• Total Materiais: ${formatarEuro(tMat)}\n` +
-                   `• Total Mão de Obra: ${formatarEuro(tLab)}\n` +
-                   `• *Lucro Líquido Estimado: ${formatarEuro(tLucro)}*\n` +
-                   `• *Valor Final Cliente: ${formatarEuro(tTotal)}*`;
+                   (anexoAtual ? `• Ficheiro / Projeto Anexado: ${anexoAtual.name}\n` : '') +
+                   `\n*DETALHAMENTO DOS ITENS (VOSTY DESIGN):*\n\n${linhasItens}\n\n` +
+                   `*RESUMO FINANCEIRO INTERNO — VOSTY DESIGN:*\n` +
+                   `• Custo do Material: ${formatarEuro(tMat)}\n` +
+                   `• Mão de Obra: ${formatarEuro(tLab)}\n` +
+                   `• *Lucro: ${formatarEuro(tLucro)}*\n` +
+                   `• *Valor de Venda / Total Cliente: ${formatarEuro(tTotal)}*`;
         }
 
         function enviarParaCliente() {
+            consolidarItemEmEdicao();
             if (itensOrcamento.length === 0) {
                 alert('Adicione pelo menos um item ao orçamento primeiro.');
                 return;
@@ -1435,7 +1478,7 @@
             const whatsRaw = document.getElementById('cliente-whatsapp').value.replace(/\D/g, '');
             const emailCliente = document.getElementById('cliente-email').value.trim();
             if (!whatsRaw && !emailCliente) {
-                alert('Preencha o seu WhatsApp ou E-mail no passo 1 para receber a cópia da proposta.');
+                alert('Preencha o WhatsApp ou E-mail no passo 1 para enviar a cópia.');
                 return;
             }
 
@@ -1446,7 +1489,7 @@
                 window.open(`https://wa.me/${whatsRaw}?text=${encodeURIComponent(texto)}`, '_blank');
             }
             if (emailCliente) {
-                const assunto = encodeURIComponent('Sua Proposta de Orçamento — Vosh design');
+                const assunto = encodeURIComponent('Sua Proposta de Orçamento — VOSTY DESIGN');
                 const corpo = encodeURIComponent(texto.replace(/\*/g, '').replace(/_/g, ''));
                 setTimeout(() => {
                     window.location.href = `mailto:${emailCliente}?subject=${assunto}&body=${corpo}`;
@@ -1454,27 +1497,30 @@
             }
         }
 
-        function finalizarComVosh() {
+        function finalizarComVosty() {
+            consolidarItemEmEdicao();
             if (itensOrcamento.length === 0) {
-                alert('Adicione pelo menos um item ao orçamento antes de enviar para a Vosh design.');
+                alert('Adicione pelo menos um item ao orçamento antes de enviar para a VOSTY DESIGN.');
                 return;
             }
 
-            baixarPDFInternoVosh();
-            const textoInterno = montarTextoInternoVosh();
+            baixarPDFInternoVosty();
+            const textoInterno = montarTextoInternoVosty();
 
-            window.open(`https://wa.me/${VOSH_WHATSAPP}?text=${encodeURIComponent(textoInterno)}`, '_blank');
+            window.open(`https://wa.me/${VOSTY_WHATSAPP}?text=${encodeURIComponent(textoInterno)}`, '_blank');
 
-            const assunto = encodeURIComponent('Fechamento de Projeto (Material, Mão de Obra & Lucro) — Vosh design');
+            const assunto = encodeURIComponent('Orçamento VOSTY DESIGN (Custo do Material, Mão de Obra & Lucro)');
             const corpo = encodeURIComponent(textoInterno.replace(/\*/g, '').replace(/_/g, ''));
             setTimeout(() => {
-                window.location.href = `mailto:${VOSH_EMAIL}?subject=${assunto}&body=${corpo}`;
+                window.location.href = `mailto:${VOSTY_EMAIL}?subject=${assunto}&body=${corpo}`;
             }, 600);
         }
 
         function limparTudo() {
             itensOrcamento = [];
             limparAnexo();
+            limparCamposMarcenaria();
+            limparCamposRemodelacao();
             document.getElementById('cliente-nome').value = '';
             document.getElementById('cliente-local').value = '';
             document.getElementById('cliente-whatsapp').value = '';
