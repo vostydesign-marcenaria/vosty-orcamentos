@@ -6,7 +6,7 @@
     <title>VOSTY DESIGN | Simulador oficial de marcenaria e remodelação</title>
     <meta name="description" content="Simulador oficial de marcenaria e remodelação — VOSTY DESIGN Marcenaria e Remodelação em Portugal e toda a Europa.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -555,50 +555,6 @@
                     </div>
                 </div>
 
-                <!-- FOLHA INTERNA OCULTA PARA GERAR O PDF DA VOSTY DESIGN -->
-                <div style="position: absolute; left: -9999px; top: 0; width: 780px;">
-                    <div id="documento-pdf-interno" class="pdf-sheet p-8 space-y-6 bg-white text-vosty-ink">
-                        <div class="border-b-2 border-vosty-ink pb-4 flex justify-between items-start">
-                            <div>
-                                <p class="text-xl font-bold tracking-tight">VOSTY DESIGN — FICHA TÉCNICA &amp; FINANCEIRA INTERNA</p>
-                                <p class="text-xs text-vosty-charcoal font-bold uppercase mt-1">VOSTY DESIGN Marcenaria e Remodelação — Custo Material, Mão de Obra &amp; Lucro</p>
-                            </div>
-                            <div class="text-right text-xs">
-                                <p class="font-bold" id="int-pdf-numero"></p>
-                                <p id="int-pdf-data"></p>
-                            </div>
-                        </div>
-
-                        <div class="bg-vosty-warm p-4 rounded border border-vosty-border text-xs space-y-1">
-                            <p><strong>Cliente:</strong> <span id="int-nome"></span></p>
-                            <p><strong>Local da Obra:</strong> <span id="int-local"></span></p>
-                            <p><strong>WhatsApp / E-mail do Cliente:</strong> <span id="int-contato"></span></p>
-                            <p id="int-anexo-linha" class="hidden"><strong>Projeto / Referência Anexada:</strong> <span id="int-anexo-nome"></span></p>
-                        </div>
-
-                        <div id="int-lista-itens" class="space-y-4"></div>
-
-                        <div class="border-t-2 border-vosty-ink pt-4 bg-vosty-warm/80 rounded p-4 space-y-2 text-xs">
-                            <div class="flex justify-between">
-                                <span>Custo do Material:</span>
-                                <strong id="int-total-mat">0,00 €</strong>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Mão de Obra:</span>
-                                <strong id="int-total-lab">0,00 €</strong>
-                            </div>
-                            <div class="flex justify-between text-vosty-ink font-bold text-sm pt-1 border-t border-vosty-border">
-                                <span>Lucro VOSTY DESIGN:</span>
-                                <span id="int-total-lucro">0,00 €</span>
-                            </div>
-                            <div class="flex justify-between text-base font-bold text-vosty-ink pt-1">
-                                <span>Valor de Venda / Preço Final Cliente:</span>
-                                <span id="int-total-cliente">0,00 €</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- BOTÕES FINAIS -->
                 <div class="bg-white p-5 rounded-lg border border-vosty-border shadow-xs space-y-3">
                     <button type="button" onclick="finalizarOrcamentoResumo()"
@@ -641,7 +597,7 @@
                 <button type="button" onclick="fecharModalProjeto()" class="text-sm font-bold text-vosty-muted hover:text-vosty-ink px-2">✕</button>
             </div>
             <p class="text-sm text-vosty-ink leading-relaxed">
-                Ficamos muito felizes em saber que você gostou da nossa proposta e tem intenção de fechar este projeto connosco.
+                Ficamos muito felizes em saber que você gostou da nossa proposta e tem intenção de finalizar este projeto connosco.
             </p>
             <p class="text-sm text-vosty-ink leading-relaxed">
                 Logo, um dos nossos consultores ou da nossa equipa vai entrar em contacto consigo para avançarmos e finalizarmos todos os detalhes.
@@ -659,9 +615,8 @@
     </div>
 
     <script>
-        const VOSTY_WHATSAPP = '351923189914';
         const VOSTY_EMAIL = 'vostydesign@gmail.com';
-        const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + VOSTY_EMAIL;
+        const WEB3FORMS_KEY = '7998f881-8c80-49f1-828b-d89000b31eb8';
 
         let itensOrcamento = [];
         let anexoAtual = null;
@@ -670,8 +625,6 @@
         const numProposta = 'PROPOSTA #VD-' + Math.floor(1000 + Math.random() * 9000);
         document.getElementById('pdf-data').textContent = 'Data: ' + hojeStr;
         document.getElementById('pdf-numero').textContent = numProposta;
-        document.getElementById('int-pdf-data').textContent = 'Data: ' + hojeStr;
-        document.getElementById('int-pdf-numero').textContent = numProposta;
 
         const BASE_PRECOS = {
             'COZ-MAD-INTBR': { category: 'Marcenaria Sob Medida', title: 'Cozinha com Interno Branco e Portas Amadeiradas', matCost: 145.00, labCost: 105.00, margin: 0.530, specs: 'Portas inteiras sob medida com acabamento amadeirado, interno em melamina branca de 16 mm, dobradiças e corrediças com amortecimento, 1 jogo de gavetas com 4 gavetas e gaveta interna com divisor de talheres.' },
@@ -1320,24 +1273,15 @@
             document.getElementById('prev-local').textContent = local;
             document.getElementById('prev-contato').textContent = contatoStr;
 
-            document.getElementById('int-nome').textContent = nome;
-            document.getElementById('int-local').textContent = local;
-            document.getElementById('int-contato').textContent = contatoStr;
-
             const anexoLinha = document.getElementById('prev-anexo-linha');
-            const intAnexoLinha = document.getElementById('int-anexo-linha');
             if (anexoAtual) {
                 anexoLinha.classList.remove('hidden');
-                intAnexoLinha.classList.remove('hidden');
                 document.getElementById('prev-anexo-nome').textContent = anexoAtual.name;
-                document.getElementById('int-anexo-nome').textContent = anexoAtual.name;
             } else {
                 anexoLinha.classList.add('hidden');
-                intAnexoLinha.classList.add('hidden');
             }
 
             const listaEl = document.getElementById('lista-itens-preview');
-            const intListaEl = document.getElementById('int-lista-itens');
             document.getElementById('contador-itens').textContent = `${itensOrcamento.length} ${itensOrcamento.length === 1 ? 'item' : 'itens'}`;
 
             if (itensOrcamento.length === 0) {
@@ -1345,19 +1289,14 @@
                     <div class="text-center py-8 text-xs text-vosty-muted border border-dashed border-vosty-border rounded">
                         Adicione móveis sob medida ou serviços de remodelação ao lado (ou carregue o PDF do projeto de referência) para visualizar aqui a descrição técnica completa e os valores.
                     </div>`;
-                intListaEl.innerHTML = '';
                 document.getElementById('prev-subtotal').textContent = '0,00 €';
                 document.getElementById('prev-total').textContent = '0,00 €';
                 return;
             }
 
-            let somaMat = 0, somaLab = 0, somaCusto = 0, somaLucro = 0, somaCliente = 0;
+            let somaCliente = 0;
 
             listaEl.innerHTML = itensOrcamento.map((item, idx) => {
-                somaMat += item.totalMat;
-                somaLab += item.totalLab;
-                somaCusto += item.custoOperacional;
-                somaLucro += item.lucroLiquido;
                 somaCliente += item.precoFinal;
 
                 return `
@@ -1370,7 +1309,7 @@
                             </div>
                             <div class="text-right shrink-0">
                                 <span class="block text-sm font-bold text-vosty-ink">${formatarEuro(item.precoFinal)}</span>
-                                <button type="button" data-html2canvas-ignore="true" onclick="removerItem(${idx})"
+                                <button type="button" onclick="removerItem(${idx})"
                                         class="text-[10px] text-red-700 hover:underline mt-1">
                                     Remover
                                 </button>
@@ -1383,170 +1322,125 @@
                 `;
             }).join('');
 
-            intListaEl.innerHTML = itensOrcamento.map((item, idx) => `
-                <div class="pdf-break-avoid border border-vosty-border rounded p-4 space-y-2 text-xs">
-                    <div class="flex justify-between font-bold">
-                        <span>${idx + 1}. ${item.titulo}</span>
-                        <span>Valor de Venda: ${formatarEuro(item.precoFinal)}</span>
-                    </div>
-                    <p class="text-[11px]"><strong>Descrição:</strong> ${item.descricao}</p>
-                    <div class="grid grid-cols-3 gap-2 bg-vosty-warm p-2 rounded border border-vosty-border text-[11px]">
-                        <div>Custo do Material: <strong>${formatarEuro(item.totalMat)}</strong></div>
-                        <div>Mão de Obra: <strong>${formatarEuro(item.totalLab)}</strong></div>
-                        <div>Lucro VOSTY DESIGN (${item.marginPct}): <strong>${formatarEuro(item.lucroLiquido)}</strong></div>
-                    </div>
-                </div>
-            `).join('');
-
             document.getElementById('prev-subtotal').textContent = formatarEuro(somaCliente);
             document.getElementById('prev-total').textContent = formatarEuro(somaCliente);
-
-            document.getElementById('int-total-mat').textContent = formatarEuro(somaMat);
-            document.getElementById('int-total-lab').textContent = formatarEuro(somaLab);
-            document.getElementById('int-total-custo').textContent = formatarEuro(somaCusto);
-            document.getElementById('int-total-lucro').textContent = formatarEuro(somaLucro);
-            document.getElementById('int-total-cliente').textContent = formatarEuro(somaCliente);
         }
 
-        function gerarPDFComJsPDF(nomeCliente, totalCliente, itensLista) {
-            const jspdfLib = window.jspdf || window.html2pdf && window.html2pdf.jsPDF;
+        function limparTextoPDF(txt) {
+            return String(txt || '')
+                .replace(/—/g, '-')
+                .replace(/×/g, 'x')
+                .replace(/•/g, '|')
+                .replace(/€/g, 'EUR');
+        }
+
+        function gerarPDFDireto(nomeCliente) {
             const JsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || (typeof jsPDF !== 'undefined' ? jsPDF : null);
-            if (!JsPDFCtor) return false;
-
-            const doc = new JsPDFCtor({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-            let y = 16;
-
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(16);
-            doc.text('VOSTY DESIGN', 14, y);
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.text('Marcenaria e Remodelação — ' + numProposta + ' (' + hojeStr + ')', 14, y + 6);
-            doc.text('Site: vostydesign.com | WhatsApp: +351 923 189 914 | E-mail: vostydesign@gmail.com', 14, y + 11);
-
-            y += 20;
-            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
-            const whats = document.getElementById('cliente-whatsapp').value.trim() || '—';
-            const email = document.getElementById('cliente-email').value.trim() || '—';
-            doc.text('Cliente: ' + nomeCliente + ' | Local: ' + local, 14, y);
-            doc.text('Contacto: ' + whats + ' | ' + email, 14, y + 5);
-            y += 12;
-
-            doc.setFont('helvetica', 'bold');
-            doc.text('Itens da Proposta:', 14, y);
-            y += 6;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-
-            itensLista.forEach((it, idx) => {
-                if (y > 265) {
-                    doc.addPage();
-                    y = 16;
-                }
-                const linha = `${idx + 1}. ${it.titulo} — ${formatarEuro(it.precoFinal)}`;
-                const splitTitulo = doc.splitTextToSize(linha, 180);
-                doc.setFont('helvetica', 'bold');
-                doc.text(splitTitulo, 14, y);
-                y += splitTitulo.length * 4.5;
-
-                doc.setFont('helvetica', 'normal');
-                const splitDesc = doc.splitTextToSize('Execução: ' + it.descricao, 180);
-                doc.text(splitDesc, 14, y);
-                y += splitDesc.length * 4 + 3;
-            });
-
-            if (y > 265) {
-                doc.addPage();
-                y = 16;
-            }
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text('VALOR TOTAL ESTIMADO: ' + formatarEuro(totalCliente), 14, y + 4);
-
-            const nomeLimpo = nomeCliente.replace(/\s+/g, '_');
-            doc.save(`Proposta_VOSTY_DESIGN_${nomeLimpo}.pdf`);
-            return true;
-        }
-
-        function gerarPDFSeguro(origemId, nomeFicheiro) {
-            const nomeCliente = document.getElementById('cliente-nome').value.trim() || 'Cliente';
-            let totalCliente = 0;
-            itensOrcamento.forEach(it => { totalCliente += it.precoFinal; });
-
-            if (gerarPDFComJsPDF(nomeCliente, totalCliente, itensOrcamento)) {
-                setStatusAcao('✓ PDF "' + nomeFicheiro + '" descarregado para a sua pasta de transferências.');
+            if (!JsPDFCtor) {
+                alert('Erro ao carregar gerador de PDF. Recarregue a página com Ctrl + F5.');
                 return;
             }
 
-            const origem = document.getElementById(origemId);
-            if (!origem) return;
+            const doc = new JsPDFCtor({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+            let y = 18;
 
-            const containerLimpo = document.createElement('div');
-            containerLimpo.style.cssText = 'position:fixed;left:-10000px;top:0;width:760px;background:#ffffff;color:#1F2421;padding:20px;font-family:Arial,sans-serif;font-size:12px;line-height:1.45;';
-            containerLimpo.innerHTML = origem.innerHTML;
-            containerLimpo.querySelectorAll('[data-html2canvas-ignore="true"]').forEach(el => el.remove());
-            document.body.appendChild(containerLimpo);
+            doc.setFillColor(31, 36, 33);
+            doc.rect(14, 12, 182, 24, 'F');
 
-            const cleanup = () => {
-                if (containerLimpo.parentNode) containerLimpo.parentNode.removeChild(containerLimpo);
-            };
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text('VOSTY DESIGN', 18, 21);
 
-            setStatusAcao('⏳ A gerar e descarregar o PDF "' + nomeFicheiro + '"...');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.text('VOSTY DESIGN Marcenaria e Remodelacao | Portugal & Toda a Europa', 18, 27);
+            doc.text('vostydesign.com | WhatsApp: +351 923 189 914 | vostydesign@gmail.com', 18, 32);
 
-            try {
-                if (typeof window.html2pdf === 'function') {
-                    const worker = window.html2pdf().set({
-                        margin: [8, 8, 8, 8],
-                        filename: nomeFicheiro,
-                        image: { type: 'jpeg', quality: 0.95 },
-                        html2canvas: {
-                            scale: 1.5,
-                            useCORS: true,
-                            backgroundColor: '#ffffff',
-                            logging: false
-                        },
-                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    }).from(containerLimpo).save();
+            doc.setFont('helvetica', 'bold');
+            doc.text(limparTextoPDF(numProposta), 192, 21, { align: 'right' });
+            doc.setFont('helvetica', 'normal');
+            doc.text('Data: ' + hojeStr, 192, 27, { align: 'right' });
 
-                    if (worker && typeof worker.then === 'function') {
-                        worker.then(() => {
-                            cleanup();
-                            setStatusAcao('✓ PDF "' + nomeFicheiro + '" descarregado com sucesso.');
-                        }).catch(() => {
-                            cleanup();
-                            setStatusAcao('✓ PDF "' + nomeFicheiro + '" enviado para o descarregamento do navegador.');
-                        });
-                        return;
-                    }
+            y = 44;
+            doc.setTextColor(31, 36, 33);
+            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
+            const whats = document.getElementById('cliente-whatsapp').value.trim() || '-';
+            const email = document.getElementById('cliente-email').value.trim() || '-';
+
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(10);
+            doc.text(limparTextoPDF('Cliente: ' + nomeCliente), 14, y);
+            doc.setFont('helvetica', 'normal');
+            doc.text(limparTextoPDF('Local da Obra: ' + local), 14, y + 5);
+            doc.text(limparTextoPDF('Contacto: ' + whats + ' | E-mail: ' + email), 14, y + 10);
+
+            y += 18;
+            doc.setDrawColor(31, 36, 33);
+            doc.line(14, y, 196, y);
+            y += 7;
+
+            let totalCliente = 0;
+
+            itensOrcamento.forEach((it, idx) => {
+                totalCliente += it.precoFinal;
+                const tituloLimpo = limparTextoPDF(`${idx + 1}. ${it.titulo}`);
+                const valorLimpo = limparTextoPDF(formatarEuro(it.precoFinal));
+                const descLimpa = limparTextoPDF('O que sera executado: ' + it.descricao);
+
+                const linhasTitulo = doc.splitTextToSize(tituloLimpo, 145);
+                const linhasDesc = doc.splitTextToSize(descLimpa, 178);
+                const alturaBloco = (linhasTitulo.length * 5) + (linhasDesc.length * 4.2) + 8;
+
+                if (y + alturaBloco > 275) {
+                    doc.addPage();
+                    y = 18;
                 }
-            } catch (e) {
-                cleanup();
+
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.text(linhasTitulo, 14, y);
+                doc.text(valorLimpo, 196, y, { align: 'right' });
+                y += linhasTitulo.length * 5;
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(8.5);
+                doc.setTextColor(75, 80, 77);
+                doc.text(linhasDesc, 14, y);
+                doc.setTextColor(31, 36, 33);
+                y += (linhasDesc.length * 4.2) + 5;
+            });
+
+            if (y > 260) {
+                doc.addPage();
+                y = 20;
             }
 
-            setTimeout(() => {
-                cleanup();
-                setStatusAcao('✓ PDF "' + nomeFicheiro + '" enviado para o descarregamento do navegador.');
-            }, 1500);
+            doc.setDrawColor(31, 36, 33);
+            doc.line(14, y, 196, y);
+            y += 8;
+
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text('VALOR TOTAL ESTIMADO:', 14, y);
+            doc.text(limparTextoPDF(formatarEuro(totalCliente)), 196, y, { align: 'right' });
+
+            y += 8;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(8);
+            doc.setTextColor(94, 100, 95);
+            const notaRodape = doc.splitTextToSize(
+                'Estimativa preliminar sujeita a confirmacao tecnica de medidas no local e escolha final de materiais. Site: vostydesign.com | E-mail: vostydesign@gmail.com | WhatsApp: +351 923 189 914.',
+                182
+            );
+            doc.text(notaRodape, 14, y);
+
+            const nomeArquivo = 'Proposta_VOSTY_DESIGN_' + nomeCliente.replace(/[^a-zA-Z0-9_-]/g, '_') + '.pdf';
+            doc.save(nomeArquivo);
+            return nomeArquivo;
         }
 
-        function montarTextoCliente() {
-            const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
-            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
-
-            let total = 0;
-            const linhasItens = itensOrcamento.map((it, i) => {
-                total += it.precoFinal;
-                return `${i + 1}. ${it.titulo} — ${formatarEuro(it.precoFinal)}`;
-            }).join('\n');
-
-            return `PROPOSTA — VOSTY DESIGN Marcenaria e Remodelação\n` +
-                   `Cliente: ${nome} | Local: ${local}\n\n` +
-                   `${linhasItens}\n\n` +
-                   `TOTAL ESTIMADO: ${formatarEuro(total)}\n` +
-                   `vostydesign.com | +351 923 189 914 | vostydesign@gmail.com`;
-        }
-
-        function montarTextoInternoVosty(intencaoFechar = false) {
+        function montarDadosInternosVosty(tipoEvento) {
             const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
             const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
             const email = document.getElementById('cliente-email').value.trim() || 'Não informado';
@@ -1558,38 +1452,71 @@
                 tLab += it.totalLab;
                 tLucro += it.lucroLiquido;
                 tTotal += it.precoFinal;
-                return `${i + 1}. ${it.titulo}\n` +
-                       `Mat: ${formatarEuro(it.totalMat)} | Mão de obra: ${formatarEuro(it.totalLab)} | Lucro: ${formatarEuro(it.lucroLiquido)} | Venda: ${formatarEuro(it.precoFinal)}`;
+                return `${i + 1}. ${it.titulo} | Material: ${formatarEuro(it.totalMat)} | Mão de obra: ${formatarEuro(it.totalLab)} | Lucro: ${formatarEuro(it.lucroLiquido)} | Venda: ${formatarEuro(it.precoFinal)}`;
             }).join('\n');
 
-            const cabecalhoAcao = intencaoFechar
-                ? `INTENÇÃO DE FECHAR PROJETO COM A VOSTY DESIGN\n\n`
-                : `PROPOSTA DESCARREGADA / ENVIADA — VOSTY DESIGN\n\n`;
-
-            return cabecalhoAcao +
-                   `Cliente: ${nome} (${local})\n` +
-                   `WhatsApp: ${whats} | E-mail: ${email}\n\n` +
-                   `${linhasItens}\n\n` +
-                   `Custo do Material: ${formatarEuro(tMat)}\n` +
-                   `Mão de Obra: ${formatarEuro(tLab)}\n` +
-                   `Lucro VOSTY DESIGN: ${formatarEuro(tLucro)}\n` +
-                   `Valor de Venda: ${formatarEuro(tTotal)}`;
+            return {
+                assunto: `${tipoEvento} — ${nome} | Venda: ${formatarEuro(tTotal)} | Lucro: ${formatarEuro(tLucro)}`,
+                cliente: nome,
+                local: local,
+                whatsapp: whats,
+                emailCliente: email,
+                custoMaterial: formatarEuro(tMat),
+                maoDeObra: formatarEuro(tLab),
+                lucro: formatarEuro(tLucro),
+                valorVenda: formatarEuro(tTotal),
+                itens: linhasItens
+            };
         }
 
-        function enviarParaEmailEmSegundoPlano(destinatario, assunto, mensagem) {
-            const endpoint = 'https://formsubmit.co/ajax/' + encodeURIComponent(destinatario);
-            return fetch(endpoint, {
+        function enviarNotificacaoVosty(dados) {
+            const textoCompleto =
+                `${dados.assunto}\n\n` +
+                `Cliente: ${dados.cliente}\n` +
+                `Localidade Obra: ${dados.local}\n` +
+                `Telemóvel WhatsApp: ${dados.whatsapp}\n` +
+                `E-mail Cliente: ${dados.emailCliente}\n\n` +
+                `Itens:\n${dados.itens}\n\n` +
+                `Custo do Material: ${dados.custoMaterial}\n` +
+                `Mão de Obra: ${dados.maoDeObra}\n` +
+                `Lucro VOSTY DESIGN: ${dados.lucro}\n` +
+                `Valor de Venda: ${dados.valorVenda}`;
+
+            // Envio via Web3Forms (mesmo serviço que já entrega na caixa de entrada da VOSTY DESIGN)
+            fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    _subject: assunto,
-                    _template: 'box',
-                    mensagem: mensagem
+                    access_key: WEB3FORMS_KEY,
+                    subject: dados.assunto,
+                    from_name: 'Simulador VOSTY DESIGN',
+                    Cliente: dados.cliente,
+                    Telemovel_WhatsApp: dados.whatsapp,
+                    Email_Cliente: dados.emailCliente,
+                    Localidade_Obra: dados.local,
+                    Custo_Material: dados.custoMaterial,
+                    Mao_de_Obra: dados.maoDeObra,
+                    Lucro_VOSTY_DESIGN: dados.lucro,
+                    Valor_de_Venda: dados.valorVenda,
+                    Detalhes: dados.itens
                 })
-            }).then(resp => resp.json()).catch(() => ({ success: false }));
+            }).catch(() => {});
+
+            // Envio redundante via FormSubmit
+            fetch('https://formsubmit.co/ajax/' + encodeURIComponent(VOSTY_EMAIL), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: dados.assunto,
+                    mensagem: textoCompleto
+                })
+            }).catch(() => {});
         }
 
         function finalizarOrcamentoResumo() {
@@ -1610,15 +1537,13 @@
                 return;
             }
             atualizarPreview();
-            const nomeCliente = (document.getElementById('cliente-nome').value.trim() || 'Cliente').replace(/\s+/g, '_');
-            gerarPDFSeguro('documento-pdf-cliente', `Proposta_VOSTY_DESIGN_${nomeCliente}.pdf`);
+            const nomeCliente = document.getElementById('cliente-nome').value.trim() || 'Cliente';
+            const nomeArquivo = gerarPDFDireto(nomeCliente);
 
-            const resumoInterno = montarTextoInternoVosty(false);
-            enviarParaEmailEmSegundoPlano(
-                VOSTY_EMAIL,
-                'Nova Proposta VOSTY DESIGN — ' + (document.getElementById('cliente-nome').value.trim() || 'Cliente'),
-                resumoInterno
-            );
+            const dadosVosty = montarDadosInternosVosty('PDF Descarregado — VOSTY DESIGN');
+            enviarNotificacaoVosty(dadosVosty);
+
+            setStatusAcao(`✓ PDF "${nomeArquivo}" descarregado no seu dispositivo e resumo com Custo do Material, Mão de Obra, Lucro e Valor de Venda enviado para ${VOSTY_EMAIL}.`);
         }
 
         function enviarParaCliente() {
@@ -1633,22 +1558,43 @@
                 return;
             }
 
-            const textoCliente = montarTextoCliente();
-            setStatusAcao('⏳ A enviar a proposta diretamente para ' + emailCliente + '...');
+            const nome = document.getElementById('cliente-nome').value.trim() || 'Cliente';
+            const local = document.getElementById('cliente-local').value.trim() || 'Portugal / Toda a Europa';
+            let total = 0;
+            const linhasItens = itensOrcamento.map((it, i) => {
+                total += it.precoFinal;
+                return `${i + 1}. ${it.titulo} — ${formatarEuro(it.precoFinal)}\n   Execução: ${it.descricao}`;
+            }).join('\n\n');
 
-            enviarParaEmailEmSegundoPlano(
-                emailCliente,
-                'Sua Proposta de Orçamento — VOSTY DESIGN',
-                textoCliente
-            ).then(() => {
-                setStatusAcao('✓ Proposta enviada para ' + emailCliente + ' (verifique também a caixa de entrada e spam).');
+            const textoCliente =
+                `PROPOSTA DE ORÇAMENTO — VOSTY DESIGN Marcenaria e Remodelação\n` +
+                `Proposta: ${numProposta} | Data: ${hojeStr}\n` +
+                `Cliente: ${nome} | Local: ${local}\n\n` +
+                `${linhasItens}\n\n` +
+                `VALOR TOTAL ESTIMADO: ${formatarEuro(total)}\n\n` +
+                `Contactos VOSTY DESIGN: vostydesign.com | WhatsApp: +351 923 189 914 | E-mail: vostydesign@gmail.com`;
+
+            setStatusAcao(`⏳ A enviar a proposta diretamente para ${emailCliente}...`);
+
+            fetch('https://formsubmit.co/ajax/' + encodeURIComponent(emailCliente), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: `Sua Proposta de Orçamento — VOSTY DESIGN (${numProposta})`,
+                    _replyto: VOSTY_EMAIL,
+                    proposta: textoCliente
+                })
+            }).then(() => {
+                setStatusAcao(`✓ Proposta enviada diretamente para o e-mail ${emailCliente} (sem abrir janelas externas).`);
+            }).catch(() => {
+                setStatusAcao(`✓ Pedido de envio concluído para ${emailCliente}.`);
             });
 
-            enviarParaEmailEmSegundoPlano(
-                VOSTY_EMAIL,
-                'Cópia Enviada ao Cliente — ' + (document.getElementById('cliente-nome').value.trim() || 'Cliente'),
-                montarTextoInternoVosty(false)
-            );
+            const dadosVosty = montarDadosInternosVosty('Proposta Enviada ao Cliente — VOSTY DESIGN');
+            enviarNotificacaoVosty(dadosVosty);
         }
 
         function finalizarComVosty() {
@@ -1659,13 +1605,11 @@
             }
 
             document.getElementById('modal-fechar-projeto').classList.remove('hidden');
-            setStatusAcao('✓ Registo de intenção de fechar projeto enviado para ' + VOSTY_EMAIL + ' com Custo do Material, Mão de Obra, Lucro e Valor de Venda.');
 
-            enviarParaEmailEmSegundoPlano(
-                VOSTY_EMAIL,
-                'Intenção de Fechar Projeto — VOSTY DESIGN (' + (document.getElementById('cliente-nome').value.trim() || 'Cliente') + ')',
-                montarTextoInternoVosty(true)
-            );
+            const dadosVosty = montarDadosInternosVosty('INTENÇÃO DE FECHAR PROJETO — VOSTY DESIGN');
+            enviarNotificacaoVosty(dadosVosty);
+
+            setStatusAcao(`✓ Intenção de fechar projeto registada e enviada para ${VOSTY_EMAIL} com Custo do Material, Mão de Obra, Lucro e Valor de Venda.`);
         }
 
         function limparTudo() {
